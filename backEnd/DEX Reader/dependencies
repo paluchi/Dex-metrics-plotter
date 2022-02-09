@@ -1,2 +1,5 @@
 pymongo
 gql
+request
+requests_toolbelt
+dotenv

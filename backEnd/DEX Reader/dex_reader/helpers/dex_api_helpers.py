@@ -2,7 +2,7 @@ import threading
 
 
 def get_volume_fees(volume):
-    return volume * 0.03
+    return float(volume) * 0.03
 
     
 
