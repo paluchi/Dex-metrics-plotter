@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+
 const createError = require("http-errors"); //error creator module
-const metricsSchema = require("../../models").metrics;
+const pairSchema = require("../../mongooseModels");
 
 const { responseStatus } = require("../../utilities");
 
 async function getMetrics(pairAdress, fromDate, toDate) {
   let metrics = {};
   try {
-    metrics = await metricsSchema
+    metrics = await pairSchema
       .findOne({
         pairAdress: pairAdress,
         "snapshot.date": {

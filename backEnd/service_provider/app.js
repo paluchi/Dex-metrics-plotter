@@ -2,9 +2,9 @@ require("dotenv").config();
 const logger = require("pino")();
 const morgan = require("morgan");
 const loaders = require("./loaders");
-const router = require("./router");
+const router = require("./router/router");
 const express = require("express");
-const { generalErrorHandler } = require("./utilities");
+const { generalErrorhandler } = require("./utilities");
 
 // Catch unhanded promise errors
 process.on("unhandledRejection", (error) => {
@@ -25,6 +25,6 @@ app.use(morgan("dev"));
 router(app);
 
 //error handler middleware
-app.use(generalErrorHandler);
+app.use(generalErrorhandler);
 
 module.exports = app;

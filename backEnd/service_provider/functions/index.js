@@ -1,3 +1,3 @@
-const metrics = require("metrics");
+const metrics = require("./metrics");
 
 module.exports = { metrics };

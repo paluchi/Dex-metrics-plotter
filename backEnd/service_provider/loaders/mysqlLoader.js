@@ -16,7 +16,7 @@ async function DBLoader() {
 
     return connection;
   } catch (error) {
-    logger.fatal("db can't be reached, ERROR: " + err);
+    logger.fatal("db can't be reached, ERROR: " + error);
   }
 }
 

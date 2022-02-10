@@ -1,5 +1,6 @@
-from .helpers.dex_api_helpers import get_volume_fees, set_interval
+from .helpers.dex_api_helpers import set_interval
 from .helpers.api_queries import get_pair_address, get_pair_hourly_snapshots
+from .pair_reader import Pair_reader
 
 from pymongo import MongoClient
 
@@ -11,24 +12,23 @@ class Reader:
     db_driver = None
     query_driver = None
 
-    token0 = None
-    token1 = None
-    pair_address = None
+    db_collection = None
+    pairs = []
 
-    collection = None
-
-    def __init__(self, token0, token1, api_host, db_host, db_port):
+    def __init__(self, pairs_addresses, api_host, db_host, db_port):
 
         print("Initializing dex-reader")
 
-        self.token0 = token0
-        self.token1 = token1
         self.init_query_driver(api_host)
-        self.pair_address = self.request_pair_address(token0, token1)
         self.init_db_driver(db_host, db_port)
-        self.add_pair(self.pair_address, self.token0, self.token1)
+        self.build_pairs(pairs_addresses)
 
         print("dex-reader fully Initialized")
+
+    def build_pairs(self, addresses):
+        for address in addresses:
+            new_pair = Pair_reader(address, self.query_driver, self.db_collection)
+            self.pairs.append(new_pair)
 
     def init_query_driver(self, api_host):
 
@@ -47,7 +47,7 @@ class Reader:
         connection = MongoClient("{}:{}".format(db_host, db_port))
         connection.drop_database("dex_lectures")
         db = connection["dex_lectures"]
-        self.collection = db["pair"]
+        self.db_collection = db["pair"]
 
         print("mongoDB driver Initialized")
 
@@ -59,62 +59,18 @@ class Reader:
 
     def initAutoReader(self):
 
-        set_interval(self.save_last_snapshot, 5)
+        set_interval(self.take_snapshot, 60)
         print("dex-reader auto reader has started working")
 
-    def request_pair_address(self, token0, token1):
+    def take_snapshot(self):
 
-        response = get_pair_address(self.query_driver, token0, token1)
-        pair_address = response["pairs"][0]["id"]
+        for pair in self.pairs:
+            pair.save_last_snapshot()
 
-        print("The tokens pair's Adress is: {}".format(pair_address))
-
-        return pair_address
-
-    def save_last_snapshot(self):
-
-        snapshot = self.request_snapshots(self.pair_address, 1)
-        self.add_snapshots(self.pair_address, snapshot)
-        self.delete_last_snapshot(self.pair_address)
-
-        print("New snapshot has been taken")
 
     def save_last_48h_snapshots(self):
 
-        last_48hs_ss = self.request_snapshots(self.pair_address, 48)
-        print(last_48hs_ss)
-        self.add_snapshots(self.pair_address, last_48hs_ss)
-        print("Last 48 hours snapshots has been saved")
+        for pair in self.pairs:
+            pair.save_snapshots_by_amount(48)
 
-    def request_snapshots(self, pair_address, amount):
-
-        pair_ss = get_pair_hourly_snapshots(
-            self.query_driver, pair_address, amount)
-
-        print("An amount of {} snapshots has been retrieved".format(amount))
-
-        return pair_ss["pairHourDatas"]
-
-    def delete_last_snapshot(self, pair_address):
-        # finish
-        pass
-
-    def add_snapshots(self, pair_address, snapshots):
-
-        for ss in snapshots:
-            ss.update({"feesUSD": get_volume_fees(ss["hourlyVolumeUSD"])})
-            self.collection.update_one({
-                "pair_address": {"$eq": "{}".format(pair_address)}
-            },
-                {'$push': {'snapshots': ss}})
-
-    def add_pair(self, pair_address, token0, token1):
-
-        # Parse data
-        data = {"pair_address": pair_address,
-                "token0": token0, "token1": token1, "snapshots": []}
-
-        # Save pair data
-        self.collection.insert_one(data)
-
-        print("A new pair has been genereated: {}".format(data))
+        print("Last 48 hours snapshots of all pairs has been saved")
