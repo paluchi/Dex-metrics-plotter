@@ -1,0 +1,25 @@
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border-width: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+}
+
+.placeEnd {
+  margin-top: auto;
+}
+
+.item:hover {
+  background-color: #eeeeee;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
