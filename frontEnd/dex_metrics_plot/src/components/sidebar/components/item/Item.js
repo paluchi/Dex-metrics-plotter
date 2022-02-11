@@ -1,19 +1,28 @@
+import { useContext } from "react";
+
+import { CurrentPageContext } from "../../../../context/CurrentPageContext";
 import { Link } from "react-router-dom";
 
 import "./styles/Item.css";
 
-function Item({ Icon, activeColor, route, placeEnd }) {
-  const handleClick = (event) => {};
+function Item({ Icon, activeColor, path, placeEnd, ...extraData }) {
+  const { setCurrentPage } = useContext(CurrentPageContext);
+
+  const handleClick = () => {
+    setCurrentPage({ activeColor, path, ...extraData });
+  };
 
   return (
-    <button className="item" onClick={handleClick}>
-      <Icon
-        fill={"#77767B"}
-        stroke={"#77767B"}
-        stroke-width={0}
-        className="icon"
-      />
-    </button>
+    <Link to={path}>
+      <button className="item" onClick={handleClick}>
+        <Icon
+          fill={"#77767B"}
+          stroke={"#77767B"}
+          stroke-width={0}
+          className="icon"
+        />
+      </button>
+    </Link>
   );
 }
 
