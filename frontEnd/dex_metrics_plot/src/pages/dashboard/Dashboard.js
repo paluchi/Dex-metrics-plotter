@@ -1,5 +1,25 @@
+import Section from "../../components/section/Section";
+
+import AprGraph from "./components/aprGraph/AprGraph";
+
+import "./styles/Dashboard.css";
+
 function Dashboard() {
-  return <h1>DASHBOARD</h1>;
+  const sections = [
+    { Component: AprGraph, header: "Annual Percentage Rate (APR)" },
+  ];
+
+  return (
+    <>
+      {sections.map(({ header, Component }) => {
+        return (
+          <Section header={header}>
+            <Component />
+          </Section>
+        );
+      })}
+    </>
+  );
 }
 
 export default Dashboard;
