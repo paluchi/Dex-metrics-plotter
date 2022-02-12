@@ -2,10 +2,12 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 const logger = require("pino")(); //logger module
 
+require("../mongooseModels"); // Loads all mongoose models
+
 module.exports = async function mongooseLoader() {
-  const dbRoute = process.env.MONGO_DB_URL
+  const dbRoute = process.env.MONGO_DB_URL;
   try {
-    const connectReq = await mongoose.connect(`mongodb://${dbRoute}`, {
+    const connectReq = await mongoose.connect(`${dbRoute}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
@@ -13,10 +15,12 @@ module.exports = async function mongooseLoader() {
       useFindAndModify: false,
     });
 
-    logger.info("db connected");
+    logger.info(
+      `database connected. connection status: ${connectReq.connection.readyState}`
+    );
     return connectReq.connection;
   } catch (error) {
     logger.fatal("db can't be reached, ERROR: " + error);
-    throw new Error(error)
+    throw new Error(error);
   }
 };

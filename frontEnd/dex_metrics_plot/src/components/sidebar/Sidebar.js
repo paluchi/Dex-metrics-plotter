@@ -12,15 +12,15 @@ function Sidebar({ items }) {
         <Logo />
       </div>
       <div className="center">
-        {items.map((item) => {
+        {items.map((item, index) => {
           if (item.placeEnd) endPlaced.push(item);
           else {
-            return <Item {...item} />;
+            return <Item {...item} key={`sidebar_top_${index}`} />;
           }
         })}
         <div className="placeEnd">
-          {endPlaced.map((item) => {
-            return <Item {...item} />;
+          {endPlaced.map((item, index) => {
+            return <Item {...item} key={`sidebar_bottom_${index}`} />;
           })}
         </div>
       </div>

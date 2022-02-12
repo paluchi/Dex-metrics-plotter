@@ -47,7 +47,7 @@ class Reader:
         connection = MongoClient("{}:{}".format(db_host, db_port))
         connection.drop_database("dex_lectures")
         db = connection["dex_lectures"]
-        self.db_collection = db["pair"]
+        self.db_collection = db["pairs"]
 
         print("mongoDB driver Initialized")
 

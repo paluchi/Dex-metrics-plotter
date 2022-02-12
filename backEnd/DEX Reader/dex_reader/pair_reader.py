@@ -53,7 +53,7 @@ class Pair_reader:
 
         snapshot = self.request_snapshots(1)
 
-        if snapshot[0]["unixTimestamp"] != self.last_snapshot["unixTimestamp"]:
+        if snapshot[0]["unix_timestamp"] != self.last_snapshot["unix_timestamp"]:
             self.add_snapshots(snapshot)
 
             print("New snapshot has been taken for: {}".format(self.name))

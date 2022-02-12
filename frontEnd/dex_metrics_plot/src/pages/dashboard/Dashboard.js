@@ -13,7 +13,7 @@ function Dashboard() {
     <>
       {sections.map(({ header, Component }) => {
         return (
-          <Section header={header}>
+          <Section header={header} key={`dashboard_${header}`}>
             <Component />
           </Section>
         );

@@ -7,7 +7,14 @@ function Main({ sections }) {
     <main className="main">
       <Routes>
         {sections.map(({ Component, path, header, ...props }) => {
-          return <Route path={path} element={<Component />} {...props} />;
+          return (
+            <Route
+              path={path}
+              element={<Component />}
+              {...props}
+              key={`main_${header}`}
+            />
+          );
         })}
       </Routes>
     </main>

@@ -1,32 +1,69 @@
-
 const createError = require("http-errors"); //error creator module
-const pairSchema = require("../../mongooseModels");
+const mongoose = require("mongoose");
+const pairModel = mongoose.model("pairs");
 
-const { responseStatus } = require("../../utilities");
+const { status } = require("../../utilities");
 
-async function getMetrics(pairAdress, fromDate, toDate) {
-  let metrics = {};
+async function getMetrics(pairAdress, fromUnixTS, toUnixTS) {
   try {
-    metrics = await pairSchema
-      .findOne({
-        pairAdress: pairAdress,
-        "snapshot.date": {
-          $gte: fromDate,
-          $lt: toDate,
+    // const metrics = await pairModel.findOne({
+    //   id: pairAdress,
+    //   "snapshots.unix_timestamp": {
+    //     $gte: fromUnixTS,
+    //     $lte: toUnixTS,
+    //   },
+    // });
+    const metrics = await pairModel.aggregate([
+      { $match: { id: pairAdress } },
+      {
+        $project: {
+          snapshots: {
+            $cond: [{
+              $and: [
+                { $gte: ["$snapshots.unix_timestamp", fromUnixTS] },
+                { $lte: ["$snapshots.unix_timestamp", toUnixTS] },
+              ],
+            }],
+          },
         },
-      })
-      .select("pairAdress token0 token1 date sonapshots -_id");
+      },
+    ]);
+    // db.workouts.aggregate([
+    //   { $match: { user_id: ObjectId("....") } },
+    //   {
+    //     $project: {
+    //       20: {
+    //         $cond: [
+    //           {
+    //             $and: [
+    //               { $gt: ["$avg_intensity", 20] },
+    //               { $lt: ["$avg_intensity", 25] },
+    //             ],
+    //           },
+    //           "$total_volume",
+    //           0,
+    //         ],
+    //       },
+    //     },
+    //   },
+    // ]);
+    console.log("getMetrics ~ metrics", metrics);
     if (!metrics) {
-      return responseStatus(false, `Pair address has not been fould`, null);
+      return status(
+        false,
+        `Pair address has not been found`,
+        createError(404, "your conditions does not match any data")
+      );
     }
-    return responseStatus(true, `Pair metrics successfully found`, user);
+    return status(true, `Pair metrics successfully found`, metrics);
   } catch (err) {
-    return responseStatus(
+    console.log(err);
+    return status(
       false,
-      "There was an error finding the pair metrics" + err.message,
-      createError(500, err.message)
+      "There was an error finding the pair metrics: ERROR - " + err.message,
+      createError(503, "There was an error finding the pair metrics")
     );
   }
 }
 
-module.exports = { getMetrics };
+module.exports = getMetrics;

@@ -4,12 +4,12 @@ const commands = require("./commands");
 
 //schemas for diferent request entries
 const getMetricsSchema = joi.object({
-  pairAdress: joi.number().integer().min(1).required(),
-  fromDate: joi.string().min(0).max(0).required(),
-  toDate: joi.string().min(0).max(0).required(),
+  pairAdress: joi.string().required(),
+  fromUnixTS: joi.number().integer().required(),
+  toUnixTS: joi.number().integer().required(),
 });
 
-module.exports.ValidateQuery = (command, query) => {
+const validateQuery = (command, query) => {
   // Call joi validation function
   let validation = {};
   switch (command) {
@@ -17,8 +17,9 @@ module.exports.ValidateQuery = (command, query) => {
       validation = getMetricsSchema.validate(query);
       break;
   }
+
   // If error field exists then an error courred
-  if (!validation.error) {
+  if (validation.error) {
     return {
       success: false,
       data: createError(400, validation.error.details[0].message),
@@ -27,6 +28,8 @@ module.exports.ValidateQuery = (command, query) => {
 
   return {
     success: true,
-    data: validation.data,
+    data: validation.value,
   };
 };
+
+module.exports = validateQuery;

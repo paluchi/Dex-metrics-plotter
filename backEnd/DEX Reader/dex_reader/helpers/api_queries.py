@@ -67,9 +67,9 @@ def get_pair_hourly_snapshots(driver, pair_address, amount=1):
     pair_ss = driver.execute(query, variable_values=params)
 
     for ss in pair_ss["pairHourDatas"]:
-        ss["unixTimestamp"] = ss.pop("hourStartUnix")
-        ss["liquidityUSD"] = ss.pop("reserveUSD")
-        ss["volumeUSD"] = ss.pop("hourlyVolumeUSD")
-        ss.update({"feesUSD": get_volume_fees(ss["liquidityUSD"])})
+        ss["unix_timestamp"] = ss.pop("hourStartUnix")
+        ss["liquidity_usd"] = ss.pop("reserveUSD")
+        ss["volume_usd"] = ss.pop("hourlyVolumeUSD")
+        ss.update({"fees_usd": get_volume_fees(ss["liquidity_usd"])})
 
     return pair_ss

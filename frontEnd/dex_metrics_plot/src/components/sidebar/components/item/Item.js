@@ -18,7 +18,7 @@ function Item({ Icon, activeColor, path, placeEnd, ...extraData }) {
         <Icon
           fill={"#77767B"}
           stroke={"#77767B"}
-          stroke-width={0}
+          strokeWidth={0}
           className="icon"
         />
       </button>
