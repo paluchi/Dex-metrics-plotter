@@ -12,6 +12,30 @@ import {
 function Rechart({ data }) {
   const lines = getLineKeys(data);
 
+  function newLine(name, key) {
+    return (
+      <Line
+        dataKey={name}
+        stroke="#8884d8"
+        strokeWidth="2"
+        dot={{
+          fill: "#FFFFFF",
+          stroke: "#8884d8",
+          strokeWidth: 2,
+          r: 3.2,
+        }}
+        activeDot={{
+          fill: "#2e4355",
+          stroke: "#8884d8",
+          strokeWidth: 5,
+          r: 5,
+        }}
+        isAnimationActive={false}
+        key={key}
+      />
+    );
+  }
+
   return (
     <div>
       <ResponsiveContainer aspect={4.5}>
@@ -66,7 +90,10 @@ function Rechart({ data }) {
             itemStyle={{ color: "#fff" }}
             cursor={false}
           />
-          {lines.map((line) => createLine(line))}
+          {lines.map((name, index) => {
+            const key = `rechart_line_${name}_${index}`;
+            return newLine(name, key);
+          })}
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -85,27 +112,4 @@ const getLineKeys = (data) => {
   });
 
   return lines;
-};
-
-const createLine = (name) => {
-  return (
-    <Line
-      dataKey={name}
-      stroke="#8884d8"
-      strokeWidth="2"
-      dot={{
-        fill: "#FFFFFF",
-        stroke: "#8884d8",
-        strokeWidth: 2,
-        r: 3.2,
-      }}
-      activeDot={{
-        fill: "#2e4355",
-        stroke: "#8884d8",
-        strokeWidth: 5,
-        r: 5,
-      }}
-      isAnimationActive={false}
-    />
-  );
 };

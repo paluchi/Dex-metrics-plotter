@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 
-import { CurrentPageContext } from "../../../../context/CurrentPageContext";
+import { CurrentItemContext } from "../../../../context/CurrentItemContext";
 import { Link } from "react-router-dom";
 
 import "./styles/Item.css";
@@ -15,37 +15,35 @@ function Item({
   active,
   ...extraData
 }) {
-  const { currentPage, setCurrentPage } = useContext(CurrentPageContext);
+  const { currentItem, setCurrentItem } = useContext(CurrentItemContext);
 
   useEffect(() => {
     active && handleClick();
   }, []);
 
   const handleClick = () => {
-    setCurrentPage({ activeColor, path, ...extraData });
+    setCurrentItem({ activeColor, path, ...extraData });
   };
 
-  const background = currentPage?.path === path ? activeBGColor : undefined;
+  const background = currentItem?.path === path ? activeBGColor : undefined;
   const color =
-    currentPage?.path === path ? activeColor : unactiveColor || "#77767B";
+    currentItem?.path === path ? activeColor : unactiveColor || "#77767B";
 
   const preventDragHandler = (e) => {
     e.preventDefault();
   };
 
   return (
-    <button
-      className="item"
-      style={{
-        background,
-      }}
-      onClick={handleClick}
-      onDragStart={preventDragHandler}
-    >
-      <Link to={path}>
+    <Link to={path} className="item" onClick={handleClick}>
+      <button
+        style={{
+          background,
+        }}
+        onDragStart={preventDragHandler}
+      >
         <Icon fill={color} stroke={color} strokeWidth={0} className="icon" />
-      </Link>
-    </button>
+      </button>
+    </Link>
   );
 }
 

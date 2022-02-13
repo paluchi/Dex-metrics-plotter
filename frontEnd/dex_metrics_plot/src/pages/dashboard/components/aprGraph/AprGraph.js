@@ -17,40 +17,46 @@ const plotLineName = "APR";
 // Start of aprGraph fuction
 function AprGraph() {
   const [plotData, setPlotData] = useState([]);
-  const [hourlyAverage, setHourlyAverage] = useState(24);
-  const [pairAddress, setPairAddress] = useState(
-    "0xbc9d21652cca70f54351e3fb982c6b5dbe992a22"
-  );
+  const [hourlyAverage, setHourlyAverage] = useState();
+  const [pairAddress, setPairAddress] = useState();
 
+  // At first render start the reader
   useEffect(() => {
     startNewMetricsReader();
+  }, []);
+
+  // If some modifier is updated the render again with updated data
+  useEffect(() => {
+    loadPlotData();
   }, [hourlyAverage, pairAddress]);
 
   const startNewMetricsReader = async () => {
-    const loadPlotData = async () => {
-      const currentDate = new Date();
-      const toUnixDate = Math.round(currentDate.getTime() / 1000);
-      const fromUnixDate = currentDate.setHours(
-        currentDate.getHours() - hourlyAverage
-      );
-
-      const pairData = await getPairDataByUnixTS(
-        pairAddress,
-        fromUnixDate,
-        toUnixDate
-      );
-
-      const averageAPR = getAverageAPR(pairData.snapshots);
-      const data = parsePlotData(plotLineName, averageAPR);
-
-      setPlotData(data);
-    };
-
     loadPlotData();
 
     setInterval(async () => {
       loadPlotData();
     }, 1000 * 60);
+  };
+
+  const loadPlotData = async () => {
+    if (!pairAddress || !hourlyAverage) return;
+
+    const currentDate = new Date();
+    const toUnixDate = Math.round(currentDate.getTime() / 1000);
+    const fromUnixDate = currentDate.setHours(
+      currentDate.getHours() - hourlyAverage
+    );
+
+    const pairData = await getPairDataByUnixTS(
+      pairAddress,
+      fromUnixDate,
+      toUnixDate
+    );
+
+    const averageAPR = getAverageAPR(pairData.snapshots);
+    const data = parsePlotData(plotLineName, averageAPR);
+
+    setPlotData(data);
   };
 
   // Chart modifiers
@@ -69,6 +75,7 @@ function AprGraph() {
           content: "24h",
           callback: setHourlyAverage,
           callbackParameters: 24,
+          active: true,
         },
       ],
     },
@@ -77,11 +84,16 @@ function AprGraph() {
       // Pair address selector
       header: "Pair: ",
       items: [
-        { content: "1h", callback: setHourlyAverage, callbackParameters: 1 },
         {
-          content: "12h",
-          callback: setHourlyAverage,
-          callbackParameters: 12,
+          content: "pair 1",
+          callback: setPairAddress,
+          callbackParameters: "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
+          active: true,
+        },
+        {
+          content: "pair 2",
+          callback: setPairAddress,
+          callbackParameters: "0xbc9d21652cca70f54351e3fb982c6b5dbe992a22",
         },
       ],
     },

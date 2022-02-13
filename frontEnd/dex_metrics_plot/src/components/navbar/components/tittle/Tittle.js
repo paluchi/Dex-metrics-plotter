@@ -1,15 +1,15 @@
 import { useContext } from "react";
 
-import { CurrentPageContext } from "../../../../context/CurrentPageContext";
+import { CurrentItemContext } from "../../../../context/CurrentItemContext";
 
 import "./styles/Tittle.css";
 
 function Tittle() {
-  const { currentPage } = useContext(CurrentPageContext);
+  const { currentItem } = useContext(CurrentItemContext);
 
   return (
     <header className="tittle">
-      <h1>{currentPage?.header}</h1>
+      <h1>{currentItem?.header}</h1>
     </header>
   );
 }

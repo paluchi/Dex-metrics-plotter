@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Sidebar from "./components/sidebar/Sidebar";
 import Navbar from "./components/navbar/Navbar";
 import Main from "./components/main/Main";
-import { CurrentPageProvider } from "./context/CurrentPageContext";
+import { CurrentItemProvider } from "./context/CurrentItemContext";
 
 import Dashboard from "./pages/dashboard/Dashboard";
 import Strategies from "./pages/Strategies/Strategies";
@@ -67,17 +67,17 @@ function App() {
       activeColor: "#3232",
       unactiveColor: "#323232",
       Icon: notification,
-      path: "/test",
+      path: "/addRouteOrCallback",
       placeEnd: true,
     },
   ];
 
   return (
     <Router>
-      <CurrentPageProvider>
+      <CurrentItemProvider>
         <Navbar tittle={"Dashboard"} />
         <Sidebar items={mainPages} />
-      </CurrentPageProvider>
+      </CurrentItemProvider>
       <Main sections={mainPages} />
     </Router>
   );

@@ -7,12 +7,14 @@ const preventDragHandler = (e) => {
 
 function Logo() {
   return (
-    <img
-      src={logo}
-      alt="logo"
-      className="logo"
-      onDragStart={preventDragHandler}
-    ></img>
+    <div className="logoContainer">
+      <img
+        src={logo}
+        alt="logo"
+        className="logo"
+        onDragStart={preventDragHandler}
+      ></img>
+    </div>
   );
 }
 

@@ -1,5 +1,5 @@
 export const getAverageAPR = (snapshots) => {
-  const ssAPR = snapshots.map(({ liquidity_usd, fees_usd }) => {
+  const ssAPR = snapshots.map(({ liquidity_usd, fees_usd, volume_usd }) => {
     return liquidity_usd / fees_usd;
   });
 

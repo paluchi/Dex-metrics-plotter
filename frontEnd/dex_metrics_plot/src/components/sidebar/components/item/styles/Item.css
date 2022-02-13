@@ -1,4 +1,9 @@
 .item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+}
+.item button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,17 +11,15 @@
   height: 40px;
   border-radius: 8px;
   border-width: 0px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: #ffffff;
+  background-color: transparent;
+}
+
+.item button:hover {
+  background-color: #eeeeee;
 }
 
 .placeEnd {
   margin-top: auto;
-}
-
-.item:hover {
-  background-color: #eeeeee;
 }
 
 .icon {

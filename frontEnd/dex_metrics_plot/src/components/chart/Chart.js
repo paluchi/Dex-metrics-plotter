@@ -22,8 +22,13 @@ export default Chart;
 function CreateModifiers({ modifiers }) {
   return (
     <div className="modifiersContainer">
-      {modifiers.map((data) => {
-        return <MultipleSelector {...data} />;
+      {modifiers.map((data, index) => {
+        return (
+          <MultipleSelector
+            {...data}
+            key={`chart_modifier${data.id || data.header || "default"}_index`}
+          />
+        );
       })}
     </div>
   );

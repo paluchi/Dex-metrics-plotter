@@ -1,4 +1,12 @@
-.logo{
-    width: 21px;
-    height: 25px;
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+}
+
+.logoContainer * {
+  width: 21px;
+  height: 25px;
 }
