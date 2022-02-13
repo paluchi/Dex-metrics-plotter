@@ -1,0 +1,43 @@
+# DEX METRICS PLOT
+#----------------------------------------
+# dependencies
+/dex_metrics_plot/node_modules
+# production
+/build
+# misc
+/dex_metrics_plot/.DS_Store
+/dex_metrics_plot/.env.local
+/dex_metrics_plot/.env.development.local
+/dex_metrics_plot/.env.test.local
+/dex_metrics_plot/.env.production.local
+/dex_metrics_plot/.env
+/dex_metrics_plot/yarn.lock
+/dex_metrics_plot/package.lock.json
+#----------------------------------------
+
+# SERVICE PROVIDER
+#----------------------------------------
+# dependencies
+/service_provider/node_modules
+# misc
+/service_provider/.DS_Store
+/service_provider/.env.local
+/service_provider/.env.development.local
+/service_provider/.env.test.local
+/service_provider/.env.production.local
+/service_provider/.env
+/service_provider/yarn.lock
+/service_provider/package.lock.json
+#----------------------------------------
+
+# DEX READER
+#----------------------------------------
+# dependencies
+/service_provider/node_modules
+# misc
+/dex_reader/.env
+/dex_reader/.env.development.local
+/dex_reader/.env.test.local
+/dex_reader/.env.production.local
+/dex_reader/.env.local
+#----------------------------------------
