@@ -1,5 +1,6 @@
 import Item from "./components/item/Item";
 import Logo from "./components/logo/Logo";
+import User from "./components/user/user";
 
 import "./styles/Sidebar.css";
 
@@ -24,7 +25,9 @@ function Sidebar({ items }) {
           })}
         </div>
       </div>
-      <div className="bottom">A</div>
+      <div className="bottom">
+        <User />
+      </div>
     </aside>
   );
 }

@@ -1,7 +1,7 @@
 const express = require("express");
 const logger = require("pino")(); //logger module
 
-module.exports = async function expressLoader(app) {
+function requestConfig(app) {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
@@ -12,8 +12,11 @@ module.exports = async function expressLoader(app) {
     if (req.method === "OPTIONS") {
       res.header("Access-Control-Allow-Methods", "*"); //methods that can be sent (get, post, delete, etc)
     }
+    logger.info("Express Intialized");
     next();
   });
 
   return app;
-};
+}
+
+module.exports = requestConfig;

@@ -3,7 +3,7 @@ const createError = require("http-errors"); //error creator module
 const serverApiKey = process.env.API_KEY;
 
 function apiKey(req, res, next) {
-  const clientApiKey = req.headers.api_key;
+  const clientApiKey = req.headers["api-key"];
 
   if (serverApiKey === clientApiKey) {
     next();

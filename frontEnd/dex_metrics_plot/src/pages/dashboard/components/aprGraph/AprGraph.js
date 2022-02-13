@@ -1,83 +1,102 @@
-import { useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+
+import getPairDataByUnixTS from "./queries/getPairDataByUnixTS";
 
 import Chart from "../../../../components/chart/Chart";
+import Card from "../../../../components/card/Card";
 
+import { getAverageAPR, parsePlotData } from "./math/aprMath";
+
+// Printed variables
+const header = "Annual Percentage Rate (APR)";
+const description = `APR (Annual Percentage Rate) is the annual rate of return,
+                    expressed as a percentage, before factoring in compound interest.
+                    APR only takes into account simple interest.`;
+const plotLineName = "APR";
+
+// Start of aprGraph fuction
 function AprGraph() {
-  const data = [
-    {
-      name: "January",
-      Iphone: 4000,
-    },
-    {
-      name: "March",
-      Iphone: 1000,
-    },
-    {
-      name: "May",
-      Iphone: 4000,
-    },
-    {
-      name: "July",
-      Iphone: 800,
-    },
-    {
-      name: "October",
-      Iphone: 1500,
-    },
-  ];
-
-  const service_provider_url = process.env.REACT_APP_SERVICE_PROVIDER_URL;
-  console.log("AprGraph ~ service_provider_url", service_provider_url);
-  const service_provider_api_key =
-    process.env.REACT_APP_SERVICE_PROVIDER_API_KEY;
-
-  const getPairDataByUnixTS = async (pairAddress, from, to) => {
-    try {
-      const data = await axios({
-        method: "get",
-        url: `${service_provider_url}/metrics`,
-        params: {
-          pairAdress: pairAddress,
-          fromUnixTS: from,
-          toUnixTS: to,
-        },
-        headers: { api_key: service_provider_api_key },
-      });
-
-      return data;
-    } catch (error) {
-      console.log(error);
-      return {};
-    }
-  };
+  const [plotData, setPlotData] = useState([]);
+  const [hourlyAverage, setHourlyAverage] = useState(24);
+  const [pairAddress, setPairAddress] = useState(
+    "0xbc9d21652cca70f54351e3fb982c6b5dbe992a22"
+  );
 
   useEffect(() => {
-    setInterval(async () => {
-      console.log("test");
-    }, 1000 * 60);
+    startNewMetricsReader();
+  }, [hourlyAverage, pairAddress]);
 
-    (async () => {
-      console.log("geting data");
-      const data = await getPairDataByUnixTS(
-        "0xbc9d21652cca70f54351e3fb982c6b5dbe992a22",
-        1644464403,
-        1644622803
+  const startNewMetricsReader = async () => {
+    const loadPlotData = async () => {
+      const currentDate = new Date();
+      const toUnixDate = Math.round(currentDate.getTime() / 1000);
+      const fromUnixDate = currentDate.setHours(
+        currentDate.getHours() - hourlyAverage
       );
-      console.log("data", data);
-    })();
-  });
 
-  const header = "Annual Percentage Rate (APR)";
+      const pairData = await getPairDataByUnixTS(
+        pairAddress,
+        fromUnixDate,
+        toUnixDate
+      );
 
-  const description = `APR (Annual Percentage Rate) is the annual rate of return,
-                      expressed as a percentage, before factoring in compound interest.
-                      APR only takes into account simple interest.`;
+      const averageAPR = getAverageAPR(pairData.snapshots);
+      const data = parsePlotData(plotLineName, averageAPR);
+
+      setPlotData(data);
+    };
+
+    loadPlotData();
+
+    setInterval(async () => {
+      loadPlotData();
+    }, 1000 * 60);
+  };
+
+  // Chart modifiers
+  const modifiers = [
+    {
+      // Average time frame selector
+      header: "Average time frame:",
+      items: [
+        { content: "1h", callback: setHourlyAverage, callbackParameters: 1 },
+        {
+          content: "12h",
+          callback: setHourlyAverage,
+          callbackParameters: 12,
+        },
+        {
+          content: "24h",
+          callback: setHourlyAverage,
+          callbackParameters: 24,
+        },
+      ],
+    },
+    ,
+    {
+      // Pair address selector
+      header: "Pair: ",
+      items: [
+        { content: "1h", callback: setHourlyAverage, callbackParameters: 1 },
+        {
+          content: "12h",
+          callback: setHourlyAverage,
+          callbackParameters: 12,
+        },
+      ],
+    },
+    ,
+  ];
 
   return (
-    <div>
-      <Chart header={header} description={description} data={data} />
-    </div>
+    <Card style={{ padding: "0px", marginLeft: "0px" }}>
+      <Chart
+        header={header}
+        description={description}
+        data={plotData}
+        modifiers={modifiers}
+      />
+    </Card>
   );
 }
 

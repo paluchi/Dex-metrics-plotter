@@ -221,7 +221,6 @@ describe("API tasks", () => {
             expect(res).to.have.status(401);
             expect(res.text).to.be.eq("You are not authorized to do this");
             done();
-            console.log("ad");
           });
       });
     });

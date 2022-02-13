@@ -18,47 +18,54 @@ import { ReactComponent as discover } from "./assets/icons/discover.svg";
 import { ReactComponent as settings } from "./assets/icons/settings.svg";
 import { ReactComponent as notification } from "./assets/icons/notification.svg";
 
-// APR = [(Fees + Interest)/Principal] x (Number of Years) x 100
-
 function App() {
-  const sidebarItems = [
+  const mainPages = [
     {
       Icon: dashboard,
-      activeColor: "blue",
+      activeBGColor: "#E7F1FF",
+      activeColor: "#2E71F0",
       path: "/",
       Component: Dashboard,
       header: "Dashboard",
       exact: true,
+      active: true,
     },
     {
       Icon: strategies,
-      activeColor: "green",
+      activeBGColor: "#E7F1FF",
+      activeColor: "#2E71F0",
       path: "/strategies",
       Component: Strategies,
       header: "Strategies",
     },
     {
       Icon: invoices,
-      activeColor: "green",
+      activeBGColor: "#E7F1FF",
+      activeColor: "#2E71F0",
       path: "/invoices",
       Component: Invoices,
       header: "Invoices",
     },
     {
       Icon: discover,
-      activeColor: "green",
+      activeBGColor: "#E7F1FF",
+      activeColor: "#2E71F0",
       path: "/discover",
       Component: Discover,
       header: "Discover",
     },
     {
       Icon: settings,
-      activeColor: "green",
+      activeBGColor: "#E7F1FF",
+      activeColor: "#2E71F0",
       path: "/settings",
       Component: Settings,
       header: "Settings",
     },
     {
+      activeBGColor: "#E7F1FF",
+      activeColor: "#3232",
+      unactiveColor: "#323232",
       Icon: notification,
       path: "/test",
       placeEnd: true,
@@ -69,9 +76,9 @@ function App() {
     <Router>
       <CurrentPageProvider>
         <Navbar tittle={"Dashboard"} />
-        <Sidebar items={sidebarItems} />
+        <Sidebar items={mainPages} />
       </CurrentPageProvider>
-      <Main sections={sidebarItems} />
+      <Main sections={mainPages} />
     </Router>
   );
 }

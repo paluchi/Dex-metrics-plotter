@@ -10,9 +10,11 @@ import {
 } from "recharts";
 
 function Rechart({ data }) {
+  const lines = getLineKeys(data);
+
   return (
     <div>
-      <ResponsiveContainer aspect={4}>
+      <ResponsiveContainer aspect={4.5}>
         <LineChart
           data={data}
           margin={{
@@ -25,7 +27,7 @@ function Rechart({ data }) {
           <Legend
             align="left"
             verticalAlign="top"
-            height={36}
+            height={50}
             iconType={"circle"}
             iconSize={10}
             wrapperStyle={{
@@ -64,18 +66,7 @@ function Rechart({ data }) {
             itemStyle={{ color: "#fff" }}
             cursor={false}
           />
-          <Line
-            dataKey="Iphone"
-            stroke="#8884d8"
-            strokeWidth="2"
-            dot={{ fill: "#FFFFFF", stroke: "#8884d8", strokeWidth: 2, r: 3.2 }}
-            activeDot={{
-              fill: "#2e4355",
-              stroke: "#8884d8",
-              strokeWidth: 5,
-              r: 5,
-            }}
-          />
+          {lines.map((line) => createLine(line))}
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -83,3 +74,38 @@ function Rechart({ data }) {
 }
 
 export default Rechart;
+
+const getLineKeys = (data) => {
+  const lines = [];
+  data.map(({ name, ...plotData }) => {
+    const entries = Object.keys(plotData);
+    entries.map((key) => {
+      !lines.includes(key) && lines.push(key);
+    });
+  });
+
+  return lines;
+};
+
+const createLine = (name) => {
+  return (
+    <Line
+      dataKey={name}
+      stroke="#8884d8"
+      strokeWidth="2"
+      dot={{
+        fill: "#FFFFFF",
+        stroke: "#8884d8",
+        strokeWidth: 2,
+        r: 3.2,
+      }}
+      activeDot={{
+        fill: "#2e4355",
+        stroke: "#8884d8",
+        strokeWidth: 5,
+        r: 5,
+      }}
+      isAnimationActive={false}
+    />
+  );
+};

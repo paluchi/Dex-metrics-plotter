@@ -15,39 +15,20 @@ async function getMetrics(pairAdress, fromUnixTS, toUnixTS) {
     // });
     const metrics = await pairModel.aggregate([
       { $match: { id: pairAdress } },
-      {
-        $project: {
-          snapshots: {
-            $cond: [{
-              $and: [
-                { $gte: ["$snapshots.unix_timestamp", fromUnixTS] },
-                { $lte: ["$snapshots.unix_timestamp", toUnixTS] },
-              ],
-            }],
-          },
-        },
-      },
+      // {
+      //   $project: {
+      //     snapshots: {
+      //       $cond: [{
+      //         $and: [
+      //           { $gte: ["$snapshots.unix_timestamp", fromUnixTS] },
+      //           { $lte: ["$snapshots.unix_timestamp", toUnixTS] },
+      //         ],
+      //       }],
+      //     },
+      //   },
+      // },
     ]);
-    // db.workouts.aggregate([
-    //   { $match: { user_id: ObjectId("....") } },
-    //   {
-    //     $project: {
-    //       20: {
-    //         $cond: [
-    //           {
-    //             $and: [
-    //               { $gt: ["$avg_intensity", 20] },
-    //               { $lt: ["$avg_intensity", 25] },
-    //             ],
-    //           },
-    //           "$total_volume",
-    //           0,
-    //         ],
-    //       },
-    //     },
-    //   },
-    // ]);
-    console.log("getMetrics ~ metrics", metrics);
+    //console.log("getMetrics ~ metrics", metrics);
     if (!metrics) {
       return status(
         false,

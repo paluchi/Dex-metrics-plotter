@@ -7,4 +7,5 @@
     box-sizing: border-box;
     padding: 89px 50px 0px 115px;
     background-color: #F9F9FB;
+    overflow-y: scroll;
 }

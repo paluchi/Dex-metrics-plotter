@@ -1,0 +1,29 @@
+.value {
+  padding: 0px;
+  margin: 0px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  color: #152935;
+}
+
+.differencePositive{
+  padding: 0px;
+  margin: 0px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  color: #5ad700;
+}
+
+.differenceNegative{
+  padding: 0px;
+  margin: 0px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  color: #d72b00;
+}
