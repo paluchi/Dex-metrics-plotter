@@ -12,7 +12,7 @@
 /dex_metrics_plot/.env.production.local
 /dex_metrics_plot/.env
 /dex_metrics_plot/yarn.lock
-/dex_metrics_plot/package.lock.json
+/dex_metrics_plot/package-lock.json
 #----------------------------------------
 
 # SERVICE PROVIDER
@@ -27,7 +27,7 @@
 /service_provider/.env.production.local
 /service_provider/.env
 /service_provider/yarn.lock
-/service_provider/package.lock.json
+/service_provider/package-lock.json
 #----------------------------------------
 
 # DEX READER

@@ -1,3 +1,3 @@
-const pairSchema = require("./Pair");
+const pairSchema = require("./pair");
 
 module.exports = {pairSchema}
