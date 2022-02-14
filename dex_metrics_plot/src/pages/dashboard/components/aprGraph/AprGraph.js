@@ -19,13 +19,13 @@ const aspect = undefined; //5.5 is best for big resolutions
 
 const initialAmount = 1000; // Used for chart plot initial amount
 
-// Start of aprGraph fuction
+// This sections presets the main chart of the dashboard
 function AprGraph() {
-  const [plotData, setPlotData] = useState([]);
-  const [hoursAmount, setHoursAmount] = useState();
-  const [pairAddress, setPairAddress] = useState();
+  const [plotData, setPlotData] = useState([]); // Chart parameters
+  const [hoursAmount, setHoursAmount] = useState(); // Hours modifier variable
+  const [pairAddress, setPairAddress] = useState(); // Pair modifier variable
 
-  // At first render start the reader
+  // At first render start the new metrics reader
   useEffect(() => {
     console.log("improve multirender issue");
     startNewMetricsReader();
@@ -45,22 +45,31 @@ function AprGraph() {
   };
 
   const loadPlotData = async () => {
+    // If some of the modifiers is not selected don't plot
     if (!pairAddress || !hoursAmount) return;
 
+    // Create time range based on hours modifier
     const toDate = new Date();
     const fromDate = new Date();
     fromDate.setHours(fromDate.getHours() - hoursAmount);
 
-    const pairData = await getPairDataByDateRange(
-      pairAddress,
-      fromDate,
-      toDate
-    );
-    
-    const plotLineName = `Hourly APR of last ${hoursAmount}hs`;
-    const data = parseHourlyAPRPlotData(plotLineName, pairData.snapshots);
+    // Create time range based on hours modifier
+    try {
+      const pairData = await getPairDataByDateRange(
+        pairAddress,
+        fromDate,
+        toDate
+      );
 
-    setPlotData(data);
+      // Set plot Line name and get the metrics
+      const plotLineName = `Hourly APR of last ${hoursAmount}hs`;
+      const data = parseHourlyAPRPlotData(plotLineName, pairData.snapshots);
+
+      // At last set the parsed data to post. render
+      setPlotData(data);
+    } catch (error) {
+      // Set sort of error screen here
+    }
   };
 
   // Chart modifiers
@@ -103,6 +112,7 @@ function AprGraph() {
     ,
   ];
 
+  // Present chart inside a card
   return (
     <Card style={{ padding: "0px", marginLeft: "0px" }}>
       <Chart

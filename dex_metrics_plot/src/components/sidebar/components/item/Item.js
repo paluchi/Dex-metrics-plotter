@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import "./styles/Item.css";
 
+// An item inside the sidebar's center place 
 function Item({
   Icon,
   activeBGColor,
@@ -25,6 +26,7 @@ function Item({
     setCurrentItem({ activeColor, path, ...extraData });
   };
 
+  // Set active visuals based on selected item context
   const background = currentItem?.path === path ? activeBGColor : undefined;
   const color =
     currentItem?.path === path ? activeColor : unactiveColor || "#77767B";
@@ -33,6 +35,7 @@ function Item({
     e.preventDefault();
   };
 
+  // Render the item wrapped in a router updating component with the given path
   return (
     <Link to={path} className="item" onClick={handleClick}>
       <button

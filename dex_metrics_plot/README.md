@@ -18,6 +18,7 @@
 - Improve re-rendeding
 - Pass all code to typescript (is a must)
 - Add components and funcionalities testing (is a must)
+- Add loading animations
 - Use multipleSelector for every set of buttons
 - Add notification component, modal component and other fundamental components
 - Add accesibility properties to every component

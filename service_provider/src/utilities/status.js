@@ -1,3 +1,5 @@
+
+// Very flexible status generator
 function createNewStatus(
   status = true,
   message = "Operation was made successfully",

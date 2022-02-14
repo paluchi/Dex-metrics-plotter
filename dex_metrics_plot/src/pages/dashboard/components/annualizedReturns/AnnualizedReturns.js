@@ -2,6 +2,7 @@ import CardsSet from "../../../../components/cardSet/CardsSet";
 
 import "./styles/AnnualizedReturns.css";
 
+// This sections presets a set of cards with (currenly) dummy data
 function AnnualizedReturns() {
   const metrics = [
     { header: "All-Time", difference: 8.838 },

@@ -1,8 +1,10 @@
 import "./styles/Card.css";
 
-function Card({ header, style, children }) {
+
+// A simple but flexible card component
+function Card({ header, children, ...extras}) {
   return (
-    <div className="card" style={style}>
+    <div className="card" {...extras}>
       {header && <h6 className="cardHeader">{header}</h6>}
       {children}
     </div>

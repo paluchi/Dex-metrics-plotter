@@ -1,11 +1,11 @@
-require("dotenv").config();
+require("dotenv").config(); // Loads .env variables as environment variables
 const logger = require("pino")();
-const morgan = require("morgan");
+const morgan = require("morgan"); // Fancy request logging module 
 const runLoaders = require("./loaders");
 const router = require("./router/router");
-const express = require("express");
-const loadRequestConfig = require("./requestConfig");
-const { generalErrorhandler } = require("./utilities");
+const express = require("express"); // Express as web framework
+const loadRequestConfig = require("./requestConfig"); // Used to set allowed request parameters and policies
+const { generalErrorhandler } = require("./utilities"); // Used to handle errors at last step of request pipeline
 
 // Catch unhanded promise errors
 process.on("unhandledRejection", (error) => {

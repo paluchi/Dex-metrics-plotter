@@ -2,6 +2,7 @@ import CardsSet from "../../../../components/cardSet/CardsSet";
 
 import "./styles/GlobalMetrics.css";
 
+// This sections presets a set of cards with (currenly) dummy data
 function GlobalMetrics() {
   const metrics = [
     { header: "Total Allocation", value: "$2,533,557.32" },

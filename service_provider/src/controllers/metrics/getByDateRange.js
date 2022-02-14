@@ -6,22 +6,24 @@ const { status } = require("../../utilities");
 
 async function getMetricsByDateRange(pairAdress, fromDate, toDate) {
   try {
+    // Request metrics
     const metrics = await pairModel.aggregate([
-      { $match: { id: pairAdress } },
+      { $match: { id: pairAdress } }, // Select pair with "pairAdress" id
       {
         $project: {
-          _id: "$id",
+          id: "$id", // return "id" as "id"
           name: "$name",
           token0: "$token0",
           token1: "$token1",
           snapshots: {
+            // return "snapshots" as a filtered version of snapwhots
             $filter: {
               input: "$snapshots",
               as: "ss",
               cond: {
                 $and: [
-                  { $gte: ["$$ss.date", fromDate] },
-                  { $lte: ["$$ss.date", toDate] },
+                  { $gte: ["$$ss.date", fromDate] }, // Greater or equal than "fromDate"
+                  { $lte: ["$$ss.date", toDate] }, // Less or equal than "toDate"
                 ],
               },
             },
@@ -30,6 +32,7 @@ async function getMetricsByDateRange(pairAdress, fromDate, toDate) {
       },
     ]);
 
+    // If no metrics retrieved return error status with error
     if (!metrics) {
       return status(
         false,
@@ -37,6 +40,8 @@ async function getMetricsByDateRange(pairAdress, fromDate, toDate) {
         createError(404, "your conditions does not match any data")
       );
     }
+
+    // If metrics retrieved returen success status with data
     return status(true, `Pair metrics successfully found`, metrics);
   } catch (err) {
     console.log(err);

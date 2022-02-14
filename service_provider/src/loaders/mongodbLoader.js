@@ -4,6 +4,7 @@ const logger = require("pino")(); //logger module
 
 require("../mongooseModels"); // Loads all mongoose models
 
+// Create mongodb connection
 module.exports = async function mongooseLoader() {
   const dbRoute = process.env.MONGO_DB_URL;
   try {

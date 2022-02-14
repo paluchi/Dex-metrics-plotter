@@ -6,7 +6,7 @@ const getPairDataByUnixTS = async (pairAddress, from, to) => {
     process.env.REACT_APP_SERVICE_PROVIDER_API_KEY;
 
   try {
-    const {data} = await axios({
+    const { data } = await axios({
       method: "get",
       url: `${service_provider_url}/metricsbydaterange`,
       params: {
@@ -22,8 +22,10 @@ const getPairDataByUnixTS = async (pairAddress, from, to) => {
 
     return data[0];
   } catch (error) {
-    console.log(error);
-    return {};
+    console.log(
+      "Error requesting a pair's metrics data. The service provider must be down"
+    );
+    throw new Error(error);
   }
 };
 

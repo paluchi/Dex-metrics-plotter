@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom";
 
 import "./styles/Main.css";
 
+
+// This component is in charge on correctly positionate all the pages content in the web and create a route with a given path for every page 
 function Main({ sections }) {
   return (
     <main className="main">

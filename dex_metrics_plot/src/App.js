@@ -18,7 +18,9 @@ import { ReactComponent as discover } from "./assets/icons/discover.svg";
 import { ReactComponent as settings } from "./assets/icons/settings.svg";
 import { ReactComponent as notification } from "./assets/icons/notification.svg";
 
+// Web app initiator
 function App() {
+  // This array contains the web's main pages (dashboard, strategies, invoices, etc), their icon in navbar, header, path, and other variables
   const mainPages = [
     {
       Icon: dashboard,
@@ -35,7 +37,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/strategies",
-      Component: <Strategies/>,
+      Component: <Strategies />,
       header: "Strategies",
     },
     {
@@ -43,7 +45,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/invoices",
-      Component: <Invoices/>,
+      Component: <Invoices />,
       header: "Invoices",
     },
     {
@@ -51,7 +53,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/discover",
-      Component: <Discover/>,
+      Component: <Discover />,
       header: "Discover",
     },
     {
@@ -59,7 +61,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/settings",
-      Component: <Settings/>,
+      Component: <Settings />,
       header: "Settings",
     },
     {
@@ -72,6 +74,8 @@ function App() {
     },
   ];
 
+  // Render the sidebar, navbar and the main component with all the prev. declared screens
+  // the prev pages are passes to sidebar too so it can create the navigation buttons
   return (
     <Router>
       <CurrentItemProvider>

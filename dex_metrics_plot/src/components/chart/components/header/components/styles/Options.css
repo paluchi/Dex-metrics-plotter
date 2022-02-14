@@ -1,0 +1,22 @@
+.chartOptionsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+}
+
+.chartOptionsContainer li {
+  list-style-type: none;
+  margin: 0px 11px 0px 11px;
+  cursor: pointer;
+}
+
+.chartOptionsContainer li:last-child {
+}
+
+@media only screen and (max-width: 600px) {
+  .chartOptionsContainer {
+    display: none;
+  }
+}

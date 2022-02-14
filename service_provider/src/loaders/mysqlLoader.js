@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const logger = require("pino")(); //logger module
 
+// Create mysql connection
 async function DBLoader() {
   try {
     const connection = await mysql

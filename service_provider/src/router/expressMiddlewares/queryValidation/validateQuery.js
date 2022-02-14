@@ -26,6 +26,7 @@ const validateQuery = (command, query) => {
     };
   }
 
+  // If there is not error then return data
   return {
     success: true,
     data: validation.value,

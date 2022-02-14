@@ -4,6 +4,8 @@ import { CurrentItemContext } from "../../../../context/CurrentItemContext";
 
 import "./styles/Header.css";
 
+
+// Render the current page header based on context
 function Header() {
   const { currentItem } = useContext(CurrentItemContext);
 

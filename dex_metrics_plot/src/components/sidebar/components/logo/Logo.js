@@ -5,6 +5,8 @@ const preventDragHandler = (e) => {
   e.preventDefault();
 };
 
+
+// A simple logo component
 function Logo() {
   return (
     <div className="logoContainer">

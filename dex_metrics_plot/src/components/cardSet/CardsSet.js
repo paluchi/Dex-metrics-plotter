@@ -2,6 +2,7 @@ import Card from "../card/Card";
 
 import "./styles/CardsSet.css";
 
+// Presents a set of generic cards based on given array ob cards parameters
 function CardsSet({ cards, style }) {
   return (
     <div className="cardsSet">

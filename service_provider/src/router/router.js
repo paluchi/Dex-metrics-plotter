@@ -1,6 +1,7 @@
 const functions = require("../functions");
 const { queryValidator, authentication } = require("./expressMiddlewares");
 
+// This function handle request query validation, business logic and status (very important)
 function validateQuery(command, callback) {
   const validate = async (req, res, next) => {
     const query = req.query;
