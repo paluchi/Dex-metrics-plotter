@@ -1,13 +1,11 @@
 FROM node:14
 
-WORKDIR /usr/src/app
+WORKDIR /dex_metrics_plot
 
-COPY ./package.json ./
+COPY package.json .
 
 RUN yarn install
 
 COPY . .
-
-EXPOSE 3000
 
 CMD [ "yarn", "start" ]

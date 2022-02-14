@@ -1,12 +1,10 @@
 FROM node:14
 
-WORKDIR /usr/src/app
+WORKDIR /service_provider
 
-COPY ./package.json ./
+COPY package.json .
 RUN yarn install
 
 COPY . .
-
-EXPOSE 5000
 
 CMD [ "npm" , "start"]

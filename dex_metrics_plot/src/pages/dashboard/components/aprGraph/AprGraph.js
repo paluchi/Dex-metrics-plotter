@@ -5,7 +5,7 @@ import getPairDataByDateRange from "../../../../queries/getPairDataByDateRange";
 import Chart from "../../../../components/chart/Chart";
 import Card from "../../../../components/card/Card";
 
-import { getAverageAPR, parsePlotData } from "./math/aprMath";
+import { parseHourlyAPRPlotData } from "./math/aprMath";
 
 // chart variables
 const header = "Annual Percentage Rate (APR)";
@@ -13,16 +13,16 @@ const description = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
 const chartId = "dashboard_apr_chart";
-const height = 350
-const width = undefined
-const aspect = undefined //5.5 is best for big resolutions
+const height = 350;
+const width = undefined;
+const aspect = undefined; //5.5 is best for big resolutions
 
 const initialAmount = 1000; // Used for chart plot initial amount
 
 // Start of aprGraph fuction
 function AprGraph() {
   const [plotData, setPlotData] = useState([]);
-  const [hourlyAverage, setHourlyAverage] = useState();
+  const [hoursAmount, setHoursAmount] = useState();
   const [pairAddress, setPairAddress] = useState();
 
   // At first render start the reader
@@ -34,7 +34,7 @@ function AprGraph() {
   // If some modifier is updated the render again with updated data
   useEffect(() => {
     loadPlotData();
-  }, [hourlyAverage, pairAddress]);
+  }, [hoursAmount, pairAddress]);
 
   const startNewMetricsReader = async () => {
     loadPlotData();
@@ -45,21 +45,20 @@ function AprGraph() {
   };
 
   const loadPlotData = async () => {
-    if (!pairAddress || !hourlyAverage) return;
+    if (!pairAddress || !hoursAmount) return;
 
     const toDate = new Date();
     const fromDate = new Date();
-    fromDate.setHours(fromDate.getHours() - hourlyAverage);
+    fromDate.setHours(fromDate.getHours() - hoursAmount);
 
     const pairData = await getPairDataByDateRange(
       pairAddress,
       fromDate,
       toDate
     );
-
-    const averageAPR = getAverageAPR(pairData.snapshots);
-    const plotLineName = `Average APR of ${averageAPR}%`;
-    const data = parsePlotData(plotLineName, initialAmount, averageAPR);
+    
+    const plotLineName = `Hourly APR of last ${hoursAmount}hs`;
+    const data = parseHourlyAPRPlotData(plotLineName, pairData.snapshots);
 
     setPlotData(data);
   };
@@ -67,38 +66,37 @@ function AprGraph() {
   // Chart modifiers
   const modifiers = [
     {
-      // Average time frame selector
-      header: "Average time frame:",
-      items: [
-        { content: "1h", callback: setHourlyAverage, callbackParameters: 1 },
-        {
-          content: "12h",
-          callback: setHourlyAverage,
-          callbackParameters: 12,
-        },
-        {
-          content: "24h",
-          callback: setHourlyAverage,
-          callbackParameters: 24,
-          active: true,
-        },
-      ],
-    },
-    ,
-    {
       // Pair address selector
       header: "Pair: ",
       items: [
         {
-          content: "pair 1",
+          content: "USDC/WETH",
           callback: setPairAddress,
           callbackParameters: "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
           active: true,
         },
         {
-          content: "pair 2",
+          content: "WETH/RKFL",
           callback: setPairAddress,
           callbackParameters: "0xbc9d21652cca70f54351e3fb982c6b5dbe992a22",
+        },
+      ],
+    },
+    {
+      // Average time frame selector
+      header: "Time frame:",
+      items: [
+        { content: "1h", callback: setHoursAmount, callbackParameters: 1 },
+        {
+          content: "12h",
+          callback: setHoursAmount,
+          callbackParameters: 12,
+        },
+        {
+          content: "24h",
+          callback: setHoursAmount,
+          callbackParameters: 24,
+          active: true,
         },
       ],
     },
@@ -106,7 +104,7 @@ function AprGraph() {
   ];
 
   return (
-    <Card style={{ padding: "0px", marginLeft: "0px"}}>
+    <Card style={{ padding: "0px", marginLeft: "0px" }}>
       <Chart
         header={header}
         description={description}

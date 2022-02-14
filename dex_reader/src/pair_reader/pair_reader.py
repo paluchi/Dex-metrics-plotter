@@ -1,6 +1,5 @@
 from .helpers.api_queries import get_pair_data, get_pair_hourly_snapshots
 
-
 class Pair_reader:
     api = None
     pairs_coll = None
@@ -27,8 +26,9 @@ class Pair_reader:
         self.pairs_coll = pairs_coll
         self.id = address
 
-        self.request_pair_data()
-        self.save_pair()
+        self.request_pair_data() # Request some pair's variables and save locally
+        self.save_pair() # Save local pair dana on db (creates new document in collection)
+
 
     def request_pair_data(self):
 

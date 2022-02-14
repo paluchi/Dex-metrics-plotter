@@ -1,0 +1,6 @@
+pymongo>=3.0.0,<=4.0.1
+gql>=0.12.3,<=0.13.0
+requests>=1.8.2,<=2.27.1
+requests_toolbelt>=1.8.2,<=2.0.0
+python-dotenv>=0.10.0,<=0.19.2
+python-decouple

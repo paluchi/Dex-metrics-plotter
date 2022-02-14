@@ -1,0 +1,7 @@
+.dockerignore
+.yarn.lock
+.env.example
+.env
+package-lock.json
+README.md
+node_modules

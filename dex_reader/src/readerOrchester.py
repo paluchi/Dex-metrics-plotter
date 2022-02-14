@@ -1,6 +1,5 @@
 from .helpers.dex_api_helpers import set_interval
-from .helpers.api_queries import get_pair_address, get_pair_hourly_snapshots
-from .pair_reader import Pair_reader
+from .pair_reader.pair_reader import Pair_reader
 
 from pymongo import MongoClient
 
@@ -26,6 +25,7 @@ class Reader:
         print("dex-reader fully Initialized")
 
     def build_pairs(self, addresses):
+         # Create an individual pair reader for every address
         for address in addresses:
             new_pair = Pair_reader(address, self.query_driver, self.db_collection)
             self.pairs.append(new_pair)
@@ -45,21 +45,21 @@ class Reader:
     def init_db_driver(self, db_host, db_port):
 
         connection = MongoClient("{}:{}".format(db_host, db_port))
-        connection.drop_database("dex_lectures")
-        db = connection["dex_lectures"]
-        self.db_collection = db["pairs"]
+        connection.drop_database("dex_lectures") # Delete db is already exists
+        db = connection["dex_lectures"] # Select db by "dex_lectures" name
+        self.db_collection = db["pairs"] # Select db's collections by "pairs" name
 
         print("mongoDB driver Initialized")
 
     def start_reader(self):
 
-        self.save_last_48h_snapshots()
-        self.initAutoReader()
+        self.save_last_48h_snapshots() # Retrieves, parse save last 48 hours (if exist) of given pairs
+        self.initAutoReader() # Retrieves, parse save last hour (if exist) of given pairs
         print("dex-reader has started working")
 
     def initAutoReader(self):
 
-        set_interval(self.take_snapshot, 10)
+        set_interval(self.take_snapshot, 10) # Retrieve and save a new snapshot (if exists)
         print("dex-reader auto reader has started working")
 
     def take_snapshot(self):

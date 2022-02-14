@@ -32,8 +32,6 @@
 
 # DEX READER
 #----------------------------------------
-# dependencies
-/service_provider/node_modules
 # misc
 /dex_reader/.env
 /dex_reader/.env.development.local

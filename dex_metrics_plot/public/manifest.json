@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Dex plotter",
+  "name": "Dex metrics plotter",
   "icons": [
     {
       "src": "favicon.ico",

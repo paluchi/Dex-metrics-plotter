@@ -1,0 +1,8 @@
+.dockerignore
+.yarn.lock
+.README.create_react-app.md
+.env.example
+.env
+package-lock.json
+README.md
+node_modules

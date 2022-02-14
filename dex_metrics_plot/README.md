@@ -10,11 +10,7 @@
 
 ### Using Docker:
 
-###### Run:
-
-```sh
-docker build -t react-app .
-```
+##### Start using your web app using [This link][pllg]
 
 ##### Then follow the root project readme
 
@@ -32,3 +28,5 @@ npm start
 ```
 
 ##### Then follow the project's root directory's readme
+
+[pllg]: https://localhost:3000

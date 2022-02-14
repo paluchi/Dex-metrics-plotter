@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "mocha ./tests || true",
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "test": "mocha ./src/tests || true",
+    "start": "node ./src/bin/www",
+    "dev": "nodemon ./src/bin/www"
   },
   "author": "",
   "license": "ISC",

@@ -6,18 +6,14 @@
 
 ## Installation
 
-##### Go to "dex_reader" directory and follow the readme instructions
-
-##### Go to "service_provider" directory and follow the readme instructions
-
-##### Go to "dex_metrics_plot" directory and follow the readme instructions
-
 ### Using Docker
+
+###### Step on this project root's directory
 
 ###### Run:
 
 ```sh
-docker compose up
+docker compose up --build
 ```
 
 ##### Start using your web app using [This link][pllg]
@@ -25,6 +21,12 @@ docker compose up
 ---
 
 ### NOT Using Docker
+
+##### Go to "dex_reader" directory and follow the readme instructions
+
+##### Go to "service_provider" directory and follow the readme instructions
+
+##### Go to "dex_metrics_plot" directory and follow the readme instructions
 
 ##### Start using your web app using [This link][pllg]
 

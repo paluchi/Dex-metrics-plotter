@@ -1,0 +1,5 @@
+.dockerignore
+.env
+.env.example
+README.md
+_pycache_

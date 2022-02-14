@@ -7,11 +7,34 @@
     box-sizing: border-box;
     padding: 89px 50px 0px 115px;
     background-color: #F9F9FB;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 @media only screen and (max-width: 600px) {
     .main{
-        padding: 89px 0px 0px 73px;
+        padding: 89px 10px 0px 73px;
     }
+  }
+
+  /* scrollbar */
+
+  /* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
