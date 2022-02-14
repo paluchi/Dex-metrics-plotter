@@ -1,19 +1,76 @@
 .headerContainer {
   display: flex;
   align-items: center;
-  width: 100%;
+  max-width: 100%;
   height: 55px;
+  padding: 0px 16px 0px 16px;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
   border-color: rgb(228, 228, 228);
 }
 
-.sectionHeader {
+.headerContainer div span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartDescriptionContainer {
+  position: absolute;
+  max-width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fafafa;
+  border-width: 1px;
+  border-color: rgb(238, 238, 238);
+  border-style: solid;
+  z-index: 1;
+}
+
+.chartDescriptionContainer p {
+  margin: 0px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: 0.12px;
+  color: #27292c;
+}
+
+.headerContainer h5 {
   font-weight: 500;
   font-style: normal;
   font-size: 15px;
   line-height: 23px;
-  padding: 0px 3px 0px 0px;
-  margin: 0px 4px 0px 16px;
+  margin: 0px 4px 0px 0px;
   color: #152935;
+}
+
+.chartOptionsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartOptionsContainer {
+  margin-left: auto;
+}
+
+.chartOptionsContainer li {
+  list-style-type: none;
+  margin: 0px 11px 0px 11px;
+  cursor: pointer;
+}
+
+.chartOptionsContainer li:last-child {
+}
+
+@media only screen and (max-width: 600px) {
+  .chartOptionsContainer {
+    display: none;
+  }
 }

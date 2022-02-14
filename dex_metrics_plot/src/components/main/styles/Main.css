@@ -9,3 +9,9 @@
     background-color: #F9F9FB;
     overflow-y: scroll;
 }
+
+@media only screen and (max-width: 600px) {
+    .main{
+        padding: 89px 0px 0px 73px;
+    }
+  }

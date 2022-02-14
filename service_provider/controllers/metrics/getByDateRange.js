@@ -4,31 +4,32 @@ const pairModel = mongoose.model("pairs");
 
 const { status } = require("../../utilities");
 
-async function getMetrics(pairAdress, fromUnixTS, toUnixTS) {
+async function getMetricsByDateRange(pairAdress, fromDate, toDate) {
   try {
-    // const metrics = await pairModel.findOne({
-    //   id: pairAdress,
-    //   "snapshots.unix_timestamp": {
-    //     $gte: fromUnixTS,
-    //     $lte: toUnixTS,
-    //   },
-    // });
     const metrics = await pairModel.aggregate([
       { $match: { id: pairAdress } },
-      // {
-      //   $project: {
-      //     snapshots: {
-      //       $cond: [{
-      //         $and: [
-      //           { $gte: ["$snapshots.unix_timestamp", fromUnixTS] },
-      //           { $lte: ["$snapshots.unix_timestamp", toUnixTS] },
-      //         ],
-      //       }],
-      //     },
-      //   },
-      // },
+      {
+        $project: {
+          _id: "$id",
+          name: "$name",
+          token0: "$token0",
+          token1: "$token1",
+          snapshots: {
+            $filter: {
+              input: "$snapshots",
+              as: "ss",
+              cond: {
+                $and: [
+                  { $gte: ["$$ss.date", fromDate] },
+                  { $lte: ["$$ss.date", toDate] },
+                ],
+              },
+            },
+          },
+        },
+      },
     ]);
-    //console.log("getMetrics ~ metrics", metrics);
+
     if (!metrics) {
       return status(
         false,
@@ -47,4 +48,4 @@ async function getMetrics(pairAdress, fromUnixTS, toUnixTS) {
   }
 }
 
-module.exports = getMetrics;
+module.exports = getMetricsByDateRange;

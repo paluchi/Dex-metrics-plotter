@@ -19,10 +19,15 @@ function validateQuery(command, callback) {
 // Router REST declared entries
 function router(app) {
   // Get entries
-  app.route("/metrics").get(
-    //authentication.apiKey,
-    validateQuery(queryValidator.commands.GET_METRICS, functions.metrics.get)
-  );
+  app
+    .route("/metricsbydaterange")
+    .get(
+      authentication.apiKey,
+      validateQuery(
+        queryValidator.commands.GET_METRICS_BY_DATE_RANGE,
+        functions.metrics.getByDateRange
+      )
+    );
 }
 
 module.exports = router;

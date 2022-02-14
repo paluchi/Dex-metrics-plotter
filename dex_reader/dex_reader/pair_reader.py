@@ -1,5 +1,6 @@
 from .helpers.api_queries import get_pair_data, get_pair_hourly_snapshots
 
+
 class Pair_reader:
     api = None
     pairs_coll = None
@@ -29,14 +30,13 @@ class Pair_reader:
         self.request_pair_data()
         self.save_pair()
 
-    
     def request_pair_data(self):
 
         response = get_pair_data(self.api, self.id)["pair"]
         self.token0 = response["token0"]
         self.token1 = response["token1"]
-        self.name = "{}/{}".format(self.token0["symbol"],self.token1["symbol"])
-    
+        self.name = "{}/{}".format(self.token0["symbol"],
+                                   self.token1["symbol"])
 
     def save_pair(self):
 
@@ -53,7 +53,7 @@ class Pair_reader:
 
         snapshot = self.request_snapshots(1)
 
-        if snapshot[0]["unix_timestamp"] != self.last_snapshot["unix_timestamp"]:
+        if snapshot[0]["date"] != self.last_snapshot["date"]:
             self.add_snapshots(snapshot)
 
             print("New snapshot has been taken for: {}".format(self.name))
@@ -63,14 +63,15 @@ class Pair_reader:
         snapshots = self.request_snapshots(amount)
         self.add_snapshots(snapshots)
 
-        print("An amount of {} snapshots has been saved for: {}".format(amount, self.name))
+        print("The last {} snapshots has been requested for: {} pair. An amount of {} has been retrieved and saved".format(
+            amount, self.name, len(snapshots)))
 
     def request_snapshots(self, amount):
 
         pair_ss = get_pair_hourly_snapshots(
             self.api, self.id, amount)
 
-        return pair_ss["pairHourDatas"]
+        return pair_ss
 
     def add_snapshots(self, snapshots):
 
@@ -79,5 +80,5 @@ class Pair_reader:
                 "id": {"$eq": "{}".format(self.id)}
             },
                 {'$push': {'snapshots': ss}})
-        
+
         self.last_snapshot = snapshots[0]

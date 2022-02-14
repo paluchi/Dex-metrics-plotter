@@ -75,7 +75,7 @@ function App() {
   return (
     <Router>
       <CurrentItemProvider>
-        <Navbar tittle={"Dashboard"} />
+        <Navbar title={"Dashboard"} />
         <Sidebar items={mainPages} />
       </CurrentItemProvider>
       <Main sections={mainPages} />

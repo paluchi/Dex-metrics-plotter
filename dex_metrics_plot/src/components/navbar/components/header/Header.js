@@ -2,16 +2,16 @@ import { useContext } from "react";
 
 import { CurrentItemContext } from "../../../../context/CurrentItemContext";
 
-import "./styles/Tittle.css";
+import "./styles/Header.css";
 
-function Tittle() {
+function Header() {
   const { currentItem } = useContext(CurrentItemContext);
 
   return (
-    <header className="tittle">
+    <header className="title">
       <h1>{currentItem?.header}</h1>
     </header>
   );
 }
 
-export default Tittle;
+export default Header;

@@ -1,3 +1,3 @@
-const get = require("./get");
+const getByDateRange = require("./getByDateRange");
 
-module.exports = { get };
+module.exports = { getByDateRange };

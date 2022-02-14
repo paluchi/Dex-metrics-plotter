@@ -59,7 +59,7 @@ class Reader:
 
     def initAutoReader(self):
 
-        set_interval(self.take_snapshot, 60)
+        set_interval(self.take_snapshot, 10)
         print("dex-reader auto reader has started working")
 
     def take_snapshot(self):

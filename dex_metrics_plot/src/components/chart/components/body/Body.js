@@ -1,7 +1,13 @@
+import { forwardRef } from "react";
+
 import "./styles/Body.css";
 
-function Body({ children }) {
-  return <div className="bodyContainer">{children}</div>;
-}
+const Body = forwardRef(({ children }, ref) => {
+  return (
+    <div className="bodyContainer" ref={ref}>
+      {children}
+    </div>
+  );
+});
 
 export default Body;

@@ -1,13 +1,13 @@
-import Tittle from "./components/tittle/Tittle";
+import Header from "./components/header/Header";
 import Seachbox from "./components/searchbox/Searchbox";
 
 import "./styles/Navbar.css";
 
-function Navbar({ tittle }) {
+function Navbar() {
   return (
     <nav className="navbar">
-        <Tittle tittle={tittle} />
-        <Seachbox />
+      <Header />
+      <Seachbox />
     </nav>
   );
 }

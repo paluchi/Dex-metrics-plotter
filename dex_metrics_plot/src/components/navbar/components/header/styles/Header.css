@@ -1,11 +1,11 @@
 
-.tittle{
+.title{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.tittle h1{
+.title h1{
     font-weight: 700;
     font-style: normal;
     font-size: 20px;

@@ -8,11 +8,11 @@ const getPairDataByUnixTS = async (pairAddress, from, to) => {
   try {
     const {data} = await axios({
       method: "get",
-      url: `${service_provider_url}/metrics`,
+      url: `${service_provider_url}/metricsbydaterange`,
       params: {
         pairAdress: pairAddress,
-        fromUnixTS: from,
-        toUnixTS: to,
+        fromDate: from,
+        toDate: to,
       },
       headers: {
         "api-key": service_provider_api_key,

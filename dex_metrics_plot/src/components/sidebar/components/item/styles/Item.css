@@ -18,7 +18,7 @@
   background-color: #eeeeee;
 }
 
-.placeEnd {
+.placeEnd:last-child {
   margin-top: auto;
 }
 

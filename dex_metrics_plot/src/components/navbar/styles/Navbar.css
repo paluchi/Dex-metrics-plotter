@@ -13,4 +13,5 @@
   border-style:solid;
   border-color: rgb(228, 228, 228);
   padding: 0px 40px 0px 103px;
+  z-index: 1;
 }

@@ -5,15 +5,15 @@ const commands = require("./commands");
 //schemas for diferent request entries
 const getMetricsSchema = joi.object({
   pairAdress: joi.string().required(),
-  fromUnixTS: joi.number().integer().required(),
-  toUnixTS: joi.number().integer().required(),
+  fromDate: joi.date().required(),
+  toDate: joi.date().required(),
 });
 
 const validateQuery = (command, query) => {
   // Call joi validation function
   let validation = {};
   switch (command) {
-    case commands.GET_METRICS:
+    case commands.GET_METRICS_BY_DATE_RANGE:
       validation = getMetricsSchema.validate(query);
       break;
   }
