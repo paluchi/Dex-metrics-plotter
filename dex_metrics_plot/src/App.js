@@ -25,7 +25,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/",
-      Component: Dashboard,
+      Component: <Dashboard />,
       header: "Dashboard",
       exact: true,
       active: true,
@@ -35,7 +35,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/strategies",
-      Component: Strategies,
+      Component: <Strategies/>,
       header: "Strategies",
     },
     {
@@ -43,7 +43,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/invoices",
-      Component: Invoices,
+      Component: <Invoices/>,
       header: "Invoices",
     },
     {
@@ -51,7 +51,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/discover",
-      Component: Discover,
+      Component: <Discover/>,
       header: "Discover",
     },
     {
@@ -59,7 +59,7 @@ function App() {
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
       path: "/settings",
-      Component: Settings,
+      Component: <Settings/>,
       header: "Settings",
     },
     {

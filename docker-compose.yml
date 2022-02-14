@@ -7,12 +7,12 @@ services:
       dockerfile: ./Dockerfile
     stdin_open: true
     ports: 
-      - "3000:3000"
+      - "3003:3003"
     volumes:
       - ./dex_metrics_plot/src:/dex_metrics_plot/src:ro
     environment:
       - REACT_APP_SERVICE_PROVIDER_API_KEY=74fecf8a-c86e-4d30-936c-389cfbe951f5
-      - REACT_APP_SERVICE_PROVIDER_URL=http://localhost:5000
+      - REACT_APP_SERVICE_PROVIDER_URL=http://localhost:5003
     networks:
       - dex-app
     depends_on:
@@ -23,13 +23,13 @@ services:
       context: ./service_provider
       dockerfile: ./Dockerfile
     ports:
-      - "5000:5000"
+      - "5003:5003"
     volumes:
       - ./service_provider/src:/service_provider/src:ro
     environment:
       - MONGO_DB_URL=mongodb://mongo:27017/dex_lectures
       - API_KEY=74fecf8a-c86e-4d30-936c-389cfbe951f5
-      - API_PORT=5000
+      - API_PORT=5003
     networks:
       - dex-app
     depends_on:

@@ -6,13 +6,13 @@ function Main({ sections }) {
   return (
     <main className="main">
       <Routes>
-        {sections.map(({ Component, path, header, ...props }) => {
+        {sections.map(({ Component, path, header, ...props }, index) => {
           return (
             <Route
               path={path}
-              element={<Component />}
               {...props}
-              key={`main_${header}`}
+              key={`main_${header}_${path}_${index}`}
+              element={Component}
             />
           );
         })}

@@ -2,20 +2,22 @@
 
 ##### A Python based script that saves UniSwap v2 liquidity pool pairs hourly metrics
 
-## How it was made and Why? 
+---
 
-- It is important to crear out that this script is very limited and can only work with Uniswap v2 metrics. It can ve greatly improved.
+## How it was made and Why?
+
+- It is important to clear out that this script is very limited and can only work with Uniswap v2 metrics. It can ve greatly improved.
 - 2 main entities were coded to create this program, the pair reader and the pair's reader orchester
 - The pair readers request, parse and save their relative hourly snapshots based on a given pair address, a db client and a graphql client
 - The Orcherster is in charge or make the pair readers make a readment over the metrics API. First at init, by last 48 hours, and then hourly with the help of a small function that set an interval
-- I found this 2 entities the most suitable to make the most scalable, easy to code, understand and improve of this task 
+- I found this 2 entities the most suitable to make the most scalable, easy to code, understand and improve of this task
 
 ## What can be improved?
 
 - Add suport to multiple Dexes (a new "dex" entity must be added to keep scalability)
 - Use gql subscription to retrieve data automatically in real time
 - The interval is not async... (It should be)
-- Must add code testing functions 
+- Must add code testing functions
 
 ---
 
