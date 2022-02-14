@@ -13,7 +13,7 @@
 ###### Run:
 
 ```sh
-docker compose up --build
+docker-compose up --build
 ```
 
 ##### Start using your web app using [This link][pllg]
