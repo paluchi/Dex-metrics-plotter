@@ -1,24 +1,26 @@
+import { RequestHandler, Application } from "express";
+import { IStatus } from "../utilities/status";
 const functions = require("../functions");
 const { queryValidator, authentication } = require("./expressMiddlewares");
 
 // This function handle request query validation, business logic and status (very important)
-function validateQuery(command, callback) {
-  const validate = async (req, res, next) => {
-    const query = req.query;
-    const validation = queryValidator.validate(command, query);
-    if (!validation.success) next(validation.data);
+const validateQuery = (command: string, callback: Function) => {
+  const validate: RequestHandler = async (req, res, next) => {
+    const query: object = req.query;
+    const validation: IStatus = queryValidator.validate(command, query);
+    if (!validation.status) next(validation.data);
     else {
-      const response = await callback(validation.data);
+      const response: IStatus = await callback(validation.data);
       if (!response.status) next(response.data);
       else res.json(response.data);
     }
   };
 
   return validate;
-}
+};
 
 // Router REST declared entries
-function router(app) {
+const router = (app: Application) => {
   // Get entries
   app
     .route("/metricsbydaterange")
@@ -29,6 +31,6 @@ function router(app) {
         functions.metrics.getByDateRange
       )
     );
-}
+};
 
-module.exports = router;
+export = router;

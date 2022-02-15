@@ -1,8 +1,7 @@
-const { number } = require("joi");
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import { Schema, model, connect } from "mongoose";
+import { IPair } from "../types/pair";
 
-const PairSchema = new Schema({
+const PairSchema = new Schema<IPair>({
   token0: { type: Object, required: true },
   token1: { type: Object, required: true },
   id: { type: String, required: true, unique: true },
@@ -10,4 +9,6 @@ const PairSchema = new Schema({
   snapshots: [],
 });
 
-module.exports = mongoose.model("pairs", PairSchema);
+const pairModel = model<IPair>("pairs", PairSchema);
+
+export = pairModel;
