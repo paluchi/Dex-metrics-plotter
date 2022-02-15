@@ -5,17 +5,23 @@ export const parseAverageAPRPlotData = (
   snapshots
 ) => {
   const data = [];
-  snapshots.reverse();
 
   if (!snapshots.length) return [];
 
   let backgroundSnapshots = snapshots.splice(0, hoursAverage - 1);
 
-  for (let i = 1; i < plottingHours; i++) {
+  for (let i = plottingHours; i > 0; i--) {
     const averageAPR = getAverageAPR(
       backgroundSnapshots.concat([snapshots[i]])
     );
-    const plotPoint = { name: `${i + 1}hs` };
+
+    const pointDate = new Date();
+    pointDate.setHours(pointDate.getHours() - i - 1);
+    const dayName = pointDate.toLocaleString(
+      "en-us", // Use 'default' to get in english, 'fr' for france, or search more by "ECMAScript Internationalization API"
+      { weekday: "narrow" } // 'long' full name of the month, 'short'  short name, 'narrow' minimal version
+    );
+    const plotPoint = { name: `${dayName} ${pointDate.getHours()}hs` };
 
     plotPoint[plotLineName] = averageAPR;
 

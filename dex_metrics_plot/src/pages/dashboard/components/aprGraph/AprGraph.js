@@ -8,13 +8,12 @@ import Card from "../../../../components/card/Card";
 import { parseAverageAPRPlotData } from "./math/aprMath";
 
 // chart variables
-const header = "Annual Percentage Rate (APR)";
+const header = "Annual Percentage Rate Average";
 const description = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
-const plottingHours = 24;
-const chartId = "dashboard_apr_chart";
 const plottingHours = 24; // amount of hours the chart is going to plot
+const chartId = "dashboard_apr_chart";
 const height = 350;
 const width = undefined;
 const aspect = undefined; //5.5 is best for big resolution
@@ -41,7 +40,7 @@ function AprGraph() {
 
     setInterval(async () => {
       loadPlotData();
-    }, 1000 * 60);
+    }, 1000 * 60 * 10);
   };
 
   const loadPlotData = async () => {
@@ -64,7 +63,7 @@ function AprGraph() {
       );
 
       // Set plot Line name and get the metrics
-      const plotLineName = `Average APR of last ${hoursAmountModifier}hs`;
+      const plotLineName = ` ${hoursAmountModifier}hs APR moving average`;
       const data = parseAverageAPRPlotData(
         plotLineName,
         plottingHours,
