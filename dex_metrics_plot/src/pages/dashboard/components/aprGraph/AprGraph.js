@@ -12,6 +12,7 @@ const header = "Annual Percentage Rate (APR)";
 const description = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
+const plottingHours = 24;
 const chartId = "dashboard_apr_chart";
 const plottingHours = 24; // amount of hours the chart is going to plot
 const height = 350;
