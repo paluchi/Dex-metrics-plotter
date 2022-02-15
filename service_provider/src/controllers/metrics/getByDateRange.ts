@@ -1,10 +1,14 @@
-const createError = require("http-errors"); //error creator module
-const mongoose = require("mongoose");
+import CreateError from "http-errors"; //error creator module
+import mongoose from "mongoose";
+import { status, IStatus } from "../../utilities/status";
+
 const pairModel = mongoose.model("pairs");
 
-const { status } = require("../../utilities");
-
-async function getMetricsByDateRange(pairAdress, fromDate, toDate) {
+const getMetricsByDateRange = async (
+  pairAdress: string,
+  fromDate: Date,
+  toDate: Date
+): Promise<IStatus> => {
   try {
     // Request metrics
     const metrics = await pairModel.aggregate([
@@ -36,8 +40,8 @@ async function getMetricsByDateRange(pairAdress, fromDate, toDate) {
     if (!metrics) {
       return status(
         false,
-        `Pair address has not been found`,
-        createError(404, "your conditions does not match any data")
+        `Pair adress has not been found`,
+        CreateError(404, "your conditions does not match any data")
       );
     }
 
@@ -47,10 +51,10 @@ async function getMetricsByDateRange(pairAdress, fromDate, toDate) {
     console.log(err);
     return status(
       false,
-      "There was an error finding the pair metrics: ERROR - " + err.message,
-      createError(503, "There was an error finding the pair metrics")
+      "",
+      CreateError(503, "There was an error finding the pair metrics")
     );
   }
-}
+};
 
-module.exports = getMetricsByDateRange;
+export = getMetricsByDateRange;

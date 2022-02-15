@@ -1,12 +1,13 @@
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
-const logger = require("pino")(); //logger module
-
-require("../mongooseModels"); // Loads all mongoose models
+import mongoose from "mongoose";
+import mongooseModels from "../mongooseModels";
 
 // Create mongodb connection
-module.exports = async function mongooseLoader() {
-  const dbRoute = process.env.MONGO_DB_URL;
+async function mongooseLoader() {
+  mongooseModels; // Loads all models when declared
+
+  const dbRoute: string = process.env.MONGO_DB_URL
+    ? process.env.MONGO_DB_URL
+    : "AddMongoDBRoute";
   try {
     const connectReq = await mongoose.connect(`${dbRoute}`, {
       useNewUrlParser: true,
@@ -16,12 +17,14 @@ module.exports = async function mongooseLoader() {
       useFindAndModify: false,
     });
 
-    logger.info(
+    console.log(
       `database connected. connection status: ${connectReq.connection.readyState}`
     );
     return connectReq.connection;
-  } catch (error) {
-    logger.fatal("db can't be reached, ERROR: " + error);
+  } catch (error: any) {
+    console.log(`db can't be reached, ERROR: ${error}`);
     throw new Error(error);
   }
-};
+}
+
+export = mongooseLoader;
