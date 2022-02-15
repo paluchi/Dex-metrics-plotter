@@ -12,6 +12,7 @@ const header = "Annual Percentage Rate (APR)";
 const description = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
+const plottingHours = 24;
 const chartId = "dashboard_apr_chart";
 const height = 350;
 const width = undefined;
@@ -51,7 +52,7 @@ function AprGraph() {
     // Create time range based on hours modifier
     const toDate = new Date();
     const fromDate = new Date();
-    fromDate.setHours(fromDate.getHours() - hoursAmount);
+    fromDate.setHours(fromDate.getHours() - plottingHours - hoursAmount);
 
     // Create time range based on hours modifier
     try {

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// This functions request a pair snapshors based on given pair addres and a date range 
 const getPairDataByUnixTS = async (pairAddress, from, to) => {
   const service_provider_url = process.env.REACT_APP_SERVICE_PROVIDER_URL;
   const service_provider_api_key =

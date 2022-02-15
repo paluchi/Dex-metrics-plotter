@@ -1,8 +1,8 @@
 export const parseHourlyAPRPlotData = (plotLineName, snapshots) => {
   const data = [];
 
-  snapshots.map(({ liquidity_usd, fees_usd }, index) => {
-    const plotPoint = { name: `${index + 1}hs` };
+  snapshots.reverse().map(({ liquidity_usd, fees_usd, date }, index) => {
+    const plotPoint = { name: date.toString().substring(0, 14) };
 
     const value = getAPR(liquidity_usd, fees_usd);
 
