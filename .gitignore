@@ -28,6 +28,7 @@
 /service_provider/.env
 /service_provider/yarn.lock
 /service_provider/package-lock.json
+/service_provider/build
 #----------------------------------------
 
 # DEX READER
