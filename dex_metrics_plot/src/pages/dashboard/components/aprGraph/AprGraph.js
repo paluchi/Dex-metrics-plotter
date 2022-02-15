@@ -5,7 +5,7 @@ import getPairDataByDateRange from "../../../../queries/getPairDataByDateRange";
 import Chart from "../../../../components/chart/Chart";
 import Card from "../../../../components/card/Card";
 
-import { parseHourlyAPRPlotData } from "./math/aprMath";
+import { parseAverageAPRPlotData } from "./math/aprMath";
 
 // chart variables
 const header = "Annual Percentage Rate (APR)";
@@ -13,17 +13,16 @@ const description = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
 const chartId = "dashboard_apr_chart";
+const plottingHours = 24; // amount of hours the chart is going to plot
 const height = 350;
 const width = undefined;
-const aspect = undefined; //5.5 is best for big resolutions
-
-const initialAmount = 1000; // Used for chart plot initial amount
+const aspect = undefined; //5.5 is best for big resolution
 
 // This sections presets the main chart of the dashboard
 function AprGraph() {
   const [plotData, setPlotData] = useState([]); // Chart parameters
-  const [hoursAmount, setHoursAmount] = useState(); // Hours modifier variable
-  const [pairAddress, setPairAddress] = useState(); // Pair modifier variable
+  const [hoursAmountModifier, sethoursAmountModifierModifier] = useState(); // Hours modifier variable. Average margin for apr calculation
+  const [pairAddressModifier, setpairAddressModifierModifier] = useState(); // Pair modifier variable. Which pair is the chart showing
 
   // At first render start the new metrics reader
   useEffect(() => {
@@ -34,7 +33,7 @@ function AprGraph() {
   // If some modifier is updated the render again with updated data
   useEffect(() => {
     loadPlotData();
-  }, [hoursAmount, pairAddress]);
+  }, [hoursAmountModifier, pairAddressModifier]);
 
   const startNewMetricsReader = async () => {
     loadPlotData();
@@ -46,24 +45,31 @@ function AprGraph() {
 
   const loadPlotData = async () => {
     // If some of the modifiers is not selected don't plot
-    if (!pairAddress || !hoursAmount) return;
+    if (!pairAddressModifier || !hoursAmountModifier) return;
 
     // Create time range based on hours modifier
     const toDate = new Date();
     const fromDate = new Date();
-    fromDate.setHours(fromDate.getHours() - hoursAmount);
+    fromDate.setHours(
+      fromDate.getHours() - plottingHours - hoursAmountModifier
+    );
 
     // Create time range based on hours modifier
     try {
       const pairData = await getPairDataByDateRange(
-        pairAddress,
+        pairAddressModifier,
         fromDate,
         toDate
       );
 
       // Set plot Line name and get the metrics
-      const plotLineName = `Hourly APR of last ${hoursAmount}hs`;
-      const data = parseHourlyAPRPlotData(plotLineName, pairData.snapshots);
+      const plotLineName = `Average APR of last ${hoursAmountModifier}hs`;
+      const data = parseAverageAPRPlotData(
+        plotLineName,
+        plottingHours,
+        hoursAmountModifier,
+        pairData.snapshots
+      );
 
       // At last set the parsed data to post. render
       setPlotData(data);
@@ -80,13 +86,13 @@ function AprGraph() {
       items: [
         {
           content: "USDC/WETH",
-          callback: setPairAddress,
+          callback: setpairAddressModifierModifier,
           callbackParameters: "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
           active: true,
         },
         {
           content: "WETH/RKFL",
-          callback: setPairAddress,
+          callback: setpairAddressModifierModifier,
           callbackParameters: "0xbc9d21652cca70f54351e3fb982c6b5dbe992a22",
         },
       ],
@@ -95,15 +101,19 @@ function AprGraph() {
       // Average time frame selector
       header: "Time frame:",
       items: [
-        { content: "1h", callback: setHoursAmount, callbackParameters: 1 },
+        {
+          content: "1h",
+          callback: sethoursAmountModifierModifier,
+          callbackParameters: 1,
+        },
         {
           content: "12h",
-          callback: setHoursAmount,
+          callback: sethoursAmountModifierModifier,
           callbackParameters: 12,
         },
         {
           content: "24h",
-          callback: setHoursAmount,
+          callback: sethoursAmountModifierModifier,
           callbackParameters: 24,
           active: true,
         },

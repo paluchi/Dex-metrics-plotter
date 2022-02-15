@@ -22,7 +22,7 @@
   margin: 5px 0px 5px 0px;
 }
 
-@media only screen and (max-width: 505px) {
+@media only screen and (max-width: 520px) {
   .card {
     min-width: 100%;
     height: auto;

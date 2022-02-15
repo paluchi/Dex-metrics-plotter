@@ -3,6 +3,7 @@ import React, { createRef } from "react";
 import Rechart from "../../utils/components/rechart/Rechart";
 import Header from "./components/header/Header";
 import Body from "./components/body/Body";
+import EmptyChart from "./components/body/empty";
 import MultipleSelector from "../multipleSelector/MultipleSelector";
 
 import "./styles/Chart.css";
@@ -26,7 +27,11 @@ function Chart({
     <div className="chart">
       <Body ref={ref}>
         {modifiers && <CreateModifiers modifiers={modifiers} parentId={id} />}
-        <Rechart data={data} parentId={id} {...chartVariables} />
+        {data.length ? (
+          <Rechart data={data} parentId={id} {...chartVariables} />
+        ) : (
+          <EmptyChart />
+        )}
       </Body>
       {header && (
         <Header
@@ -43,7 +48,7 @@ function Chart({
 export default Chart;
 
 // Modifiers are created through the fundamental multipleSelector.
-// Modifiers pass a callback and a callback params so the multiple selector know what to do when a selector is pressed 
+// Modifiers pass a callback and a callback params so the multiple selector know what to do when a selector is pressed
 function CreateModifiers({ modifiers, chartId }) {
   return (
     <div className="modifiersContainer">

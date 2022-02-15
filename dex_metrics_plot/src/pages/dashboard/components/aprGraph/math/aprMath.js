@@ -1,19 +1,46 @@
-export const parseHourlyAPRPlotData = (plotLineName, snapshots) => {
+export const parseAverageAPRPlotData = (
+  plotLineName,
+  plottingHours,
+  hoursAverage,
+  snapshots
+) => {
   const data = [];
+  snapshots.reverse();
 
-  snapshots.map(({ liquidity_usd, fees_usd }, index) => {
-    const plotPoint = { name: `${index + 1}hs` };
+  if (!snapshots.length) return [];
 
-    const value = getAPR(liquidity_usd, fees_usd);
+  let backgroundSnapshots = snapshots.splice(0, hoursAverage - 1);
 
-    plotPoint[plotLineName] = value;
+  for (let i = 1; i < plottingHours; i++) {
+    const averageAPR = getAverageAPR(
+      backgroundSnapshots.concat([snapshots[i]])
+    );
+    const plotPoint = { name: `${i + 1}hs` };
+
+    plotPoint[plotLineName] = averageAPR;
 
     data.push(plotPoint);
-  });
 
+    backgroundSnapshots = backgroundSnapshots.concat(snapshots[i]);
+    backgroundSnapshots.shift();
+  }
   return data;
 };
 
+const getAPR = (liquidity, fees) => {
+  return (fees / liquidity) * 365;
+};
+
+export const getAverageAPR = (snapshots) => {
+  const ssAPR = snapshots.map(({ liquidity_usd, fees_usd }) => {
+    return getAPR(liquidity_usd, fees_usd);
+  });
+
+  const totalAverage = ssAPR.reduce((a, b) => a + b, 0) / ssAPR.length;
+
+  return totalAverage;
+};
+// ----------------------------------------------------------------------------------------------------------------
 // Not what the test is asking for but an interest piece of code
 export const parseIncreasingRevenuePlotData = (
   plotLineName,
@@ -40,18 +67,4 @@ export const parseIncreasingRevenuePlotData = (
   });
 
   return data;
-};
-
-const getAPR = (liquidity, fees) => {
-  return (fees / liquidity) * 365;
-};
-
-export const getAverageAPR = (snapshots) => {
-  const ssAPR = snapshots.map(({ liquidity_usd, fees_usd }) => {
-    return getAPR(liquidity_usd, fees_usd);
-  });
-
-  const totalAverage = ssAPR.reduce((a, b) => a + b, 0) / ssAPR.length;
-
-  return totalAverage;
 };

@@ -14,8 +14,9 @@ const getMetricsByDateRange = async (
     const metrics = await pairModel.aggregate([
       { $match: { id: pairAdress } }, // Select pair with "pairAdress" id
       {
+        // create a subset of variables
         $project: {
-          id: "$id", // return "id" as "id"
+          id: "$id", // creates as "id" with the value of document's "id"
           name: "$name",
           token0: "$token0",
           token1: "$token1",
@@ -32,6 +33,20 @@ const getMetricsByDateRange = async (
               },
             },
           },
+        },
+      },
+      // create a document for every snapshot
+      { $unwind: "$snapshots" },
+      // order by descendent date
+      { $sort: { "snapshots.date": -1 } },
+      // reagroup and retrieve
+      {
+        $group: {
+          _id: "$id", // return "id" as "id"
+          name: { $first: "$name" },
+          token0: { $first: "$token0" },
+          token1: { $first: "$token1" },
+          snapshots: { $push: "$snapshots" },
         },
       },
     ]);
