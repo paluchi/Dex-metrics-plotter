@@ -50,7 +50,6 @@ const getMetricsByDateRange = async (
         },
       },
     ]);
-    console.log("metrics", metrics);
 
     // If no metrics retrieved return error status with error
     if (!metrics) {
