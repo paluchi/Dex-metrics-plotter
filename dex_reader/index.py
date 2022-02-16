@@ -1,7 +1,7 @@
 from src.main import main
 
 
-#initial function. project starts in main
+# initial function. project starts in main
 def runFirst():
     main()
 

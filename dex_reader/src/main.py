@@ -6,9 +6,9 @@ import json
 
 # Initial function
 def main():
-    load_dotenv() # Loads .env file as environment variables
+    load_dotenv()  # Loads .env file as environment variables
 
-    # Tracking pairs 
+    # Tracking pairs
     pairs = json.loads(environ.get(
         "PAIRS", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"))
     # Server to ask for pairs

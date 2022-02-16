@@ -1,4 +1,4 @@
-from .helpers import get_volume_fees
+from .get_volume_fees import get_volume_fees
 from gql import gql
 from datetime import datetime
 from gql import gql, Client
