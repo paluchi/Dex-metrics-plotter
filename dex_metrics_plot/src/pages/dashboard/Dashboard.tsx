@@ -1,6 +1,5 @@
 import Section, { ISection } from "../../components/section/Section";
-
-import AprGraph from "./components/aprGraph/AprGraph";
+import AprMA from "../../graphs/aprMA/AprMA";
 import GlobalMetrics from "./components/globalMetrics/GlobalMetrics";
 import AnnualizedReturns from "./components/annualizedReturns/AnnualizedReturns";
 
@@ -12,7 +11,7 @@ const Dashboard: React.FC = (): JSX.Element => {
   const sections: ISection[] = [
     { children: <GlobalMetrics />, header: "Global Metrics" },
     { children: <AnnualizedReturns />, header: "Annualized Returns" },
-    { children: <AprGraph />, header: "Annual Percentage Rate (APR)" },
+    { children: <AprMA />, header: "Annual Percentage Rate (APR)" },
   ];
 
   return (

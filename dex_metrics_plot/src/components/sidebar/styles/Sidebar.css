@@ -28,6 +28,10 @@
     overflow-y: auto;
 }
 
+.center ul{
+    padding: 0px;
+}
+
 .bottom{
     height: 50px;
     margin-bottom: 10px;

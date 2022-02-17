@@ -11,7 +11,7 @@ import "./styles/Item.css";
 export interface INavigationItem {
   id: string;
   header?: string;
-  icon: any; // Icon that's goingto render
+  Icon: any; // Icon that is going to render
   activeBGColor?: string; // backgorund color when hovered or active
   activeColor?: string; // Color when hovered or active
   unactiveColor?: string;
@@ -26,7 +26,7 @@ export interface INavigationItem {
 // An item inside the sidebar's center place
 const Item: React.FC<INavigationItem> = ({
   id,
-  icon,
+  Icon,
   activeBGColor,
   unactiveBGColor,
   activeColor,
@@ -54,23 +54,14 @@ const Item: React.FC<INavigationItem> = ({
   const background = currentItem?.id === id ? activeBGColor : unactiveBGColor;
   const color = currentItem?.id === id ? activeColor : unactiveColor;
 
-  const preventDragHandler: React.DragEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-  };
-
   const InnerContent: React.FC = () => {
     return (
       <button
         style={{
           background,
         }}
-        onDragStart={preventDragHandler}
       >
-        <img
-          src={icon}
-          style={{ color: color, borderWidth: 0 }}
-          className="icon"
-        />
+        <Icon fill={color} stroke={color} strokeWidth={0} className="icon" />
       </button>
     );
   };
@@ -79,9 +70,11 @@ const Item: React.FC<INavigationItem> = ({
   // If it's a pathed item then render wrapping it in a router's link component. if not then render without the link component
   if (path) {
     return (
-      <Link to={path} className="item" onClick={handleClick}>
-        <InnerContent />
-      </Link>
+      <li className="item">
+        <Link to={path} onClick={handleClick} draggable={"false"}>
+          <InnerContent />
+        </Link>
+      </li>
     );
   } else {
     return <InnerContent />;

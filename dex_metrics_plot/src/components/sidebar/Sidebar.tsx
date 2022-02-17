@@ -21,16 +21,20 @@ const Sidebar: React.FC<props> = ({ items }) => {
         <Logo />
       </div>
       <div className="center">
-        {items.map((item, index) => {
-          if (item.placeEnd) endPlaced.push(item);
-          else {
-            return <Item {...item} key={`sidebar_top_${index}`} />;
-          }
-        })}
-        <div className="placeEnd">
-          {endPlaced.map((item, index) => {
-            return <Item {...item} key={`sidebar_bottom_${index}`} />;
+        <ul>
+          {items.map((item, index) => {
+            if (item.placeEnd) endPlaced.push(item);
+            else {
+              return <Item {...item} key={`sidebar_top_${index}`} />;
+            }
           })}
+        </ul>
+        <div className="placeEnd">
+          <ul>
+            {endPlaced.map((item, index) => {
+              return <Item {...item} key={`sidebar_bottom_${index}`} />;
+            })}
+          </ul>
         </div>
       </div>
       <div className="bottom">

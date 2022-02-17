@@ -1,4 +1,4 @@
-import { ISnapshot } from "../../../../../queries/getPairDataByDateRange";
+import { ISnapshot } from "../../../queries/getPairDataByDateRange";
 
 export interface IAprPlotData {
   [propName: string]: string | number;
@@ -53,7 +53,16 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
 };
 
 const getAPR = (liquidity: number, fees: number): number => {
-  return (fees / liquidity) * 365;
+  const hourlyFeesPerDollar: number = fees / liquidity;
+  const daylyFeesPerDollar: number = hourlyFeesPerDollar * 24;
+  const YearlyFeesPerDollar: number = daylyFeesPerDollar * 365;
+  const apr: number = YearlyFeesPerDollar * 100;
+  console.log("getAPR ~ hourlyFeesPerDollar", hourlyFeesPerDollar);
+  console.log("getAPR ~ daylyFeesPerDollar", daylyFeesPerDollar);
+  console.log("getAPR ~ YearlyFeesPerDollar", YearlyFeesPerDollar);
+  console.log("getAPR ~ apr", apr); 
+
+  return apr;
 };
 
 export const getAverageAPR = (snapshots: ISnapshot[]): number => {

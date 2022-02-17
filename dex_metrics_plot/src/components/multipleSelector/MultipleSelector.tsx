@@ -17,6 +17,7 @@ export interface IMultipleSelector {
   items: IItem[];
   header: string;
   id: string;
+  style?: object;
 }
 
 // Presents a set of given selectors. use a local context (generic currentItem context) to set which one is the active
@@ -25,16 +26,17 @@ const MultipleSelector: React.FC<IMultipleSelector> = ({
   items,
   header,
   id,
+  ...ExtraProps
 }) => {
   return (
     <CurrentItemProvider>
-      <div className="multipleSelectorContainer">
-        <div>
-          {header && <Header header={header} />}
+      <div className={`multipleSelectorContainer`} {...ExtraProps}>
+        {header && <Header header={header} />}
+        <ul>
           {items.map((data, index) => {
             return <Item {...data} key={`multiple_selector_${id}_${index}`} />;
           })}
-        </div>
+        </ul>
       </div>
     </CurrentItemProvider>
   );
@@ -73,9 +75,9 @@ const Item: React.FC<IItem> = ({
     currentItem?.content === content ? "#65aad3" : undefined;
 
   return (
-    <button onClick={handleClick} style={{ background, borderColor }}>
+    <li onClick={handleClick} style={{ background, borderColor }}>
       <span>{content}</span>
-    </button>
+    </li>
   );
 };
 

@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { useScreenshot } from "use-react-screenshot";
 import { saveAs } from "file-saver";
 import { TwitterShareButton } from "react-share";
 
-import { ReactComponent as ChartShare } from "../../../../../assets/icons/share.svg";
-import { ReactComponent as ChartDownload } from "../../../../../assets/icons/download.svg";
-import { ReactComponent as ChartExpand } from "../../../../../assets/icons/expand.svg";
-import { ReactComponent as ChartOptions } from "../../../../../assets/icons/moreOptions.svg";
+import IChartShare from "../../../../icons/Share";
+import IChartDownload from "../../../../icons/Download";
+import IChartExpand from "../../../../icons/Expand";
+import IChartOptions from "../../../../icons/MoreOptions";
 
 import "./styles/Options.css";
 
@@ -28,6 +28,7 @@ function Options({ imageName, parentId, chartRef }) {
   };
   const onDownloadClick = () => {
     getImage();
+    setTimeout(() => {}, 5);
   };
   const onExpandClick = () => {
     console.log("expand pressed");
@@ -45,16 +46,16 @@ function Options({ imageName, parentId, chartRef }) {
         hashtags={["greatApp"]}
         via={"MyLocalHostApp"}
       >
-        <ChartShare fill={"#808080"} strokeWidth={0} />
+        <IChartShare fill={"#808080"} strokeWidth={0} />
       </TwitterShareButton>
     );
   };
 
   const options = [
     { Component: shareButton, callback: onShareClick },
-    { Component: ChartDownload, callback: onDownloadClick },
-    { Component: ChartExpand, callback: onExpandClick },
-    { Component: ChartOptions, callback: onOptionsClick },
+    { Component: IChartDownload, callback: onDownloadClick },
+    { Component: IChartExpand, callback: onExpandClick },
+    { Component: IChartOptions, callback: onOptionsClick },
   ];
 
   return (

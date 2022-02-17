@@ -1,12 +1,12 @@
 import "./styles/Searchbox.css";
 
-import searchIcon from "../../../../assets/icons/searchIcon.svg";
+import ISearchIcon from "../../../icons/SearchIcon";
 
 // A dummy  searchbox
 const Searchbox: React.FC = () => {
   return (
     <div className="searchbox">
-      <img src={searchIcon} className="searchboxIcon" />
+      <ISearchIcon className="searchboxIcon" />
       <input type="text" placeholder="Search..." />
     </div>
   );

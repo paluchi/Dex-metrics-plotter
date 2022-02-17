@@ -1,6 +1,6 @@
 import asyncio
 
-from .helpers.dex_api_helpers import set_interval
+from .helpers.set_interval import set_interval
 from .pair_reader.pair_reader import Pair_reader
 
 from pymongo import MongoClient

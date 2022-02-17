@@ -4,16 +4,9 @@ import Rechart, { IRechart } from "../../utils/components/rechart/Rechart";
 import Header from "./components/header/Header";
 import Body from "./components/body/Body";
 import EmptyChart from "./components/body/empty";
-import MultipleSelector from "../multipleSelector/MultipleSelector";
+import MultipleSelector, { IItem } from "../multipleSelector/MultipleSelector";
 
 import "./styles/Chart.css";
-
-interface IItem {
-  content: string;
-  callback: Function;
-  callbackParameters: any;
-  active?: boolean;
-}
 
 export interface IModifier {
   header: string;

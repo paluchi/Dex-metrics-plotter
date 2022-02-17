@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import getPairDataByDateRange, {
   IPair,
-} from "../../../../queries/getPairDataByDateRange";
+} from "../../queries/getPairDataByDateRange";
 
-import Chart, { IModifier } from "../../../../components/chart/Chart";
-import Card from "../../../../components/card/Card";
+import Chart, { IModifier } from "../../components/chart/Chart";
+import Card from "../../components/card/Card";
 
 import parseAverageAPRPlotData, { IAprPlotData } from "./math/aprMath";
 
@@ -21,7 +21,7 @@ const width = undefined;
 const aspect = undefined; //5.5 is best for big resolution
 
 // This sections presets the main chart of the dashboard
-const AprGraph = () => {
+const AprMA = () => {
   const [plotData, setPlotData] = useState([] as IAprPlotData[]); // Chart parameters
   const [hoursAmountModifier, sethoursAmountModifierModifier] =
     useState<number>(24); // Hours modifier variable. Average margin for apr calculation
@@ -113,6 +113,16 @@ const AprGraph = () => {
           callbackParameters: 1,
         },
         {
+          content: "4h",
+          callback: sethoursAmountModifierModifier,
+          callbackParameters: 4,
+        },
+        {
+          content: "8h",
+          callback: sethoursAmountModifierModifier,
+          callbackParameters: 8,
+        },
+        {
           content: "12h",
           callback: sethoursAmountModifierModifier,
           callbackParameters: 12,
@@ -129,7 +139,7 @@ const AprGraph = () => {
 
   // Present chart inside a card
   return (
-    <Card style={{ padding: "0px", marginLeft: "0px" }} key={"apr_ma_chart"}>
+    <Card style={{ padding: "0px", marginLeft: "0px"}} key={"apr_ma_chart"}>
       <Chart
         header={header}
         description={description}
@@ -144,4 +154,4 @@ const AprGraph = () => {
   );
 };
 
-export default AprGraph;
+export default AprMA;

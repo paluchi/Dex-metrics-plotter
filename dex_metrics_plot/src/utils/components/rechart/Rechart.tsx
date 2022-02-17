@@ -20,9 +20,23 @@ export interface IRechart {
   height?: number;
   width?: number;
   aspect?: number;
+  lineType?:
+    | "basis"
+    | "basisClosed"
+    | "basisOpen"
+    | "linear"
+    | "linearClosed"
+    | "natural"
+    | "monotoneX"
+    | "monotoneY"
+    | "monotone"
+    | "step"
+    | "stepBefore"
+    | "stepAfter"
+    | Function;
 }
 
-const Rechart: React.FC<IRechart> = ({ data, id, ...display }) => {
+const Rechart: React.FC<IRechart> = ({ data, id, lineType, ...display }) => {
   const lines = getLineKeys(data);
 
   return (
@@ -53,10 +67,7 @@ const Rechart: React.FC<IRechart> = ({ data, id, ...display }) => {
             lineHeight: "13px",
           }}
         />
-        <CartesianGrid
-          horizontal={false}
-          vertical={false}
-        />
+        <CartesianGrid horizontal={false} vertical={false} />
         <XAxis
           dataKey="name"
           tick={{
@@ -87,7 +98,7 @@ const Rechart: React.FC<IRechart> = ({ data, id, ...display }) => {
         />
         {lines.map((name: string, index: number) => {
           const key = `rechart_${id}_line_${name}_${index}`;
-          return newLine(name, key);
+          return newLine({ name, type: lineType, key });
         })}
       </LineChart>
     </ResponsiveContainer>
@@ -108,10 +119,17 @@ const getLineKeys = (data: IPoint[]) => {
   return lines;
 };
 
-const newLine = (name: string, key: string) => {
+interface ILine {
+  name: string;
+  key: string;
+  type: any;
+}
+
+const newLine = ({ name, type, key }: ILine) => {
   return (
     <Line
       dataKey={name}
+      type={type || "monotone"}
       stroke="#2E71F0"
       strokeWidth="1.5"
       dot={{

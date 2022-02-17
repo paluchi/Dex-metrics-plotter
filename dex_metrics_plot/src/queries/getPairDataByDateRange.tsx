@@ -27,7 +27,7 @@ export interface IRequest {
 }
 
 // This functions request a pair snapshors based on given pair addres and a date range
-const getPairDataByUnixTS = async (
+const getPairDataByDateRange = async (
   pairAddress: string,
   from: Date,
   to: Date
@@ -60,4 +60,4 @@ const getPairDataByUnixTS = async (
   }
 };
 
-export default getPairDataByUnixTS;
+export default getPairDataByDateRange;

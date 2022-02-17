@@ -14,12 +14,12 @@ import Discover from "./pages/discover/Discover";
 import Settings from "./pages/settings/Settings";
 import Notifications from "./pages/notifications/Notifications";
 
-import dashboard from "./assets/icons/dashboard.svg";
-import strategies from "./assets/icons/strategies.svg";
-import invoices from "./assets/icons/invoices.svg";
-import discover from "./assets/icons/discover.svg";
-import settings from "./assets/icons/settings.svg";
-import notification from "./assets/icons/notification.svg";
+import IDashboard from "./components/icons/Dashboard";
+import IStrategies from "./components/icons/Strategies";
+import IInvoices from "./components/icons/Invoices";
+import IDiscover from "./components/icons/Discover";
+import ISettings from "./components/icons/Settings";
+import INotification from "./components/icons/Notification";
 
 interface IDeclaredComponentsPlusIcon {
   path: string;
@@ -65,9 +65,10 @@ const mainComponents: IDeclaredComponentsPlusIcon[] = [
     id: "page_Dashboard",
     itemData: {
       header: "Dashboard",
-      icon: dashboard,
+      Icon: IDashboard,
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
+      unactiveColor: "#77767B",
       active: true,
     },
     componentData: {
@@ -80,9 +81,10 @@ const mainComponents: IDeclaredComponentsPlusIcon[] = [
     path: "/strategies",
     itemData: {
       header: "Strategies",
-      icon: strategies,
+      Icon: IStrategies,
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
+      unactiveColor: "#77767B",
     },
     componentData: {
       Component: <Strategies />,
@@ -93,9 +95,10 @@ const mainComponents: IDeclaredComponentsPlusIcon[] = [
     path: "/invoices",
     itemData: {
       header: "Invoices",
-      icon: invoices,
+      Icon: IInvoices,
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
+      unactiveColor: "#77767B",
     },
     componentData: {
       Component: <Invoices />,
@@ -106,9 +109,10 @@ const mainComponents: IDeclaredComponentsPlusIcon[] = [
     path: "/discover",
     itemData: {
       header: "Discover",
-      icon: discover,
+      Icon: IDiscover,
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
+      unactiveColor: "#77767B",
     },
     componentData: {
       Component: <Discover />,
@@ -119,9 +123,10 @@ const mainComponents: IDeclaredComponentsPlusIcon[] = [
     path: "/settings",
     itemData: {
       header: "Settings",
-      icon: settings,
+      Icon: ISettings,
       activeBGColor: "#E7F1FF",
       activeColor: "#2E71F0",
+      unactiveColor: "#77767B",
     },
     componentData: {
       Component: <Settings />,
@@ -135,7 +140,7 @@ const mainComponents: IDeclaredComponentsPlusIcon[] = [
       activeBGColor: "#E7F1FF",
       activeColor: "#3232",
       unactiveColor: "#323232",
-      icon: notification,
+      Icon: INotification,
       placeEnd: true,
     },
     componentData: {

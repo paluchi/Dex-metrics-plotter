@@ -2,6 +2,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: #ffffff;
+  list-style-type: none;
 }
 .item button {
   display: flex;
