@@ -1,25 +1,23 @@
 # Web application
 
-##### A React based Web app that connects to an api server an displays a beautiful chart you can interact with!
+##### A React based Web app that connects to an api server and displays a beautiful chart you can interact with!
 
 ---
 
 ## How it was made and Why?
 
 - This Web app was created in base of several fundamental components
-- This fundamental components brings the modularity needed to create a very easy, responsive, fast and readeable way to create new components.
+- This fundamental components aims to bring the modularity needed to create a very easy, responsive, fast and readeable way to create new components.
 - Code duplication is near to inexistent
-- This app could be a good point of start for a templating library
+- This app aims to be a good point of start for a web app templating library
 
 ## What can be improved?
 
 - Improve already existing fundamental components variability
 - Make big improvements in the chart component by adding a lot more of variability and functionalities
 - Improve re-rendeding
-- Pass all code to typescript (is a must)
 - Add components and funcionalities testing (is a must)
 - Add loading animations
-- Use multipleSelector for every set of buttons
 - Add notification component, modal component and other fundamental components
 - Add accesibility properties to every component
 - Add more content

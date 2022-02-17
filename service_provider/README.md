@@ -17,7 +17,6 @@
 - src/controllers locate the core funcionalities of the business logic. The most basic operations are coded here. like database operations, api requests, etc. So src/functions can manage more complex operations
 - A generic status return function is used to comunicate between controllers, functions and the router
 - At last a generic error handler middleware is added for your used web framework
-- This could be a good template for a very robust REST API
 
 ## What can be improved?
 

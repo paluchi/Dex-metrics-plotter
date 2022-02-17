@@ -57,10 +57,6 @@ const getAPR = (liquidity: number, fees: number): number => {
   const daylyFeesPerDollar: number = hourlyFeesPerDollar * 24;
   const YearlyFeesPerDollar: number = daylyFeesPerDollar * 365;
   const apr: number = YearlyFeesPerDollar * 100;
-  console.log("getAPR ~ hourlyFeesPerDollar", hourlyFeesPerDollar);
-  console.log("getAPR ~ daylyFeesPerDollar", daylyFeesPerDollar);
-  console.log("getAPR ~ YearlyFeesPerDollar", YearlyFeesPerDollar);
-  console.log("getAPR ~ apr", apr); 
 
   return apr;
 };
