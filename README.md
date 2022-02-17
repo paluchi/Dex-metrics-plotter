@@ -30,4 +30,4 @@ docker-compose up --build
 
 ##### Start using your web app using [This link][pllg]
 
-[pllg]: https://localhost:3000
+[pllg]: localhost:3000
