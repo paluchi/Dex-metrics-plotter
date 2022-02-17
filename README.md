@@ -1,6 +1,6 @@
 # Dex metrics plotter
 
-##### A full MERN stack application (and Python) that retrieves, save, provide and plots Uniswap v2 pair's hourly metrics APR's.
+##### A full MERN stack application (and Python) that retrieves, save, provides and plots Uniswap v2 pair's hourly metrics APR's as a moving average.
 
 ---
 
