@@ -1,7 +1,7 @@
 from .get_volume_fees import get_volume_fees
 from gql import gql
 from datetime import datetime
-from gql import gql, Client
+from gql import gql  #, Client
 #from gql.transport.websockets import WebsocketsTransport # Remove
 
 # This function request and retrieves some an addres based on their token's names (not in use)

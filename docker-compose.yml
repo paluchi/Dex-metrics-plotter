@@ -1,18 +1,19 @@
 version: "3"
 services:
   react-app:
-    image: dex_metrics_plot
+    image: metrics_plotter
     build:
-      context: ./dex_metrics_plot
+      context: ./metrics_plotter
       dockerfile: ./Dockerfile
     stdin_open: true
     ports: 
-      - "3003:3003"
+      - "3000:3000"
     volumes:
-      - ./dex_metrics_plot/src:/dex_metrics_plot/src:ro
+      - ./metrics_plotter/src:/metrics_plotter/src:ro
     environment:
       - REACT_APP_SERVICE_PROVIDER_API_KEY=74fecf8a-c86e-4d30-936c-389cfbe951f5
-      - REACT_APP_SERVICE_PROVIDER_URL=http://localhost:5003
+      - REACT_APP_SERVICE_PROVIDER_URL=http://localhost:5000
+      - ENVIRONMENT=production
     networks:
       - dex-app
     depends_on:
@@ -23,30 +24,31 @@ services:
       context: ./service_provider
       dockerfile: ./Dockerfile
     ports:
-      - "5003:5003"
+      - "5000:5000"
     volumes:
       - ./service_provider/src:/service_provider/src:ro
     environment:
       - MONGO_DB_URL=mongodb://mongo:27017/dex_lectures
       - API_KEY=74fecf8a-c86e-4d30-936c-389cfbe951f5
-      - API_PORT=5003
+      - API_PORT=5000
+      - ENVIRONMENT=production
     networks:
       - dex-app
     depends_on:
       - mongo
-      - dex-reader
-  dex-reader:
-    image: dex_reader
+      - metrics-reader
+  metrics-reader:
+    image: metrics_reader
     build:
-      context: ./dex_reader
+      context: ./metrics_reader
       dockerfile: ./Dockerfile
     volumes:
-      - ./dex_reader/src:/dex_reader/src:ro
+      - ./metrics_reader/src:/metrics_reader/src:ro
     environment:
-      - DEX_API=https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
-      - DB_HOST=mongo
-      - DB_PORT=27017
+      - DEX_API_URL=https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
+      - MONGO_DB_URL=mongo:27017
       - PAIRS=["0xbc9d21652cca70f54351e3fb982c6b5dbe992a22", "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc"]
+      - ENVIRONMENT=production
     networks:
       - dex-app
     depends_on:

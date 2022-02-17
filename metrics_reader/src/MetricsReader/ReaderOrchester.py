@@ -1,7 +1,5 @@
-import asyncio
-
 from .helpers.set_interval import set_interval
-from .pair_reader.pair_reader import Pair_reader
+from .PairReader.PairReader import PairReader
 
 from pymongo import MongoClient
 
@@ -9,19 +7,20 @@ from gql import Client
 from gql.transport.requests import RequestsHTTPTransport
 
 
-class Reader:
+class ReaderOrchester:
+
     db_driver = None
     query_driver = None
 
     db_collection = None
     pairs = []
 
-    def __init__(self, pairs_addresses, api_host, db_host, db_port):
+    def __init__(self, pairs_addresses, api_url, db_url):
 
         print("Initializing dex-reader")
 
-        self.init_query_driver(api_host)
-        self.init_db_driver(db_host, db_port)
+        self.init_query_driver(api_url)
+        self.init_db_driver(db_url)
         self.build_pairs(pairs_addresses)
 
         print("dex-reader fully Initialized")
@@ -29,7 +28,7 @@ class Reader:
     def build_pairs(self, addresses):
         # Create an individual pair reader for every address
         for address in addresses:
-            new_pair = Pair_reader(
+            new_pair = PairReader(
                 address, self.query_driver, self.db_collection)
             self.pairs.append(new_pair)
 
@@ -45,9 +44,9 @@ class Reader:
 
         print("graphQL driver Initialized")
 
-    def init_db_driver(self, db_host, db_port):
+    def init_db_driver(self, db_url):
 
-        connection = MongoClient("{}:{}".format(db_host, db_port))
+        connection = MongoClient(db_url)
         connection.drop_database("dex_lectures")  # Delete db is already exists
         db = connection["dex_lectures"]  # Select db by "dex_lectures" name
         # Select db's collections by "pairs" name
@@ -59,17 +58,16 @@ class Reader:
 
         # Retrieves, parse save last 48 hours (if exist) of given pairs
         self.save_last_48h_snapshots()
-        # Retrieves, parse save last hour (if exist) of given pairs
-        asyncio.run(self.initAutoReader())
+        self.initAutoReader()  # Retrieves, parse save last hour (if exist) of given pairs
         print("dex-reader has started working")
 
-    async def initAutoReader(self):
+    def initAutoReader(self):
 
         # Retrieve and save a new snapshot (if exists)
+        set_interval(self.take_snapshot, 10)
         print("dex-reader auto reader has started working")
-        await set_interval(self.take_snapshot, 1)
 
-    async def take_snapshot(self):
+    def take_snapshot(self):
 
         for pair in self.pairs:
             pair.save_last_snapshot()

@@ -1,4 +1,4 @@
-import Joi from "Joi"; // Module used for request query parameters verification
+import Joi from "joi"; // Module used for request query parameters verification
 import CreateError from "http-errors";
 import commands from "./commands";
 import { status, IStatus } from "../../../utilities/status";

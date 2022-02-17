@@ -1,4 +1,4 @@
-import "dotenv/config"; // Loads .env variables as environment variables
+import * as dotenv from "dotenv"; // Loads .env variables as environment variables
 import morgan from "morgan"; // Fancy request logging module
 import runLoaders from "./loaders";
 import router from "./router/router";
@@ -11,7 +11,11 @@ process.on("unhandledRejection", (error) => {
   console.log(`unhandledRejection: ${error}`);
 });
 
-//process.env.NODE_ENV = 'production' //hide stack trace
+if (process.env.ENVIRONMENT !== "production") {
+  dotenv.config();
+} else {
+  process.env.NODE_ENV = "production"; //hide stack trace
+}
 
 // Loads functional libraries
 runLoaders();

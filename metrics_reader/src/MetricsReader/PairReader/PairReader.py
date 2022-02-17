@@ -1,6 +1,6 @@
 from .helpers.api_queries import get_pair_data, get_pair_hourly_snapshots
 
-class Pair_reader:
+class PairReader:
     api = None
     pairs_coll = None
 

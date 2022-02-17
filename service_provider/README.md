@@ -8,7 +8,7 @@
 
 - This REST API server is made in such a way that Express could be very easily replaced by any other web framework.
 - Many abstraction layers are used for very distinct but seemsly equal purposes
-- src/bin/www.js is where the server is created and the basics parameters are configures.
+- src/bin/www is where the server is created and the basics parameters are configures.
 - src/app.js is used to configure the web framework (express in this case), using src/frameworkName.js to configure request allowed params and policies
 - src/loaders is used to initiate fundamental drivers like db connections, and others
 - src/router stucture must be coded depending on your framework. post router level middlewares are loaded here and in this case are a query validator and a client validator
@@ -21,8 +21,7 @@
 
 ## What can be improved?
 
-- Add testing (must)
-- Pass to typescript (must)
+- Remove dependency from status util and use try catch only
 
 ===
 

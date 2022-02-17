@@ -1,12 +1,12 @@
 {
-  "name": "g2iapi",
+  "name": "metrics_provider",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "start": "tsc && node ./build/src/bin/www",
-    "dev": "ts-node-dev ./src/bin/www.ts",
+    "dev": "ts-node-dev ./src/bin/www",
     "build": "tsc"
   },
   "author": "",
