@@ -2,11 +2,12 @@ import { RequestHandler } from "express";
 import CreateError from "http-errors"; //error creator module
 
 const serverApiKey: string | undefined = process.env.API_KEY;
+console.log("serverApiKey", serverApiKey)
 
 // Very simple api key auth
 const apiKey: RequestHandler = (req, res, next) => {
   const clientApiKey: string | string[] | undefined = req.headers["api-key"];
-
+  
   if (serverApiKey === clientApiKey) {
     next();
   } else {

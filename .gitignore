@@ -1,18 +1,18 @@
 # DEX METRICS PLOT
 #----------------------------------------
 # dependencies
-/metrics_plottter/node_modules
+/metrics_plotter/node_modules
 # production
 /build
 # misc
-/metrics_plottter/.DS_Store
-/metrics_plottter/.env.local
-/metrics_plottter/.env.development.local
-/metrics_plottter/.env.test.local
-/metrics_plottter/.env.production.local
-/metrics_plottter/.env
-/metrics_plottter/yarn.lock
-/metrics_plottter/package-lock.json
+/metrics_plotter/.DS_Store
+/metrics_plotter/.env.local
+/metrics_plotter/.env.development.local
+/metrics_plotter/.env.test.local
+/metrics_plotter/.env.production.local
+/metrics_plotter/.env
+/metrics_plotter/yarn.lock
+/metrics_plotter/package-lock.json
 #----------------------------------------
 
 # SERVICE PROVIDER

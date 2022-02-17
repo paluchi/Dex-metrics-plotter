@@ -55,7 +55,7 @@ const AprMA = () => {
     const toDate = new Date();
     const fromDate = new Date();
     fromDate.setHours(
-      fromDate.getHours() - plottingHours - hoursAmountModifier
+      fromDate.getHours() - plottingHours - hoursAmountModifier + 1
     );
 
     // Create time range based on hours modifier
@@ -139,7 +139,7 @@ const AprMA = () => {
 
   // Present chart inside a card
   return (
-    <Card style={{ padding: "0px", marginLeft: "0px"}} key={"apr_ma_chart"}>
+    <Card style={{ padding: "0px", marginLeft: "0px" }} key={"apr_ma_chart"}>
       <Chart
         header={header}
         description={description}

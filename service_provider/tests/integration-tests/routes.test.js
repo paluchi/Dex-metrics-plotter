@@ -90,7 +90,6 @@ describe("| route Testing | GET /metricsbydaterange", () => {
         const currentDate = new Date();
         const fromDate = new Date();
         const snapshotsAmount = 5;
-        console.log("test ~ fromDate", fromDate);
         fromDate.setHours(fromDate.getHours() - snapshotsAmount);
         const response = yield (0, supertest_1.default)(www_1.default)
             .get("/metricsbydaterange")

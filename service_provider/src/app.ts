@@ -1,21 +1,24 @@
 import * as dotenv from "dotenv"; // Loads .env variables as environment variables
 import morgan from "morgan"; // Fancy request logging module
-import runLoaders from "./loaders";
-import router from "./router/router";
 import express, { Application } from "express"; // Express as web framework
+
+import runLoaders from "./loaders";
 import loadRequestConfig from "./requestConfig"; // Used to set allowed request parameters and policies
 import { generalErrorhandler } from "./utilities"; // Used to handle errors at last step of request pipeline
+
+// process.env.NODE_ENV = "production"; //hide stack trace
+// must be loaded before router
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+} else {
+}
+
+import router from "./router/router";
 
 // Catch unhanded promise errors
 process.on("unhandledRejection", (error) => {
   console.log(`unhandledRejection: ${error}`);
 });
-
-if (process.env.ENVIRONMENT !== "production") {
-  dotenv.config();
-} else {
-  process.env.NODE_ENV = "production"; //hide stack trace
-}
 
 // Loads functional libraries
 runLoaders();

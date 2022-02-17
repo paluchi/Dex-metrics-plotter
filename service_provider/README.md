@@ -22,7 +22,7 @@
 
 - Remove dependency from status util and use try catch only
 
-===
+---
 
 ## Installation
 

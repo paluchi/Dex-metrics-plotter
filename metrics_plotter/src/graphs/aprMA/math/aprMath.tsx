@@ -23,7 +23,7 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
   const data: IAprPlotData[] = [];
 
   if (!snapshots.length) return [];
-
+  
   let backgroundSnapshots: ISnapshot[] = snapshots.splice(0, hoursAverage - 1);
 
   for (let i = plottingHours; i > 0; i--) {
