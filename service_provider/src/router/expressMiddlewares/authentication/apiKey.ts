@@ -5,7 +5,6 @@ const serverApiKey: string | undefined = process.env.API_KEY;
 
 // Very simple api key auth
 const apiKey: RequestHandler = (req, res, next) => {
-  
   const clientApiKey: string | string[] | undefined = req.headers["api-key"];
 
   if (serverApiKey === clientApiKey) {

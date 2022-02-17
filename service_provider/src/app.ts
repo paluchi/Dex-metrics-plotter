@@ -1,11 +1,10 @@
-import 'dotenv/config' // Loads .env variables as environment variables
+import "dotenv/config"; // Loads .env variables as environment variables
 import morgan from "morgan"; // Fancy request logging module
 import runLoaders from "./loaders";
 import router from "./router/router";
 import express, { Application } from "express"; // Express as web framework
 import loadRequestConfig from "./requestConfig"; // Used to set allowed request parameters and policies
 import { generalErrorhandler } from "./utilities"; // Used to handle errors at last step of request pipeline
-
 
 // Catch unhanded promise errors
 process.on("unhandledRejection", (error) => {
