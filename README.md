@@ -16,7 +16,7 @@
 docker-compose up --build
 ```
 
-##### Start using your web app using [This link][pllg]
+##### Start using your web app using localhost:3000
 
 ---
 
@@ -28,6 +28,4 @@ docker-compose up --build
 
 ##### Go to "dex_metrics_plot" directory and follow the readme instructions
 
-##### Start using your web app using [This link][pllg]
-
-[pllg]: tcp//:localhost:3000
+##### Start using your web app using localhost:3000
