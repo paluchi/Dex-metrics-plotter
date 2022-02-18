@@ -20,6 +20,7 @@
 # dependencies
 /service_provider/node_modules
 # misc
+/service_provider/coverage
 /service_provider/.DS_Store
 /service_provider/.env.local
 /service_provider/.env.development.local

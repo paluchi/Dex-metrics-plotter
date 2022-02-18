@@ -13,6 +13,8 @@ def runFirst():
     # Tracking pairs
     pairs = json.loads(environ.get(
         "PAIRS", "[0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2]"))
+
+    print(pairs)
     # Server to ask for pairs
     api_url = environ.get(
         "DEX_API_URL", "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2")

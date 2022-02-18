@@ -5,6 +5,8 @@ import mongooseModels from "../mongooseModels";
 async function mongooseLoader() {
   mongooseModels; // Loads all models when declared
 
+  
+
   const dbRoute: string = process.env.MONGO_DB_URL
     ? process.env.MONGO_DB_URL
     : "AddMongoDBRoute";

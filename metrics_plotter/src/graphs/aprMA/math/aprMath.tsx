@@ -24,14 +24,17 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
 
   if (!snapshots.length) return [];
   
+  
   let backgroundSnapshots: ISnapshot[] = snapshots.splice(0, hoursAverage - 1);
 
-  for (let i = plottingHours; i > 0; i--) {
+  for (let i = 0; i < plottingHours; i++) {
+    
     const averageAPR: number = getAverageAPR(
       backgroundSnapshots.concat([snapshots[i]])
     );
 
     const pointDate: Date = new Date();
+
     pointDate.setHours(pointDate.getHours() - i - 1);
     const dayName: string = pointDate.toLocaleString(
       "en-us", // Use 'default' to get in english, 'fr' for france, or search more by "ECMAScript Internationalization API"
@@ -43,12 +46,14 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
     };
 
     plotPoint[plotLineName] = averageAPR;
+    
 
     data.push(plotPoint);
 
     backgroundSnapshots = backgroundSnapshots.concat(snapshots[i]);
     backgroundSnapshots.shift();
   }
+  
   return data;
 };
 
