@@ -1,23 +1,38 @@
-import React, { createRef } from "react";
+import React, { createRef, useState, useEffect } from "react";
 
 import MultipleSelector, {
   IMultipleSelector,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
 
+import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
 import Chart, { IPoint, IChart } from "../chart/Chart";
 import Header from "./components/header/Header";
 
 import "./styles/Facade.css";
 
-export type { IMultipleSelector as IModifier } from "../../../multipleSelector/MultipleSelector";
+//export type { IMultipleSelector as IModifier } from "../../../multipleSelector/MultipleSelector";
+
+interface IModifierItem {
+  content: any;
+  value: any;
+  active?: boolean;
+}
+
+export interface IModifier {
+  items: IModifierItem[];
+  header?: string;
+  id: string;
+  style?: object;
+}
 
 export interface IFacade extends IChart {
   header: string;
   description: string;
   data: IPoint[];
-  modifiers?: IMultipleSelector[];
+  modifiers: IModifier[];
+  metricsLoader: Function;
 }
 
 const ChartFacade: React.FC<IFacade> = ({
@@ -27,8 +42,36 @@ const ChartFacade: React.FC<IFacade> = ({
   id,
   data,
   display,
+  metricsLoader,
   ...props
 }) => {
+  const [metrics, setMetrics] = useState<IPoint[]>([]);
+  const [reducedModifiers, multipleSelectors] = useModifiers(modifiers);
+
+  // At first render start the new metrics reader
+  useEffect(() => {
+    startNewMetricsReader();
+  }, []);
+
+  // If some modifier is updated the render again with updated data
+
+  useEffect(() => {
+    loadMetrics();
+  }, [reducedModifiers]);
+
+  const startNewMetricsReader = async () => {
+    loadMetrics();
+
+    setInterval(() => {
+      loadMetrics();
+    }, 1000 * 60 * 10);
+  };
+
+  const loadMetrics = async () => {
+    const metrics = await metricsLoader(reducedModifiers);
+    setMetrics(metrics);
+  };
+
   // This ref will be used in a very complex way
   // It will be forwarded to body so it can be used to take a body content snapshot as an image when the download button is pressed from the header selectors
   const ref = createRef<HTMLDivElement>();
@@ -40,7 +83,7 @@ const ChartFacade: React.FC<IFacade> = ({
       <div className="chartFacade" {...props}>
         <Body ref={ref}>
           {modifiers &&
-            modifiers.map((props: IMultipleSelector, index) => {
+            multipleSelectors.map((props: IMultipleSelector, index) => {
               return (
                 <MultipleSelector
                   key={`${id}_multipleSelector_${index}`}
@@ -48,7 +91,7 @@ const ChartFacade: React.FC<IFacade> = ({
                 />
               );
             })}
-          <Chart data={data} id={id} display={display} />
+          <Chart data={metrics} id={id} display={display} />
         </Body>
         <Header
           header={header}
