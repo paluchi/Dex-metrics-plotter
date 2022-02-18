@@ -2,11 +2,11 @@ import React from "react";
 
 import { useState } from "react";
 
-import Options from "./components/Options";
+import Options from "./components/options/Options";
 
 import "./styles/Header.css";
 
-import chartDescription from "../../../../assets/icons/chartDescription.svg";
+import Info from "../../../../../icons/Info";
 
 interface IHeader {
   header: string;
@@ -42,10 +42,7 @@ const Description: React.FC<{ text: string }> = ({ text }) => {
   return (
     <div>
       <span onMouseOver={onHover} onMouseLeave={onUnhover}>
-        <img
-          src={chartDescription}
-          style={{ color: "#808080", strokeWidth: 0 }}
-        />
+        <Info fill={"#808080"} strokeWidth={0} />
       </span>
       {showDescription && (
         <div className="chartDescriptionContainer">

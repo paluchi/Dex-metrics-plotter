@@ -4,10 +4,11 @@ import getPairDataByDateRange, {
   IPair,
 } from "../../queries/getPairDataByDateRange";
 
-import Chart, { IModifier } from "../../components/chart/Chart";
-import Card from "../../components/card/Card";
-
 import parseAverageAPRPlotData, { IAprPlotData } from "./math/aprMath";
+
+import ChartFacade, {
+  IModifier,
+} from "../../components/statistics/charting/facade/Facade";
 
 // chart variables
 const header = "Annual Percentage Rate Average";
@@ -16,17 +17,19 @@ const description = `APR (Annual Percentage Rate) is the annual rate of return,
                     APR only takes into account simple interest.`;
 const plottingHours = 24; // amount of hours the chart is going to plot
 const chartId = "dashboard_apr_chart";
-const height = 350;
-const width = undefined;
-const aspect = undefined; //5.5 is best for big resolution
+const height = 350; //chart height
+const width = undefined; //chart width
+const aspect = undefined; //chart ascpect ratio (5.5 is best for big resolution)
 
 // This sections presets the main chart of the dashboard
 const AprMA = () => {
+
+  //Parsed data and chart modifiers
   const [plotData, setPlotData] = useState([] as IAprPlotData[]); // Chart parameters
   const [hoursAmountModifier, sethoursAmountModifierModifier] =
-    useState<number>(24); // Hours modifier variable. Average margin for apr calculation
+    useState<number>(24); // Average margin for apr calculation
   const [pairAddressModifier, setpairAddressModifierModifier] =
-    useState<string>(""); // Pair modifier variable. Which pair is the chart showing
+    useState<string>(""); // Which pair is the chart showing
 
   // At first render start the new metrics reader
   useEffect(() => {
@@ -86,7 +89,7 @@ const AprMA = () => {
   const modifiers: IModifier[] = [
     {
       // Pair address selector
-      id: "pairSelector",
+      id: "apr_MA_pair_selector",
       header: "Pair: ",
       items: [
         {
@@ -104,7 +107,7 @@ const AprMA = () => {
     },
     {
       // Average time frame selector
-      id: "timeFrameSelector",
+      id: "apr_MA_time_frame_selector",
       header: "Time frame:",
       items: [
         {
@@ -139,18 +142,14 @@ const AprMA = () => {
 
   // Present chart inside a card
   return (
-    <Card style={{ padding: "0px", marginLeft: "0px" }} key={"apr_ma_chart"}>
-      <Chart
-        header={header}
-        description={description}
-        data={plotData}
-        modifiers={modifiers}
-        id={chartId}
-        width={width}
-        height={height}
-        aspect={aspect}
-      />
-    </Card>
+    <ChartFacade
+      header={header}
+      description={description}
+      data={plotData}
+      modifiers={modifiers}
+      id={chartId}
+      display={{height:height,width:width,aspect:aspect}}
+    />
   );
 };
 

@@ -4,17 +4,17 @@ import { useScreenshot } from "use-react-screenshot";
 import { saveAs } from "file-saver";
 import { TwitterShareButton } from "react-share";
 
-import IChartShare from "../../../../icons/Share";
-import IChartDownload from "../../../../icons/Download";
-import IChartExpand from "../../../../icons/Expand";
-import IChartOptions from "../../../../icons/MoreOptions";
+import ChartShare from "../../../../../../../icons/Share";
+import ChartDownload from "../../../../../../../icons/Download";
+import ChartExpand from "../../../../../../../icons/Expand";
+import ChartOptions from "../../../../../../../icons/MoreOptions";
 
 import "./styles/Options.css";
 
 // Presents a set of usefull options for the chat. (share, download, expand, others)
 // Makes use of a custom hook that takes a screenshot of a ref component (body child)
 // Makes use oF a twitter share module (must add other options. should use other module)
-function Options({ imageName, parentId, chartRef }) {
+function Options({ imageName, id, chartRef }) {
   const [image, takeScreenshot] = useScreenshot();
 
   const getImage = () => takeScreenshot(chartRef.current);
@@ -46,23 +46,23 @@ function Options({ imageName, parentId, chartRef }) {
         hashtags={["greatApp"]}
         via={"MyLocalHostApp"}
       >
-        <IChartShare fill={"#808080"} strokeWidth={0} />
+        <ChartShare fill={"#808080"} strokeWidth={0} />
       </TwitterShareButton>
     );
   };
 
   const options = [
     { Component: shareButton, callback: onShareClick },
-    { Component: IChartDownload, callback: onDownloadClick },
-    { Component: IChartExpand, callback: onExpandClick },
-    { Component: IChartOptions, callback: onOptionsClick },
+    { Component: ChartDownload, callback: onDownloadClick },
+    { Component: ChartExpand, callback: onExpandClick },
+    { Component: ChartOptions, callback: onOptionsClick },
   ];
 
   return (
     <ul className="chartOptionsContainer">
       {options.map(({ Component, callback }, index) => {
         return (
-          <li onClick={callback} key={`chart_${parentId}_options_${index}`}>
+          <li onClick={callback} key={`chart_${id}_options_${index}`}>
             <Component fill={"#808080"} strokeWidth={0} />
           </li>
         );

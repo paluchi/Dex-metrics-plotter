@@ -1,4 +1,4 @@
-export const IShare = (props: React.SVGProps<SVGSVGElement>) => {
+export const Share = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="14"
@@ -16,4 +16,4 @@ export const IShare = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default IShare;
+export default Share;

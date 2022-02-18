@@ -1,4 +1,4 @@
-export const IDownload = (props: React.SVGProps<SVGSVGElement>) => {
+export const Download = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="11"
@@ -16,4 +16,4 @@ export const IDownload = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default IDownload;
+export default Download;

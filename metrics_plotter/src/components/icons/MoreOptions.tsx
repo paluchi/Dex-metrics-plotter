@@ -1,4 +1,4 @@
-export const IMoreOptions = (props: React.SVGProps<SVGSVGElement>) => {
+export const MoreOptions = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="3"
@@ -16,4 +16,4 @@ export const IMoreOptions = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default IMoreOptions;
+export default MoreOptions;

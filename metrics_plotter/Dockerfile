@@ -1,6 +1,6 @@
 FROM node:14
 
-WORKDIR /dex_metrics_plot
+WORKDIR /metrics_plotter
 
 COPY package.json .
 

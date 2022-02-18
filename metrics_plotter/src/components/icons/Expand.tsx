@@ -1,4 +1,4 @@
-export const IExpand = (props: React.SVGProps<SVGSVGElement>) => {
+export const Expand = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="15"
@@ -16,4 +16,4 @@ export const IExpand = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default IExpand;
+export default Expand;

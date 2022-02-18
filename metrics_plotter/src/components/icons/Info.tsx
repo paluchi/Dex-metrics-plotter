@@ -1,4 +1,4 @@
-const IChartDescription = (props: React.SVGProps<SVGSVGElement>) => {
+const Info = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="14"
@@ -16,4 +16,4 @@ const IChartDescription = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default IChartDescription;
+export default Info;

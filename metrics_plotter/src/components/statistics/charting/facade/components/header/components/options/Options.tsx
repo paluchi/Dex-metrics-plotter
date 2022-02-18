@@ -4,10 +4,10 @@ import React, { useEffect } from "react";
 //import { saveAs } from "file-saver";
 import { TwitterShareButton } from "react-share";
 
-import IChartShare from "../../../../icons/Share";
-import IChartDownload from "../../../../icons/Download";
-import IChartExpand from "../../../../icons/Expand";
-import IChartOptions from "../../../../icons/MoreOptions";
+import ChartShare from "../../../../../../../icons/Share";
+import ChartDownload from "../../../../../../../icons/Download";
+import ChartExpand from "../../../../../../../icons/Expand";
+import ChartOptions from "../../../../../../../icons/MoreOptions";
 
 import "./styles/Options.css";
 
@@ -51,23 +51,23 @@ const Options: React.FC<IOptions> = ({ imageName, id, chartRef }) => {
         hashtags={["greatApp"]}
         via={"MyLocalHostApp"}
       >
-        <IChartShare fill={"#808080"} strokeWidth={0} />
+        <ChartShare fill={"#808080"} strokeWidth={0} />
       </TwitterShareButton>
     );
   };
 
   const options = [
     { Component: shareButton, callback: onShareClick },
-    { Component: IChartDownload, callback: onDownloadClick },
-    { Component: IChartExpand, callback: onExpandClick },
-    { Component: IChartOptions, callback: onOptionsClick },
+    { Component: ChartDownload, callback: onDownloadClick },
+    { Component: ChartExpand, callback: onExpandClick },
+    { Component: ChartOptions, callback: onOptionsClick },
   ];
 
   return (
     <ul className="chartOptionsContainer">
       {options.map(({ Component, callback }, index) => {
         return (
-          <li onClick={callback} key={`chart_${id}_options_${index}`}>
+          <li onClick={callback} key={`${id}_option_${index}`}>
             <Component fill={"#808080"} strokeWidth={0} />
           </li>
         );

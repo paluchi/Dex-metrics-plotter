@@ -9,17 +9,29 @@ import {
   Legend,
 } from "recharts";
 
-interface IPoint {
+export interface IPoint {
   [propName: string]: string | number;
   name: string;
 }
 
+interface IHWDisplay {
+  height?: number;
+  width?: number;
+  aspect?: never;
+}
+
+interface IAspectDisplay {
+  height?: never;
+  width?: never;
+  aspect: number;
+}
+
+type IDisplay = IHWDisplay | IAspectDisplay;
+
 export interface IRechart {
   data: IPoint[];
   id: string;
-  height?: number;
-  width?: number;
-  aspect?: number;
+  display: IDisplay;
   lineType?:
     | "basis"
     | "basisClosed"
@@ -36,15 +48,17 @@ export interface IRechart {
     | Function;
 }
 
-const Rechart: React.FC<IRechart> = ({ data, id, lineType, ...display }) => {
+interface ILine {
+  name: string;
+  key: string;
+  type: any;
+}
+
+const Rechart: React.FC<IRechart> = ({ data, id, lineType, display }) => {
   const lines = getLineKeys(data);
 
   return (
-    <ResponsiveContainer
-      height={display.height}
-      width={display.width}
-      aspect={display.aspect}
-    >
+    <ResponsiveContainer {...display}>
       <LineChart
         data={data}
         margin={{
@@ -96,9 +110,9 @@ const Rechart: React.FC<IRechart> = ({ data, id, lineType, ...display }) => {
           itemStyle={{ color: "#fff" }}
           cursor={false}
         />
-        {lines.map((name: string, index: number) => {
-          const key = `rechart_${id}_line_${name}_${index}`;
-          return newLine({ name, type: lineType, key });
+        {lines.map((name: string) => {
+          const lineKey = `${id}_rechart_line_${name}`;
+          return newLine({ name, type: lineType, key: lineKey });
         })}
       </LineChart>
     </ResponsiveContainer>
@@ -118,12 +132,6 @@ const getLineKeys = (data: IPoint[]) => {
 
   return lines;
 };
-
-interface ILine {
-  name: string;
-  key: string;
-  type: any;
-}
 
 const newLine = ({ name, type, key }: ILine) => {
   return (

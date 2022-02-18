@@ -1,17 +1,14 @@
 import "./styles/Card.css";
 
 export interface ICard {
-  header?: string;
   children: React.ReactNode;
   style?: object;
-  key: string;
 }
 
 // A simple but flexible card component
-const Card = ({ header, children, ...extras }: ICard): JSX.Element => {
+const Card = ({ children, ...props }: ICard): JSX.Element => {
   return (
-    <div className="card" {...extras}>
-      {header && <h6 className="cardHeader">{header}</h6>}
+    <div className="card" {...props}>
       {children}
     </div>
   );

@@ -15,7 +15,7 @@ export interface IItem {
 
 export interface IMultipleSelector {
   items: IItem[];
-  header: string;
+  header?: string;
   id: string;
   style?: object;
 }
@@ -34,7 +34,7 @@ const MultipleSelector: React.FC<IMultipleSelector> = ({
         {header && <Header header={header} />}
         <ul>
           {items.map((data, index) => {
-            return <Item {...data} key={`multiple_selector_${id}_${index}`} />;
+            return <Item {...data} key={`${id}_multipleSelector_${index}`} />;
           })}
         </ul>
       </div>
@@ -52,6 +52,7 @@ const Item: React.FC<IItem> = ({
   callback,
   callbackParameters,
   active,
+  ...props
 }) => {
   const { currentItem, setCurrentItem } = useContext(CurrentItemContext);
 
@@ -75,7 +76,7 @@ const Item: React.FC<IItem> = ({
     currentItem?.content === content ? "#65aad3" : undefined;
 
   return (
-    <li onClick={handleClick} style={{ background, borderColor }}>
+    <li onClick={handleClick} style={{ background, borderColor }} {...props}>
       <span>{content}</span>
     </li>
   );
