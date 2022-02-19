@@ -3,9 +3,7 @@ import React from "react";
 import getPairDataByDateRange, {
   IPair,
 } from "../../queries/getPairDataByDateRange";
-
 import parseAverageAPRPlotData, { IAprPlotData } from "./math/aprMath";
-
 import ChartFacade, {
   IModifier,
 } from "../../components/statistics/charting/facade/Facade";
@@ -26,6 +24,16 @@ interface IMyModifiers {
   apr_MA_time_frame: number;
 }
 
+const getTimeFrame = (
+  marginHours: number
+): { fromDate: Date; toDate: Date } => {
+  const toDate = new Date();
+  const fromDate = new Date();
+  fromDate.setHours(fromDate.getHours() - plottingHours - marginHours + 1);
+
+  return { fromDate, toDate };
+};
+
 // This sections presets the main chart of the dashboard
 const AprMA: React.FC = () => {
   const loadPlotData = async ({
@@ -36,12 +44,7 @@ const AprMA: React.FC = () => {
     if (!apr_MA_pair || !apr_MA_time_frame) return;
 
     // Create time range based on hours modifier
-    const toDate = new Date();
-    const fromDate = new Date();
-    fromDate.setHours(
-      fromDate.getHours() - plottingHours - apr_MA_time_frame + 1
-    );
-
+    const { fromDate, toDate } = getTimeFrame(apr_MA_time_frame);
     // Create time range based on hours modifier
     try {
       const pairData: IPair = await getPairDataByDateRange(
