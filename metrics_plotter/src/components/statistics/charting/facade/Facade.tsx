@@ -1,19 +1,15 @@
-import React, { createRef, useState, useEffect, useReducer } from "react";
+import React, { createRef, useState, useEffect } from "react";
 
 import MultipleSelector, {
   IMultipleSelector,
-  IItem,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
-
 import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
 import Chart, { IPoint, IChart } from "../chart/Chart";
 import Header from "./components/header/Header";
 
 import "./styles/Facade.css";
-
-//export type { IMultipleSelector as IModifier } from "../../../multipleSelector/MultipleSelector";
 
 interface IModifierItem {
   content: any;
