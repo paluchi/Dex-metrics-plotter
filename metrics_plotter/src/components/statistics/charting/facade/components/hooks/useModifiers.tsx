@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 
 import {
   IMultipleSelector,
@@ -40,28 +40,28 @@ interface IModifiersReducer {
   [propName: string]: any;
 }
 
+const modifiersReducer = (
+  modifiers: IModifiersReducer,
+  action: IModifiersReducerActionAndAdd | IModifiersReducerActionAndSet
+) => {
+  switch (action.type) {
+    case "addMultipleSelector":
+      action.payload.map((selector: addMultipleSelectorPayload) => {
+        modifiers = { ...modifiers, ...selector };
+      });
+      return modifiers;
+    case "setMultipleSelector":
+      modifiers[action.payload.selector] = action.payload.value;
+      return { ...modifiers };
+    default:
+      return modifiers;
+  }
+};
+
 const useModifiers = (
   modifiers: IModifier[]
 ): [IModifiersReducer, IMultipleSelector[]] => {
   const initialState = {};
-
-  const modifiersReducer = (
-    modifiers: IModifiersReducer,
-    action: IModifiersReducerActionAndAdd | IModifiersReducerActionAndSet
-  ) => {
-    switch (action.type) {
-      case "addMultipleSelector":
-        action.payload.map((selector: addMultipleSelectorPayload) => {
-          modifiers = { ...modifiers, ...selector };
-        });
-        return modifiers;
-      case "setMultipleSelector":
-        modifiers[action.payload.selector] = action.payload.value;
-        return { ...modifiers };
-      default:
-        return modifiers;
-    }
-  };
 
   const [reducedModifiers, displatchModifier] = useReducer(
     modifiersReducer,
@@ -72,35 +72,37 @@ const useModifiers = (
     IMultipleSelector[]
   >([] as IMultipleSelector[]);
 
-  // At first render start the new metrics reader
-  const MSelectors: IMultipleSelector[] = [];
-  modifiers?.map(({ items: modItems, ...mod }) => {
-    const activeValue = modItems.find((item) => item.active === true)?.value;
+  useEffect(() => {
+    // At first render start the new metrics reader
+    const MSelectors: IMultipleSelector[] = [];
+    modifiers?.map(({ items: modItems, ...mod }) => {
+      const activeValue = modItems.find((item) => item.active === true)?.value;
 
-    const modState: addMultipleSelectorPayload = {};
-    modState[mod.id] = activeValue;
+      const modState: addMultipleSelectorPayload = {};
+      modState[mod.id] = activeValue;
 
-    const items: IItem[] = modItems.map(({ content, value, active }) => {
-      return {
-        content: content,
-        callbackParameters: {
-          type: "setMultipleSelector",
-          payload: { selector: mod.id, value: value },
-        },
-        active: active,
-        callback: displatchModifier,
-      };
+      const items: IItem[] = modItems.map(({ content, value, active }) => {
+        return {
+          content: content,
+          callbackParameters: {
+            type: "setMultipleSelector",
+            payload: { selector: mod.id, value: value },
+          },
+          active: active,
+          callback: displatchModifier,
+        };
+      });
+
+      const multipleSelector: IMultipleSelector = { items: items, ...mod };
+      MSelectors.push(multipleSelector);
+      setMultipleSelectors(MSelectors);
+
+      displatchModifier({
+        type: "addMultipleSelector",
+        payload: MSelectors,
+      });
     });
-
-    const multipleSelector: IMultipleSelector = { items: items, ...mod };
-    MSelectors.push(multipleSelector);
-    setMultipleSelectors(MSelectors);
-
-    displatchModifier({
-      type: "addMultipleSelector",
-      payload: MSelectors,
-    });
-  });
+  }, []);
 
   return [reducedModifiers, multipleSelectors];
 };

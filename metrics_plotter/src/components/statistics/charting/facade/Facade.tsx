@@ -1,7 +1,8 @@
-import React, { createRef, useState, useEffect } from "react";
+import React, { createRef, useState, useEffect, useReducer } from "react";
 
 import MultipleSelector, {
   IMultipleSelector,
+  IItem,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
 
@@ -45,12 +46,14 @@ const ChartFacade: React.FC<IFacade> = ({
   metricsLoader,
   ...props
 }) => {
-  const [metrics, setMetrics] = useState<IPoint[]>([]);
+  const [metrics, setMetrics] = useState([] as IPoint[]);
+
   const [reducedModifiers, multipleSelectors] = useModifiers(modifiers);
 
   // At first render start the new metrics reader
   useEffect(() => {
     startNewMetricsReader();
+    //console.log("improve multirender");
   }, []);
 
   // If some modifier is updated the render again with updated data
