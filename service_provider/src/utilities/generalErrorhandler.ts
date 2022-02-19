@@ -6,4 +6,4 @@ const generalErrorhandler: ErrorRequestHandler = (err, req, res, next) => {
   res.status(err.status).send(err.message);
 };
 
-export = generalErrorhandler;
+export default generalErrorhandler;

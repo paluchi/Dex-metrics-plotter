@@ -1,5 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 
+// This file configures request allowed parameters and policies
+// This file must be modified depending on the framework used for the api
 function requestConfig(app: Application): void {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
@@ -15,4 +17,4 @@ function requestConfig(app: Application): void {
   });
 }
 
-export = requestConfig;
+export default requestConfig;

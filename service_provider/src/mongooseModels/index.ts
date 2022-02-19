@@ -1,3 +1,4 @@
 import pairSchema from "./pair";
 
-export = { pairSchema };
+export default { pairSchema };
+

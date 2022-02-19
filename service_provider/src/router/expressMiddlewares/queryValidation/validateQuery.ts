@@ -1,7 +1,7 @@
 import Joi from "joi"; // Module used for request query parameters verification
 import CreateError from "http-errors";
 import commands from "./commands";
-import { status, IStatus } from "../../../utilities/status";
+import status, { IStatus } from "../../../utilities/status";
 
 //schemas for diferent request entries
 const getMetricsSchema: Joi.ObjectSchema = Joi.object({
@@ -22,11 +22,11 @@ const validateQuery = (command: string, query: object): IStatus => {
   // If error field exists then an error courred
   if (validation.error) {
     const errorMessage = validation.error.details[0].message;
-    return status(false, "", CreateError(400, errorMessage));
+    return status(false, CreateError(400, errorMessage));
   }
 
   // If there is not error then return data
-  return status(true, "", validation.value);
+  return status(true, validation.value);
 };
 
-export = validateQuery;
+export default validateQuery;

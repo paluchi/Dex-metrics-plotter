@@ -22,4 +22,4 @@ const getByDateRange = async ({
   return response;
 };
 
-export = getByDateRange;
+export default getByDateRange;

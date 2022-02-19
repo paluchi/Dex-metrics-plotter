@@ -1,6 +1,6 @@
 import CreateError from "http-errors"; //error creator module
 import mongoose from "mongoose";
-import { status, IStatus } from "../../utilities/status";
+import status, { IStatus } from "../../utilities/status";
 
 const pairModel = mongoose.model("pairs");
 
@@ -55,21 +55,19 @@ const getMetricsByDateRange = async (
     if (!metrics) {
       return status(
         false,
-        `Pair adress has not been found`,
         CreateError(404, "your conditions does not match any data")
       );
     }
 
     // If metrics retrieved returen success status with data
-    return status(true, `Pair metrics successfully found`, metrics);
+    return status(true, metrics);
   } catch (err) {
     console.log(err);
     return status(
       false,
-      "",
       CreateError(503, "There was an error finding the pair metrics")
     );
   }
 };
 
-export = getMetricsByDateRange;
+export default getMetricsByDateRange;

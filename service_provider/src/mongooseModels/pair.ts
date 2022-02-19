@@ -11,4 +11,4 @@ const PairSchema = new Schema<IPair>({
 
 const pairModel = model<IPair>("pairs", PairSchema);
 
-export = pairModel;
+export default pairModel;

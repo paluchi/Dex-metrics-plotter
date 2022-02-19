@@ -33,4 +33,4 @@ const router = (app: Application) => {
     );
 };
 
-export = router;
+export default router;

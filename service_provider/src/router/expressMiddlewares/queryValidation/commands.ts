@@ -4,4 +4,4 @@ const commands = {
   GET_METRICS_BY_DATE_RANGE: "GET_METRICS_BY_DATE_RANGE",
 };
 
-export = commands;
+export default commands;

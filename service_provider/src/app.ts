@@ -37,4 +37,4 @@ router(app);
 //error handler middleware
 app.use(generalErrorhandler);
 
-export = app;
+export default app;

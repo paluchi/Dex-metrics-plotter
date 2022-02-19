@@ -29,4 +29,4 @@ async function mongooseLoader() {
   }
 }
 
-export = mongooseLoader;
+export default mongooseLoader;

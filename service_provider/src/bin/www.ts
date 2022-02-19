@@ -23,4 +23,4 @@ server.on("listening", () =>
   console.log(`${projectName} API server started on: 127.0.0.1:${port}`)
 );
 
-export = server;
+export default server;

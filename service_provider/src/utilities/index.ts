@@ -1,4 +1,4 @@
-import status from "./status/status";
+import status from "./status";
 import generalErrorhandler from "./generalErrorhandler";
 
 export { status, generalErrorhandler };

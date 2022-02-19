@@ -13,4 +13,5 @@ const apiKey: RequestHandler = (req, res, next) => {
     next(CreateError(401, "You are not authorized to do this"));
   }
 };
-export = apiKey;
+export default apiKey;
+
