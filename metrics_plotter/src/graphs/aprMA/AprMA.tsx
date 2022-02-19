@@ -16,6 +16,7 @@ const description = `APR (Annual Percentage Rate) is the annual rate of return,
 const plottingHours = 24; // amount of hours the chart is going to plot
 const chartId = "dashboard_apr_chart";
 const height = 350; //chart height
+const updateInterval = 60 * 10; // every how many SECONDS it is going to update
 const width = undefined; //chart width
 const aspect = undefined; //chart ascpect ratio (5.5 is best for big resolution)
 
@@ -78,6 +79,7 @@ const AprMA: React.FC = () => {
       id={chartId}
       display={{ height: height, width: width, aspect: aspect }}
       metricsLoader={loadPlotData}
+      updateInterval={updateInterval}
       data={[]}
     />
   );

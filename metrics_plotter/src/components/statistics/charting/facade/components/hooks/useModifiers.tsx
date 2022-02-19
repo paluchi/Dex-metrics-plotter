@@ -36,7 +36,7 @@ interface IModifiersReducerActionAndSet {
   payload: setMultipleSelectorPayload;
 }
 
-interface IModifiersReducer {
+export interface IModifiersReducer {
   [propName: string]: any;
 }
 

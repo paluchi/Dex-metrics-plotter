@@ -1,10 +1,12 @@
-import React, { createRef, useState, useEffect } from "react";
+import React, { createRef, useState, useEffect, useRef } from "react";
 
 import MultipleSelector, {
   IMultipleSelector,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
-import useModifiers from "./components/hooks/useModifiers";
+import useModifiers, {
+  IModifiersReducer,
+} from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
 import Chart, { IPoint, IChart } from "../chart/Chart";
 import Header from "./components/header/Header";
@@ -30,6 +32,7 @@ export interface IFacade extends IChart {
   data: IPoint[];
   modifiers: IModifier[];
   metricsLoader: Function;
+  updateInterval?: number;
 }
 
 const ChartFacade: React.FC<IFacade> = ({
@@ -37,33 +40,36 @@ const ChartFacade: React.FC<IFacade> = ({
   description,
   modifiers,
   id,
+  updateInterval,
   data,
   display,
   metricsLoader,
   ...props
 }) => {
   const [metrics, setMetrics] = useState([] as IPoint[]);
+  const loadInterval = useRef<NodeJS.Timer | undefined>();
 
   const [reducedModifiers, multipleSelectors] = useModifiers(modifiers);
 
   // At first render start the new metrics reader
   useEffect(() => {
-    startNewMetricsReader();
-    //console.log("improve multirender");
+    loadMetrics();
   }, []);
 
   // If some modifier is updated the render again with updated data
 
   useEffect(() => {
+    interval();
     loadMetrics();
   }, [reducedModifiers]);
 
-  const startNewMetricsReader = async () => {
-    loadMetrics();
-
-    setInterval(() => {
-      loadMetrics();
-    }, 1000 * 60 * 10);
+  const interval = () => {
+    if (updateInterval) {
+      loadInterval.current && clearInterval(loadInterval.current);
+      loadInterval.current = setInterval(() => {
+        loadMetrics();
+      }, 1000 * (updateInterval));
+    }
   };
 
   const loadMetrics = async () => {
