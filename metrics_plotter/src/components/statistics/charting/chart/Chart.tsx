@@ -15,8 +15,8 @@ export interface IChart extends IRechart {}
 const Chart: React.FC<IChart> = ({ id, data, ...chartVariables }) => {
   return (
     <div>
-      {data.length ? (
-        <Rechart data={data} id={id} {...chartVariables} />
+      {data?.length ? (
+        <Rechart data={data || []} id={id} {...chartVariables} />
       ) : (
         <EmptyChart />
       )}
