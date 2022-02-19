@@ -3,7 +3,6 @@ import React from "react";
 import Rechart, {
   IRechart,
 } from "../../../../utils/components/rechart/Rechart";
-import EmptyChart from "./components/body/empty";
 
 import "./styles/Chart.css";
 
@@ -15,11 +14,7 @@ export interface IChart extends IRechart {}
 const Chart: React.FC<IChart> = ({ id, data, ...chartVariables }) => {
   return (
     <div>
-      {data?.length ? (
-        <Rechart data={data || []} id={id} {...chartVariables} />
-      ) : (
-        <EmptyChart />
-      )}
+      <Rechart data={data || []} id={id} {...chartVariables} />
     </div>
   );
 };

@@ -80,7 +80,6 @@ const AprMA: React.FC = () => {
       display={{ height: height, width: width, aspect: aspect }}
       metricsLoader={loadPlotData}
       updateInterval={updateInterval}
-      data={[]}
     />
   );
 };

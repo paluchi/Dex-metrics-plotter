@@ -3,7 +3,7 @@ import React from "react";
 import "./styles/Body.css";
 
 // This component renders a "empty chart error"
-const EmptyChart: React.FC = () => {
+export const EmptyBody: React.FC = () => {
   return (
     <div className="emptyChartContainer">
       <span>It looks like your chart is empty!</span>
@@ -11,5 +11,3 @@ const EmptyChart: React.FC = () => {
     </div>
   );
 };
-
-export default EmptyChart;

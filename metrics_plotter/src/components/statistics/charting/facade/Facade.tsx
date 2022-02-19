@@ -4,9 +4,7 @@ import MultipleSelector, {
   IMultipleSelector,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
-import useModifiers, {
-  IModifiersReducer,
-} from "./components/hooks/useModifiers";
+import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
 import Chart, { IPoint, IChart } from "../chart/Chart";
 import Header from "./components/header/Header";
@@ -26,14 +24,24 @@ export interface IModifier {
   style?: object;
 }
 
-export interface IFacade extends IChart {
+interface IFacadeBasics extends Omit<IChart, "data"> {
   header: string;
   description: string;
+}
+interface IFacadeStatic extends IFacadeBasics {
   data: IPoint[];
-  modifiers: IModifier[];
+  metricsLoader?: never;
+  updateInterval?: never;
+  modifiers?: never;
+}
+interface IFacadeLoader extends IFacadeBasics {
   metricsLoader: Function;
   updateInterval?: number;
+  modifiers?: IModifier[];
+  data?: never;
 }
+
+export type IFacade = IFacadeLoader | IFacadeStatic;
 
 const ChartFacade: React.FC<IFacade> = ({
   header,
@@ -49,7 +57,7 @@ const ChartFacade: React.FC<IFacade> = ({
   const [metrics, setMetrics] = useState([] as IPoint[]);
   const loadInterval = useRef<NodeJS.Timer | undefined>();
 
-  const [reducedModifiers, multipleSelectors] = useModifiers(modifiers);
+  const [reducedModifiers, multipleSelectors] = useModifiers(modifiers || []);
 
   // At first render start the new metrics reader
   useEffect(() => {
@@ -59,21 +67,21 @@ const ChartFacade: React.FC<IFacade> = ({
   // If some modifier is updated the render again with updated data
 
   useEffect(() => {
-    interval();
+    metricsLoader && interval();
     loadMetrics();
   }, [reducedModifiers]);
 
   const interval = () => {
-    if (updateInterval) {
-      loadInterval.current && clearInterval(loadInterval.current);
-      loadInterval.current = setInterval(() => {
-        loadMetrics();
-      }, 1000 * (updateInterval));
-    }
+    loadInterval.current && clearInterval(loadInterval.current);
+    loadInterval.current = setInterval(() => {
+      loadMetrics();
+    }, 1000 * (updateInterval || 60 * 5));
   };
 
   const loadMetrics = async () => {
-    const metrics = await metricsLoader(reducedModifiers);
+    const metrics = data
+      ? data
+      : metricsLoader && (await metricsLoader(reducedModifiers));
     setMetrics(metrics);
   };
 
@@ -83,6 +91,8 @@ const ChartFacade: React.FC<IFacade> = ({
 
   // Render body first so the ref is generated, then render the header and pass the ref. (using css the header in on top)
   // Then render chart modifiers and the header
+
+  console.log("multipleSelectors.map ~ metrics", metrics);
   return (
     <Card style={{ padding: "0px", marginLeft: "0px" }}>
       <div className="chartFacade" {...props}>
