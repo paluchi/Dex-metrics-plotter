@@ -34,7 +34,7 @@ const MultipleSelector: React.FC<IMultipleSelector> = ({
         {header && <Header header={header} />}
         <ul>
           {items.map((data, index) => {
-            return <Item {...data} key={`${id}_multipleSelector_${index}`} />;
+            return <Item {...data} key={`${id}_Item_${index}`} />;
           })}
         </ul>
       </div>
@@ -45,6 +45,8 @@ const MultipleSelector: React.FC<IMultipleSelector> = ({
 const Header: React.FC<{ header: string }> = ({ header }) => {
   return <h6>{header}</h6>;
 };
+
+export default MultipleSelector;
 
 // Selector item presenter and relations with local context
 const Item: React.FC<IItem> = ({
@@ -70,8 +72,6 @@ const Item: React.FC<IItem> = ({
   // Set active render variables
   const background: string | undefined =
     currentItem?.content === content ? "#E2E8F3" : undefined;
-  const color: string | undefined =
-    currentItem?.content === content ? undefined : undefined;
   const border: string | undefined =
     currentItem?.content === content ? "1px solid #65aad3" : undefined;
 
@@ -81,5 +81,3 @@ const Item: React.FC<IItem> = ({
     </li>
   );
 };
-
-export default MultipleSelector;

@@ -26,3 +26,26 @@ body,
   font-family: "inter";
   src: local("inter"), url(./assets/fonts/Inter.ttf) format("truetype");
 }
+
+.genericIsLoading {
+  background: linear-gradient(
+    90deg,
+    #e6e6e6 30%,
+    #f0f0f0 38%,
+    #f0f0f0 40%,
+    #e6e6e6 48%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: loadingShimmer 2s infinite;
+}
+.dontLoads {
+  background: local;
+  animation: none;
+}
+
+@keyframes loadingShimmer {
+  100% {
+    background-position: -100% 0;
+  }
+}

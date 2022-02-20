@@ -14,19 +14,28 @@ export interface IPoint {
   name: string;
 }
 
-interface IHWDisplay {
-  height?: number;
-  width?: number;
-  aspect?: never;
+interface IHDisplay {
+  height: number;
+  width?: number | undefined;
+  aspect?: never | undefined;
+}
+interface IWDisplay {
+  width: number;
+  height?: number | undefined;
+  aspect?: never | undefined;
 }
 
 interface IAspectDisplay {
-  height?: never;
-  width?: never;
+  width?: never | undefined;
+  height?: never | undefined;
   aspect: number;
 }
 
-type IDisplay = IHWDisplay | IAspectDisplay;
+export type IDisplay =
+  | IHDisplay
+  | IWDisplay
+  | IAspectDisplay
+  | (IHDisplay & IWDisplay);
 
 export interface IRechart {
   data: IPoint[];

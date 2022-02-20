@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StatsSet, {
   IStat,
 } from "../../../../components/statistics/stats/statsSet/StatsSet";
@@ -30,9 +30,14 @@ const GlobalMetrics: React.FC = (): JSX.Element => {
       header: "Total Deployed",
       value: "$21,000,000",
     },
+    {
+      header: "Total Allocation",
+      value: "$2,533,557.32",
+      isLoading: true,
+    },
   ];
 
-  return <StatsSet id={"dashboard_globalMetrics"} stats={stats} />;
+  return <StatsSet stats={stats} id={"dashboard_globalMetrics"} />;
 };
 
 export default GlobalMetrics;

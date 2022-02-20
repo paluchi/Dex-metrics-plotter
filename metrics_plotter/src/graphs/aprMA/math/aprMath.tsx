@@ -23,12 +23,10 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
   const data: IAprPlotData[] = [];
 
   if (!snapshots.length) return [];
-  
-  
+
   let backgroundSnapshots: ISnapshot[] = snapshots.splice(0, hoursAverage - 1);
 
   for (let i = 0; i < plottingHours; i++) {
-    
     const averageAPR: number = getAverageAPR(
       backgroundSnapshots.concat([snapshots[i]])
     );
@@ -46,14 +44,13 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
     };
 
     plotPoint[plotLineName] = averageAPR;
-    
 
     data.push(plotPoint);
 
     backgroundSnapshots = backgroundSnapshots.concat(snapshots[i]);
     backgroundSnapshots.shift();
   }
-  
+
   return data;
 };
 

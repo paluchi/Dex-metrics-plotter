@@ -13,15 +13,24 @@ interface IHeader {
   description: string;
   id: string;
   chartRef: React.RefObject<HTMLDivElement>;
+  isLoading: boolean;
 }
 
 // Presents the chart header, a set of options and a description
-const Header: React.FC<IHeader> = ({ header, description, id, chartRef }) => {
+const Header: React.FC<IHeader> = ({
+  header,
+  description,
+  isLoading,
+  id,
+  chartRef,
+}) => {
   return (
     <div className="headerContainer">
       <h5>{header}</h5>
       <Description text={description} />
-      <Options id={`${id}_header`} chartRef={chartRef} imageName={header} />
+      {!isLoading && (
+        <Options id={`${id}_header`} chartRef={chartRef} imageName={header} />
+      )}
     </div>
   );
 };

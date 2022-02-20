@@ -9,15 +9,15 @@ import ChartFacade, {
 } from "../../components/statistics/charting/facade/Facade";
 
 // chart variables
-const header = "Annual Percentage Rate Average";
-const description = `APR (Annual Percentage Rate) is the annual rate of return,
+const header: string = "Annual Percentage Rate Average";
+const description: string = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
-const plottingHours = 24; // amount of hours the chart is going to plot
-const lastHoursSkip = 0; // Last hour is current on process so if it needs to be skipped use this
-const chartId = "dashboard_apr_chart";
+const plottingHours: number = 24; // amount of hours the chart is going to plot
+const lastHoursSkip: number = 0; // Last hour is current on process so if it needs to be skipped use this
+const updateInterval: number = 60 * 0.05; // every ho w many SECONDS it is going to update
+const chartId: string = "dashboard_apr_chart";
 const height = 350; //chart height
-const updateInterval = 60 * 0.05; // every how many SECONDS it is going to update
 const width = undefined; //chart width
 const aspect = undefined; //chart ascpect ratio (5.5 is best for big resolution)
 
@@ -45,7 +45,7 @@ const AprMA: React.FC = () => {
     apr_MA_time_frame,
   }: IMyModifiers) => {
     // If some of the modifiers is not selected don't plot
-    if (!apr_MA_pair || !apr_MA_time_frame) return;
+    if (!apr_MA_pair || !apr_MA_time_frame) return [];
 
     // Create time range based on hours modifier
     const { fromDate, toDate } = getTimeFrame(apr_MA_time_frame);

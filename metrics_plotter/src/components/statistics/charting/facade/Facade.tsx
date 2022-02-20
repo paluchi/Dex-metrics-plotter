@@ -6,7 +6,7 @@ import MultipleSelector, {
 import Card from "../../../card/Card";
 import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
-import Chart, { IPoint, IChart } from "../chart/Chart";
+import Chart, { IChartPoint, IChart } from "../chart/Chart";
 import Header from "./components/header/Header";
 
 import "./styles/Facade.css";
@@ -29,7 +29,7 @@ interface IFacadeBasics extends Omit<IChart, "data"> {
   description: string;
 }
 interface IFacadeStatic extends IFacadeBasics {
-  data: IPoint[];
+  data: IChartPoint[];
   metricsLoader?: never;
   updateInterval?: never;
   modifiers?: never;
@@ -54,7 +54,7 @@ const ChartFacade: React.FC<IFacade> = ({
   metricsLoader,
   ...props
 }) => {
-  const [metrics, setMetrics] = useState([] as IPoint[]);
+  const [metrics, setMetrics] = useState<IChartPoint[]>([] as IChartPoint[]);
   const loadInterval = useRef<NodeJS.Timer | undefined>();
 
   const [reducedModifiers, multipleSelectors] = useModifiers(modifiers || []);
@@ -64,8 +64,13 @@ const ChartFacade: React.FC<IFacade> = ({
     loadMetrics();
   }, []);
 
-  // If some modifier is updated the render again with updated data
+  // Clears setInterval when derendered
+  useEffect(
+    () => () => loadInterval.current && clearInterval(loadInterval.current),
+    []
+  );
 
+  // If some modifier is updated the render again with updated data
   useEffect(() => {
     metricsLoader && interval();
     loadMetrics();
@@ -79,10 +84,12 @@ const ChartFacade: React.FC<IFacade> = ({
   };
 
   const loadMetrics = async () => {
-    const metrics = data
+    const newMetrics = data
       ? data
       : metricsLoader && (await metricsLoader(reducedModifiers));
-    setMetrics(metrics);
+
+    //If metrics exist but is empty then set it to undefined (so loading anim. starts)
+    setMetrics(newMetrics ? newMetrics : []);
   };
 
   // This ref will be used in a very complex way
@@ -92,7 +99,6 @@ const ChartFacade: React.FC<IFacade> = ({
   // Render body first so the ref is generated, then render the header and pass the ref. (using css the header in on top)
   // Then render chart modifiers and the header
 
-  console.log("multipleSelectors.map ~ metrics", metrics);
   return (
     <Card style={{ padding: "0px", marginLeft: "0px" }}>
       <div className="chartFacade" {...props}>
@@ -113,6 +119,7 @@ const ChartFacade: React.FC<IFacade> = ({
           description={description}
           id={id}
           chartRef={ref}
+          isLoading={!metrics.length && true}
         />
       </div>
     </Card>
