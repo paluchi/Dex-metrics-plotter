@@ -14,9 +14,10 @@ const description = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
 const plottingHours = 24; // amount of hours the chart is going to plot
+const lastHoursSkip = 0; // Last hour is current on process so if it needs to be skipped use this
 const chartId = "dashboard_apr_chart";
 const height = 350; //chart height
-const updateInterval = 60 * 10; // every how many SECONDS it is going to update
+const updateInterval = 60 * 0.05; // every how many SECONDS it is going to update
 const width = undefined; //chart width
 const aspect = undefined; //chart ascpect ratio (5.5 is best for big resolution)
 
@@ -30,7 +31,9 @@ const getTimeFrame = (
 ): { fromDate: Date; toDate: Date } => {
   const toDate = new Date();
   const fromDate = new Date();
-  fromDate.setHours(fromDate.getHours() - plottingHours - marginHours + 1);
+  fromDate.setHours(
+    fromDate.getHours() - plottingHours - lastHoursSkip - marginHours + 1
+  );
 
   return { fromDate, toDate };
 };

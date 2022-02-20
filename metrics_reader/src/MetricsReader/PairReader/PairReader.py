@@ -56,7 +56,7 @@ class PairReader:
         if snapshot[0]["date"] != self.last_snapshot["date"]:
             self.add_snapshots(snapshot)
             print("New hourly snapshot has been taken for: {}".format(self.name))
-        #else:
+        # else:
         elif snapshot[0]["liquidity_usd"] != self.last_snapshot["liquidity_usd"] or snapshot[0]["volume_usd"] != self.last_snapshot["volume_usd"] or snapshot[0]["fees_usd"] != self.last_snapshot["fees_usd"]:
             self.update_last_snapshot(snapshot[0])
             print("Last hourly snapshot has been updated for: {}".format(self.name))
@@ -90,7 +90,7 @@ class PairReader:
 
         self.pairs_coll.update_one({
             "id": {"$eq": "{}".format(self.id)},
-            "snapshots.$.date": snapshot["date"]
+            "snapshots.date": snapshot["date"]
         },
             {'$set': {
                 'snapshots.$.liquidity_usd': snapshot["liquidity_usd"],
