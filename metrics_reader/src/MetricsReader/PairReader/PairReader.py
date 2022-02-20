@@ -1,5 +1,6 @@
 from .helpers.api_queries import get_pair_data, get_pair_hourly_snapshots
 
+
 class PairReader:
     api = None
     pairs_coll = None
@@ -26,9 +27,8 @@ class PairReader:
         self.pairs_coll = pairs_coll
         self.id = address
 
-        self.request_pair_data() # Request some pair's variables and save locally
-        self.save_pair() # Save local pair dana on db (creates new document in collection)
-
+        self.request_pair_data()  # Request some pair's variables and save locally
+        self.save_pair()  # Save local pair dana on db (creates new document in collection)
 
     def request_pair_data(self):
 
@@ -51,12 +51,15 @@ class PairReader:
 
     def save_last_snapshot(self):
 
-        snapshot = self.request_snapshots(1)
+        snapshot = self.request_snapshots()
 
         if snapshot[0]["date"] != self.last_snapshot["date"]:
             self.add_snapshots(snapshot)
-
-            print("New snapshot has been taken for: {}".format(self.name))
+            print("New hourly snapshot has been taken for: {}".format(self.name))
+        #else:
+        elif snapshot[0]["liquidity_usd"] != self.last_snapshot["liquidity_usd"] or snapshot[0]["volume_usd"] != self.last_snapshot["volume_usd"] or snapshot[0]["fees_usd"] != self.last_snapshot["fees_usd"]:
+            self.update_last_snapshot(snapshot[0])
+            print("Last hourly snapshot has been updated for: {}".format(self.name))
 
     def save_snapshots_by_amount(self, amount):
 
@@ -66,7 +69,7 @@ class PairReader:
         print("The last {} snapshots has been requested for: {} pair. An amount of {} has been retrieved and saved".format(
             amount, self.name, len(snapshots)))
 
-    def request_snapshots(self, amount):
+    def request_snapshots(self, amount=1):
 
         pair_ss = get_pair_hourly_snapshots(
             self.api, self.id, amount)
@@ -82,3 +85,18 @@ class PairReader:
                 {'$push': {'snapshots': ss}})
 
         self.last_snapshot = snapshots[0]
+
+    def update_last_snapshot(self, snapshot):
+
+        self.pairs_coll.update_one({
+            "id": {"$eq": "{}".format(self.id)},
+            "snapshots.$.date": snapshot["date"]
+        },
+            {'$set': {
+                'snapshots.$.liquidity_usd': snapshot["liquidity_usd"],
+                'snapshots.$.volume_usd': snapshot["volume_usd"],
+                'snapshots.$.fees_usd': snapshot["fees_usd"]
+            }}
+        )
+
+        self.last_snapshot = snapshot
