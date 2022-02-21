@@ -24,6 +24,7 @@
 ## What can be improved?
 
 - Add components and funcionalities testing (is a must)
+- Add multiline, line customization and multiple chart tyles functionalities to charting components
 - (bugfix) horizontal container with fixed width charts don't work at it's best
 - Improve already existing fundamental components variability. Add a stats facade for complex statsSets interactions
 - Add notification component, modal component and other fundamental components
