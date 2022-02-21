@@ -30,17 +30,27 @@
 
 ### NOT Using Docker
 
-##### Go to "dex_metrics_plot" directory and then:
+##### Go to "service_provider" directory and then:
 
 ###### Copy all the ".env.example" file content, create a new file called ".env" at previous file level, paste the content and save
 
-###### Install [Node.js][pln] an then run the following command on "dex-reader" directory:
+###### Install [Node.js][pln] an then run the following command:
 
 ```sh
 npm install
 npm start
 ```
 
-##### Then follow the "dex_metrics_plot" directory project's readme
+##### Then follow the root directory project's readme
+
+---
+
+## Usage
+
+##### Start using your front end web app using localhost:3000
+
+##### Use "dashboard" page to use the Annual Percentahe Rate Moving Average (APR MA)
+
+##### Use other pages to watch dummy charts and stats sets with mixed display and loading status configurations
 
 [pln]: https://nodejs.org/es/download/

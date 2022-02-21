@@ -43,15 +43,22 @@
 mongod
 ```
 
-###### Install [Python 3][plpt3] or using your python version run the following command on "dex-reader" directory:
+###### Install [Python 3][plpt3] or using your python version run the following command:
 
 (having python3 installed)
 
 ```sh
+pip3 install -r dependencies.txt
 python3 main.js
 ```
 
-##### Then follow the "service_provider" directory project's readme
+##### Then follow the root directory project's readme
+
+---
+
+## Usage
+
+##### This script is automatic and currently hasn't a single interaction method
 
 [plpt3]: https://www.python.org/downloads/
 [plmdb]: https://docs.mongodb.com/manual/installation/

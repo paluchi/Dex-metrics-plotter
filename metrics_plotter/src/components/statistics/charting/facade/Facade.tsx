@@ -1,15 +1,17 @@
 import React, { createRef, useState, useEffect, useRef } from "react";
-
 import MultipleSelector, {
   IMultipleSelector,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
+
 import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
-import Chart, { IChartPoint, IChart } from "../chart/Chart";
+import Chart, { IChartPoint, IChart, IChartDisplay } from "../chart/Chart";
 import Header from "./components/header/Header";
 
 import "./styles/Facade.css";
+
+export type { IChartDisplay } from "../chart/Chart";
 
 interface IModifierItem {
   content: any;
@@ -100,7 +102,13 @@ const ChartFacade: React.FC<IFacade> = ({
   // Then render chart modifiers and the header
 
   return (
-    <Card style={{ padding: "0px", marginLeft: "0px" }}>
+    <Card
+      style={{
+        padding: "0px",
+        marginLeft: "0px",
+        ...processCardDisplay(display),
+      }}
+    >
       <div className="chartFacade" {...props}>
         <Body ref={ref}>
           {modifiers &&
@@ -112,7 +120,11 @@ const ChartFacade: React.FC<IFacade> = ({
                 />
               );
             })}
-          <Chart data={metrics} id={id} display={display} />
+          <Chart
+            data={metrics}
+            id={id}
+            display={processChartDisplay(display)}
+          />
         </Body>
         <Header
           header={header}
@@ -127,3 +139,25 @@ const ChartFacade: React.FC<IFacade> = ({
 };
 
 export default ChartFacade;
+
+interface ICardDisplay {
+  width: number | undefined | string;
+  height: number | undefined | string;
+}
+
+const processCardDisplay = (display: IChartDisplay) => {
+  const processedDisplay: ICardDisplay = {} as ICardDisplay;
+
+  processedDisplay.width = display.width ? display.width : "100%";
+
+  return processedDisplay;
+};
+const processChartDisplay = (display: IChartDisplay) => {
+  const processedDisplay: IChartDisplay = {} as IChartDisplay;
+
+  processedDisplay.width = "100%";
+  processedDisplay.height = display.height;
+  processedDisplay.aspect = display.aspect;
+
+  return processedDisplay;
+};

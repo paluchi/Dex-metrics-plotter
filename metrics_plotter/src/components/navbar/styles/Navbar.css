@@ -8,10 +8,16 @@
   height: 64px;
   width: 100%;
   box-sizing: border-box;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-width: 0px 0px 1px 0px;
-  border-style:solid;
+  border-style: solid;
   border-color: rgb(228, 228, 228);
   padding: 0px 40px 0px 103px;
   z-index: 1;
+}
+
+@media only screen and (max-width: 520px) {
+  .navbar {
+    padding: 0px 10px 0px 73px;
+  }
 }

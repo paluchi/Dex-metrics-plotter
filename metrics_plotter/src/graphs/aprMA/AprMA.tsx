@@ -6,6 +6,7 @@ import getPairDataByDateRange, {
 import parseAverageAPRPlotData, { IAprPlotData } from "./math/aprMath";
 import ChartFacade, {
   IModifier,
+  IChartDisplay,
 } from "../../components/statistics/charting/facade/Facade";
 
 // chart variables
@@ -17,9 +18,12 @@ const plottingHours: number = 24; // amount of hours the chart is going to plot
 const lastHoursSkip: number = 0; // Last hour is current on process so if it needs to be skipped use this
 const updateInterval: number = 60 * 0.05; // every ho w many SECONDS it is going to update
 const chartId: string = "dashboard_apr_chart";
-const height = 350; //chart height
-const width = undefined; //chart width
-const aspect = undefined; //chart ascpect ratio (5.5 is best for big resolution)
+//chart (height and/or width) or ascpect ratio (5.5 is best for big resolution)
+const display: IChartDisplay = {
+  height: 350,
+  width: undefined,
+  aspect: undefined,
+};
 
 interface IMyModifiers {
   apr_MA_pair: string;
@@ -80,7 +84,7 @@ const AprMA: React.FC = () => {
       description={description}
       modifiers={modifiers}
       id={chartId}
-      display={{ height: height, width: width, aspect: aspect }}
+      display={display}
       metricsLoader={loadPlotData}
       updateInterval={updateInterval}
     />

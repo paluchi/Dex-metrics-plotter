@@ -30,11 +30,6 @@ const GlobalMetrics: React.FC = (): JSX.Element => {
       header: "Total Deployed",
       value: "$21,000,000",
     },
-    {
-      header: "Total Allocation",
-      value: "$2,533,557.32",
-      isLoading: true,
-    },
   ];
 
   return <StatsSet stats={stats} id={"dashboard_globalMetrics"} />;

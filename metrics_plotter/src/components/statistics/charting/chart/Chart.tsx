@@ -17,13 +17,13 @@ export interface IChart extends IRechart {}
 // A chart presenter component. It uses rechart library to create the chart
 const Chart: React.FC<IChart> = ({ id, data, ...chartVariables }) => {
   return (
-    <div>
+    <>
       {data && !data.length ? (
         <LoadingChart {...chartVariables.display} />
       ) : (
         <Rechart data={data || []} id={id} {...chartVariables} />
       )}
-    </div>
+    </>
   );
 };
 
@@ -35,15 +35,14 @@ export const LoadingChart: React.FC<IChartDisplay> = ({
   height,
   aspect,
 }) => {
-  const processesWidth = width || "100%";
   const processesHeight = height || (aspect && `${100 / aspect}%`) || 350;
 
   return (
     <div
       className="loadingChartContainer"
-      style={{ width: processesWidth, height: processesHeight }}
+      style={{ width: width, height: processesHeight }}
     >
-      <div>
+      <div className="loadingChartWrapper">
         <div className="loadingchartBar genericIsLoading" />
         <div className="loadingchartBar genericIsLoading" />
         <div className="loadingchartBar genericIsLoading" />
@@ -51,7 +50,9 @@ export const LoadingChart: React.FC<IChartDisplay> = ({
         <div className="loadingchartBar genericIsLoading" />
         <div className="loadingchartBar genericIsLoading" />
       </div>
-      <span className="genericIsLoading">Looks like your chart is loading!</span>
+      <span className="genericIsLoading">
+        Looks like your chart is loading!
+      </span>
     </div>
   );
 };

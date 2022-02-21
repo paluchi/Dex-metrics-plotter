@@ -30,3 +30,9 @@
   height: 12px;
   left: 13px;
 }
+
+@media only screen and (max-width: 520px) {
+  .searchbox {
+    width: 160px;
+  }
+}

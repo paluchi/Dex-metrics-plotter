@@ -6,6 +6,7 @@ export interface ISection {
   children: JSX.Element;
   header: string;
   key?: string;
+  style?: object;
 }
 
 // Presents a section with a header prev to the content

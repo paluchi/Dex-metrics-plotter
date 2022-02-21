@@ -16,8 +16,6 @@
 docker-compose up --build
 ```
 
-##### Start using your web app using localhost:3000
-
 ---
 
 ### NOT Using Docker
@@ -28,4 +26,24 @@ docker-compose up --build
 
 ##### Go to "dex_metrics_plot" directory and follow the readme instructions
 
-##### Start using your web app using localhost:3000
+##### Read following sections in this file to start using your web app with localhost:3000 in your favorite internet explorer
+
+---
+
+## Usage
+
+#### General usage readmes
+
+##### Read "./metrics_plotter/README.md" for front end usage
+
+##### Read "./service_provider/README.md" for API service usage
+
+##### Read "./metrics_reader/README.md" for isolated metrics reader process usage
+
+#### Template usage readmes
+
+##### Read "./metrics_plotter/README.template.md" for front end templating usage
+
+##### Read "./service_provider/README.template.md" for API service templating usage
+
+##### Read "./metrics_reader/README.template.md" for solated metrics reader templating usage

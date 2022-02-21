@@ -16,12 +16,12 @@ export interface IPoint {
 
 interface IHDisplay {
   height: number;
-  width?: number | undefined;
+  width?: number | string | undefined;
   aspect?: never | undefined;
 }
 interface IWDisplay {
   width: number;
-  height?: number | undefined;
+  height?: number | string | undefined;
   aspect?: never | undefined;
 }
 
