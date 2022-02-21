@@ -6,21 +6,26 @@
 
 ## How it was made and Why?
 
-- This REST API server is made in such a way that Express could be very easily replaced by any other web framework.
-- Many abstraction layers are used for very distinct but seemsly equal purposes
-- src/bin/www is where the server is created and the basics parameters are configures.
-- src/app.js is used to configure the web framework (express in this case), using src/frameworkName.js to configure request allowed params and policies
-- src/loaders is used to initiate fundamental drivers like db connections, and others
-- src/router stucture must be coded depending on your framework. post router level middlewares are loaded here and in this case are a query validator and a client validator
-- Router works as a very important abstraction layer in this system, because post router only the parameters are going to be processed, in a way that post logic does'nt depend on your framework
-- src/functions is used to manake your main request need. this set of function can make multiple operation between controllers in order to retrieve a processes result.
-- src/controllers locate the core funcionalities of the business logic. The most basic operations are coded here. like database operations, api requests, etc. So src/functions can manage more complex operations
-- A generic status return function is used to comunicate between controllers, functions and the router
-- At last a generic error handler middleware is added for your used web framework
+#### This project needs a service provider that retrieves hourly metrics snapshots based on a time range.
+
+- Rest was chosen as the state transfer for it's simplicity and very fast development style
+- Expressjs was chosen as server middleware framework because of it's very easy set up, development and very big community
+- Mongodb was chosen as data base for it's super fast querying and saving technology and very easy use over the chosen framework
+- To the sake of simplicity only one route has been created
+- This route recieves an api key through headers to confirm the client, a fromDate ,toDate and pairAddress variables to request the metrics to the data based
+- fromDate is a date variable and represents the date the snapshots creation are going to be requested from
+- toDate is a date variable and represents the date the snapshots creation are going to be requested to
+- pairAddress is a string variable and represents the Uniswap v2 liquidity pool pair address
+- Three ReADMES were created:
+- - README.md for project creation explanation
+- - README.template.md for the app template system
+- - README.project_documentation.md for specific logic documentation about this project
 
 ## What can be improved?
 
-- Remove dependency from status util and use try catch only
+- Add mutiple dexes support
+- Add mutiple metrics suport (should be a micro service for each metric to increase scalability and code maintenability)
+- Use multi threading to increase performance at it's best
 
 ---
 
@@ -28,9 +33,9 @@
 
 ---
 
-### NOT Using Docker
-
 ##### Go to "service_provider" directory and then:
+
+### NOT Using Docker
 
 ###### Copy all the ".env.example" file content, create a new file called ".env" at previous file level, paste the content and save
 
@@ -47,10 +52,6 @@ npm start
 
 ## Usage
 
-##### Start using your front end web app using localhost:3000
-
-##### Use "dashboard" page to use the Annual Percentahe Rate Moving Average (APR MA)
-
-##### Use other pages to watch dummy charts and stats sets with mixed display and loading status configurations
+##### Start using the testing provider or postman querying tool loading ./service_provider.postman.json
 
 [pln]: https://nodejs.org/es/download/

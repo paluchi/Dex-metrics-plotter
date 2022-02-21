@@ -1,4 +1,4 @@
-# Front end templating system
+# Front end template system
 
 ##### Use this template to work over this project
 
@@ -6,7 +6,7 @@
 
 ##### New addons into the system (components and others)
 
-- The fundamentals of this component relies over [Create React App][cran] node module. Check their docs to get a more indeep explanation about basic usage
+- The fundamentals of this directories system and some of its scripts relies over [Create React App][cran] node module. Read ./README.create_react_app.md or check their web docs to get a more indeep explanation about their framework basics
 - ./src/assets contains all custom fonts files, icons, images or any other static type files
 - ./src/components contains the most generic components of the system. This components must have very extended usage and may contain very complex logic that needs to be centralized
 - ./src/components/icons contains componentized sgvs for every pursope usage
@@ -16,12 +16,13 @@
 - ./src/utils contains a fix of multiple small tools. hooks, libraries basics components (rechart for example) are stored here
 - All the components mentioned above can contain sub directories for styles, specific sub compomponents or other specific logics. The above components can have dependencies between each other to build themself with the least amount of duplicated logics.
 - The above explained directories are part of the fundamental logic components of this system. They compose the ui library and could be wrapped into an independient node module and installed as the ui dependency of this specific system. This new independient module increases distributivity and scalability. New tools could be installed in this independient ui module to test icons
-- All new components inside the above directories that are used directly must have usage instrictions documents in this readme and must be self documented over the code
+- ./README.project_documentation.md must contain all usage instructions of new components inside the above directories and this new component's code must be self documentative too
 
 ###### The next directories must use all components resumed above to create in a very easy, scalable and simple way all sections and pages of our web
 
 - ./src/App renders the pages, navbar and sidebar based of a declared set of objects that contains props related to the page (path, icon, header, etc)
 - ./src/pages contains all the pages of the web app. They are composed by a main file a styles subdirectory, a components subdirectory, a tests subdirectory and any other directory can be added to contain very specific logic related to this page. Sub components can contain styles and nested components directories if needed
+- ./src/pages/main contains the logic used to add path and other properties to the pages. It us used as the pages container.
 - ./src/pages/{somePage}/components must contain a serie of section components. This components must reclare a page's section logic.
 - ./src/pages don't need to have documentation sections in this readme, but have documentation alongside the code.
 
@@ -36,10 +37,17 @@
 
 ---
 
-### specific documentation
+##### Others
+
+- Typescript Must be used to code every component over this system
+- ./tsconfig.json Must contain all typescript related configurations
+- ./src/index.css Must contain the very generic styles lie loading animationn, overall font, etc
+- ./Dockerfile must contain all instructions to successfully deploy the app with docker
 
 ---
 
 ## What can be improved?
 
 -
+
+[cran]: https://www.npmjs.com/package/create-react-app

@@ -2,6 +2,8 @@
 
 ##### A full MERN stack application (and Python) that retrieves, save, provides and plots Uniswap v2 pair's hourly metrics APR's as a moving average.
 
+###### Please read metrics_plotter, service_provider and metrics_leader's READMEs to understant the whys and hows of this project
+
 ---
 
 ## Installation
@@ -47,3 +49,11 @@ docker-compose up --build
 ##### Read "./service_provider/README.template.md" for API service templating usage
 
 ##### Read "./metrics_reader/README.template.md" for solated metrics reader templating usage
+
+#### project components usage readmes
+
+##### Read "./metrics_plotter/README.project_documentation.md" for front end components usage
+
+##### Read "./service_provider/README.project_documentation.md" for API service logics usage
+
+##### Read "./metrics_reader/README.project_documentation.md" for solated metrics reader logics usage

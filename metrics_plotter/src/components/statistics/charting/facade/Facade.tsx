@@ -45,6 +45,7 @@ interface IFacadeLoader extends IFacadeBasics {
 
 export type IFacade = IFacadeLoader | IFacadeStatic;
 
+// This function gather all needed parameters to generate complex chart interactions
 const ChartFacade: React.FC<IFacade> = ({
   header,
   description,
@@ -56,9 +57,11 @@ const ChartFacade: React.FC<IFacade> = ({
   metricsLoader,
   ...props
 }) => {
+  // Parsed metrics are saved here
   const [metrics, setMetrics] = useState<IChartPoint[]>([] as IChartPoint[]);
+  // Loading interval is saved here
   const loadInterval = useRef<NodeJS.Timer | undefined>();
-
+  // This custom hook adds all the logic needed to use modifiers (must move multipleSelector parsing logic from here)
   const [reducedModifiers, multipleSelectors] = useModifiers(modifiers || []);
 
   // At first render start the new metrics reader
@@ -90,7 +93,7 @@ const ChartFacade: React.FC<IFacade> = ({
       ? data
       : metricsLoader && (await metricsLoader(reducedModifiers));
 
-    //If metrics exist but is empty then set it to undefined (so loading anim. starts)
+    //If metrics does not exist then set it to empty array (so loading anim. starts)
     setMetrics(newMetrics ? newMetrics : []);
   };
 
@@ -145,6 +148,7 @@ interface ICardDisplay {
   height: number | undefined | string;
 }
 
+// This function parses the display for the card that contains the header, options, modifiers and chart
 const processCardDisplay = (display: IChartDisplay) => {
   const processedDisplay: ICardDisplay = {} as ICardDisplay;
 
@@ -152,6 +156,8 @@ const processCardDisplay = (display: IChartDisplay) => {
 
   return processedDisplay;
 };
+
+// This function parses the display for chart
 const processChartDisplay = (display: IChartDisplay) => {
   const processedDisplay: IChartDisplay = {} as IChartDisplay;
 
