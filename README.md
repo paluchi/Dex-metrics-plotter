@@ -22,11 +22,11 @@ docker-compose up --build
 
 ### NOT Using Docker
 
-##### Go to "dex_reader" directory and follow the readme instructions
+##### Go to "metrics_reader" directory and follow the readme instructions
 
 ##### Go to "service_provider" directory and follow the readme instructions
 
-##### Go to "dex_metrics_plot" directory and follow the readme instructions
+##### Go to "metrics_plotter" directory and follow the readme instructions
 
 ##### Read following sections in this file to start using your web app with localhost:3000 in your favorite internet explorer
 
