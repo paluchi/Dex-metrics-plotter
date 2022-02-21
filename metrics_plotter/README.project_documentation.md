@@ -1,6 +1,6 @@
-# Project full components documetation
+# Project full logics documetation
 
-#### Use this file to read usage instructions and document the new components added to the system
+#### Use this file to read usage instructions and document the new logics added to the system
 
 ---
 
@@ -73,9 +73,14 @@
 ```
 
 - metricsLoader
-- - This function receives and object containing the modifiers names and expect one of the  declared posible values of each. Then request, parse and return data to reload the chart
+- - This function receives and object containing the modifiers names and expect one of the declared posible values of each. Then request, parse and return data to reload the chart
 
 ###### Follow the next path to get an example
+
 ```ssh
 .\src\graphs\aprMA\AprMA.tsx
 ```
+
+---
+
+# ADD MORE DOCUMENTATION

@@ -26,6 +26,7 @@
 - Add mutiple dexes support
 - Add mutiple metrics suport (should be a micro service for each metric to increase scalability and code maintenability)
 - Use multi threading to increase performance at it's best
+- Add more documentation
 
 ---
 

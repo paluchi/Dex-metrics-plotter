@@ -21,6 +21,7 @@
 - - README.md for project creation explanation
 - - README.template.md for the app template system
 - - README.project_documentation.md for specific logic documentation about this project
+- Add more documentation
 
 ## What can be improved?
 
