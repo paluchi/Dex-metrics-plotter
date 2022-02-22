@@ -18,21 +18,32 @@
 - The above explained directories are part of the fundamental logic components of this system. They compose the ui library and could be wrapped into an independient node module and installed as the ui dependency of this specific system. This new independient module increases distributivity and scalability. New tools could be installed in this independient ui module to test icons
 - ./README.project_documentation.md must contain all usage instructions of new components inside the above directories and this new component's code must be self documentative too
 
-###### The next directories must use all components resumed above to create in a very easy, scalable and simple way all sections and pages of our web
+##### The next directories must use all components resumed above to create in a very easy, scalable and simple way all sections and pages of our web
 
-- ./src/App renders the pages, navbar and sidebar based of a declared set of objects that contains props related to the page (path, icon, header, etc)
+###### Navigation
+
+- ./App is the component used to declare all the navigation components
+- All navigation components are related between each other through a context provider declared in ./app
+- ./src/navigation is the directory were navbars and navigation related components are stores
+- ./src/navigation/main contains the logic used to add routing and other properties to the pages. It is used as the pages container. This component will receive a set of declared pages in ./App
+- ./src/navigation/navbar contains the logic of the principal navigation bar
+- ./src/navigation/sidebar contains the logic of side navbar
+- ./src/navigation/{newNavComponent} must be created for a new navigation related component
+
+###### pages
+
+- ./src/App is the component used to declare pages based on a declared set of objects that contains props related to the page (path, icon, header, etc). Then ./src/navigation/main will use it's logic to render this pages
 - ./src/pages contains all the pages of the web app. They are composed by a main file a styles subdirectory, a components subdirectory, a tests subdirectory and any other directory can be added to contain very specific logic related to this page. Sub components can contain styles and nested components directories if needed
-- ./src/pages/main contains the logic used to add path and other properties to the pages. It us used as the pages container.
-- ./src/pages/{somePage}/components must contain a serie of section components. This components must reclare a page's section logic.
-- ./src/pages don't need to have documentation sections in this readme, but have documentation alongside the code.
+- ./src/pages/{somePage}/components must contain a serie of section components. This components must reclare a page's section logic
+- ./src/pages don't need to have documentation sections in this readme, but have documentation alongside the code
 
 ---
 
 ##### Testing
 
-- Every page directory inside ./src/pages must have a tests directory that contains all testing logic related to it's parent page logic.
+- Every page directory inside ./src/pages must have a tests directory that contains all testing logic related to it's parent page logic
 - ./src/tests Must containt all kind of tests declarations
-- A self descriptive set of directories are already added. New sub directories must be added to their respectively testing directory to test new logic.
+- A self descriptive set of directories are already added. New sub directories must be added to their respectively testing directory to test new logic
 - Every test directory must have unit testing and integration testing divided by distinct folders
 
 ---

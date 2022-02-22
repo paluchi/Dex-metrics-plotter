@@ -1,19 +1,20 @@
 import { useContext } from "react";
 
 import {
-  CurrentItemContext,
-  ITodosContextData,
-} from "../../../../context/CurrentItemContext";
+  NavigationContext,
+  INavigationContextData,
+} from "../../../../context/NavigationContext";
 
 import "./styles/Header.css";
 
 // Render the current page header based on context
 const Header: React.FC = () => {
-  const { currentItem }: ITodosContextData = useContext(CurrentItemContext);
+  const { reducedPages }: INavigationContextData =
+    useContext(NavigationContext);
 
   return (
     <header className="title">
-      <h1>{currentItem?.header}</h1>
+      <h1>{reducedPages?.currentPage?.header}</h1>
     </header>
   );
 };

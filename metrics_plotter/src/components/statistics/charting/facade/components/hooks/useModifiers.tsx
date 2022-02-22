@@ -63,7 +63,7 @@ const useModifiers = (
 ): [IModifiersReducer, IMultipleSelector[]] => {
   const initialState = {};
 
-  const [reducedModifiers, displatchModifier] = useReducer(
+  const [reducedModifiers, dispatchModifier] = useReducer(
     modifiersReducer,
     initialState
   );
@@ -89,7 +89,7 @@ const useModifiers = (
             payload: { selector: mod.id, value: value },
           },
           active: active,
-          callback: displatchModifier,
+          callback: dispatchModifier,
         };
       });
 
@@ -97,7 +97,7 @@ const useModifiers = (
       MSelectors.push(multipleSelector);
       setMultipleSelectors(MSelectors);
 
-      displatchModifier({
+      dispatchModifier({
         type: "addMultipleSelector",
         payload: MSelectors,
       });

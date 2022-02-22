@@ -77,8 +77,10 @@ const ChartFacade: React.FC<IFacade> = ({
 
   // If some modifier is updated the render again with updated data
   useEffect(() => {
+    const loadingTimeout = setTimeout(async () => setMetrics([]), 50); // If loading time takes too long then set the loading screen as placeholder
     metricsLoader && interval();
     loadMetrics();
+    clearInterval(loadingTimeout);
   }, [reducedModifiers]);
 
   const interval = () => {
@@ -88,6 +90,7 @@ const ChartFacade: React.FC<IFacade> = ({
     }, 1000 * (updateInterval || 60 * 5));
   };
 
+  // This function loads and sets the new metrics
   const loadMetrics = async () => {
     const newMetrics = data
       ? data

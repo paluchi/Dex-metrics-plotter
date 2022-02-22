@@ -7,7 +7,7 @@ import ChartFacade from "../../components/statistics/charting/facade/Facade";
 import Section from "../../components/section/Section";
 
 // This sections presents a set of cards with dummy data. sections shoud not be declared here, but in a sub folder called sections
-const Strategies: React.FC = (): JSX.Element => {
+const DummyPage: React.FC = (): JSX.Element => {
   return (
     <>
       <Section header={"Dummy staats Loaders with overall loading"}>
@@ -127,4 +127,4 @@ const stats: IStat[] = [
   },
 ];
 
-export default Strategies;
+export default DummyPage;
