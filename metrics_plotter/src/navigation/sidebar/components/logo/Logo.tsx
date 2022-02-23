@@ -1,4 +1,4 @@
-import ILogo from "../../../icons/Logo";
+import ILogo from "../../../../components/icons/Logo";
 import "./styles/Logo.css";
 
 // A simple logo component

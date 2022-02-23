@@ -14,9 +14,9 @@
 
 #### Receiving parametrs
 
-- header (obligatory) {string}
+- header (optional) {string}
 - - Feader of the chart
-- description (obligatory) {string}
+- description (optional) {string}
 - - Description of the chart
 - modifiers (optional) {array}
 - - Modifiers of the chart. This options reload the chart having in count the option parameter when pressed
@@ -38,7 +38,8 @@
         "value": "some string"
       }
     ]
-  }
+  },
+  ...
 ]
 ```
 
@@ -46,21 +47,40 @@
 - - Id of the chart
 - updateInterval (optional) {number}
 - - This property descrives the amount of time an interval would wait to reload the chart
-- data (add this or metricsLoader prop) {array}
+- contentLoader (optional) {function}
+- - This function receives and object containing the modifiers names and expect one of the declared posible values of each. Then request, parse and return data to reload the chart
+- content (add this or metricsLoader prop) {array}
 - - This is used for static graphs and receives an array of multiple objects
+- - both content and contentLoader must return the next convention when used
 
 ```json
-[
   {
-    "_comment": "name (obligatory) {string} is of the plotting line, somekey and somekey2  (at leat 1) {number} represents the y axis name and the y axis value respectively",
-    "name": "your id",
-    "someKey": 10,
-    "someKey2": 15
+    "_comment": "type (obligatory) {string}, data (obligatory) {array of objecst}, content (optional) {object of multiple objects}. Content must has a key value pair for every plotting element where the key is the plotting element key and the value an object of it´s properties",
+    "type": "line",
+    "data": [{name: "july 1": metric_1: 5, metric_2: 8},{name: "july 2": metric_1: 12, metric_2: 4}, ...],
+    "contentProps": {metric_1:{
+                    "_comment": "None of this variables are obligatory. consult rechart line graph properties to get more information",
+                    type: "monotone",
+                    strokeColor: "#5E71F0",
+                    strokeWidth: 1.5,
+                    dot: {
+                      fillColor: undefined,
+                      strokeColor: undefined,
+                      strokeWidth: 1.5,
+                      radius: 2.5,
+                    },
+                    activeDot: {
+                      fillColor: undefined,
+                      strokeColor: undefined,
+                      strokeWidth: 5,
+                      radius: 5,
+                    },
+                    metric_2:{...}},
+};
   }
-]
 ```
 
-- display (obligatory) {object}
+- display (optional) {object}
 - - The display settings of the chart
 
 ```json
@@ -71,9 +91,10 @@
   "aspect": undefined
 }
 ```
-
-- metricsLoader
-- - This function receives and object containing the modifiers names and expect one of the declared posible values of each. Then request, parse and return data to reload the chart
+- hideLegend (optional) {boolean}
+- - Set to true to hide the charting components legends
+- hide toolTip (optional) {boolean}
+- - Set to true to hide the charting components tooltip
 
 ###### Follow the next path to get an example
 

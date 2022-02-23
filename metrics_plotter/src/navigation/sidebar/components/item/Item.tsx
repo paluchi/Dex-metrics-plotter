@@ -1,9 +1,11 @@
 import { useContext, useEffect } from "react";
 
 import {
-  CurrentItemContext,
-  ITodosContextData,
-} from "../../../../context/CurrentItemContext";
+  NavigationContext,
+  INavigationContextData,
+  ISetCurrentPageAction,
+} from "../../../../context/NavigationContext";
+
 import { Link } from "react-router-dom";
 
 import "./styles/Item.css";
@@ -16,7 +18,6 @@ export interface INavigationItem {
   activeColor?: string; // Color when hovered or active
   unactiveColor?: string;
   unactiveBGColor?: string;
-  active?: boolean;
   placeEnd?: boolean;
   callback?: Function;
   callbackParameters?: any;
@@ -32,27 +33,21 @@ const Item: React.FC<INavigationItem> = ({
   activeColor,
   unactiveColor,
   path,
-  placeEnd,
-  active,
   callback,
   callbackParameters,
-  ...extraData
 }) => {
-  const { currentItem, setCurrentItem }: ITodosContextData =
-    useContext(CurrentItemContext);
-
-  useEffect(() => {
-    active && handleClick();
-  }, []);
+  const { reducedPages }: INavigationContextData =
+    useContext(NavigationContext);
 
   const handleClick = () => {
-    setCurrentItem({ activeColor, path, id, ...extraData });
     callback && callback(callbackParameters);
   };
 
   // Set active visuals based on selected item context
-  const background = currentItem?.id === id ? activeBGColor : unactiveBGColor;
-  const color = currentItem?.id === id ? activeColor : unactiveColor;
+  const background =
+    reducedPages.currentPage?.id === id ? activeBGColor : unactiveBGColor;
+  const color =
+    reducedPages.currentPage?.id === id ? activeColor : unactiveColor;
 
   const InnerContent: React.FC = () => {
     return (

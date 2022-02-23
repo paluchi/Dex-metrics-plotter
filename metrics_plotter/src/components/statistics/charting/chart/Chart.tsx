@@ -3,25 +3,30 @@ import React from "react";
 import Rechart, {
   IRechart,
   IDisplay as IChartDisplay,
+  defaultDisplay,
 } from "../../../../utils/components/rechart/Rechart";
 
 import "./styles/Chart.css";
 
 export type {
   IPoint as IChartPoint,
+  ILineProps as IChartLineProps,
   IDisplay as IChartDisplay,
+  IContent as IChartContent,
 } from "../../../../utils/components/rechart/Rechart";
 
-export interface IChart extends IRechart {}
+export { defaultDisplay as defaultChartDisplay } from "../../../../utils/components/rechart/Rechart";
+
+export type IChart = IRechart;
 
 // A chart presenter component. It uses rechart library to create the chart
-const Chart: React.FC<IChart> = ({ id, data, ...chartVariables }) => {
+const Chart: React.FC<IChart> = ({ id, content, ...chartVariables }) => {
   return (
     <>
-      {data && !data.length ? (
-        <LoadingChart {...chartVariables.display} />
+      {content && !content.data.length ? (
+        <LoadingChart {...(chartVariables.display || defaultDisplay)} />
       ) : (
-        <Rechart data={data || []} id={id} {...chartVariables} />
+        <Rechart content={content} id={id} {...chartVariables} />
       )}
     </>
   );

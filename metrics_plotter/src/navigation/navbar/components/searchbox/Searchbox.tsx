@@ -1,6 +1,6 @@
 import "./styles/Searchbox.css";
 
-import ISearchIcon from "../../../icons/SearchIcon";
+import ISearchIcon from "../../../../components/icons/SearchIcon";
 
 // A dummy  searchbox
 const Searchbox: React.FC = () => {

@@ -9,8 +9,8 @@ import "./styles/Header.css";
 import Info from "../../../../../icons/Info";
 
 interface IHeader {
-  header: string;
-  description: string;
+  header?: string;
+  description?: string;
   id: string;
   chartRef: React.RefObject<HTMLDivElement>;
   isLoading: boolean;
@@ -26,10 +26,14 @@ const Header: React.FC<IHeader> = ({
 }) => {
   return (
     <div className="headerContainer">
-      <h5>{header}</h5>
-      <Description text={description} />
+      {header && <h5>{header}</h5>}
+      {description && <Description text={description} />}
       {!isLoading && (
-        <Options id={`${id}_header`} chartRef={chartRef} imageName={header} />
+        <Options
+          id={`${id}_header`}
+          chartRef={chartRef}
+          imageName={header || "new_chart"}
+        />
       )}
     </div>
   );

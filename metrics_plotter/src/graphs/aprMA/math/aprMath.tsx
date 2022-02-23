@@ -27,8 +27,9 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
   let backgroundSnapshots: ISnapshot[] = snapshots.splice(0, hoursAverage - 1);
 
   for (let i = 0; i < plottingHours; i++) {
+    const currentSS = snapshots[i] || snapshots[snapshots.length - 1];
     const averageAPR: number = getAverageAPR(
-      backgroundSnapshots.concat([snapshots[i]])
+      backgroundSnapshots.concat([currentSS])
     );
 
     const pointDate: Date = new Date();
@@ -47,7 +48,7 @@ const parseAverageAPRPlotData: IParseAverageAprPlotData = (
 
     data.push(plotPoint);
 
-    backgroundSnapshots = backgroundSnapshots.concat(snapshots[i]);
+    backgroundSnapshots = backgroundSnapshots.concat(currentSS);
     backgroundSnapshots.shift();
   }
 
