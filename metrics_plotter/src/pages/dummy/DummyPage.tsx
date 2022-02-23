@@ -22,7 +22,7 @@ const DummyPage: React.FC = (): JSX.Element => {
           header={"Dummy chart"}
           display={{ height: 350 }}
           description={"This is a dummy chart with 100% width and 350px height"}
-          data={[]}
+          content={{ data: [], type: "line" }}
         />
       </Section>
       <Section header={"Tipple Dummy chart with variable width"}>
@@ -34,21 +34,21 @@ const DummyPage: React.FC = (): JSX.Element => {
             header={"Dummy chart 1"}
             display={{ height: 350, width: "25%" }}
             description={"This is another dummy chart. with 350x25% display!!"}
-            data={[]}
+            content={{ data: [], type: "line" }}
           />
           <ChartFacade
             id={"dashboard_Discover"}
             header={"Dummy chart 2"}
             display={{ height: 350, width: "50%" }}
             description={"This is another dummy chart. with 350x50% display!!"}
-            data={[]}
+            content={{ data: [], type: "line" }}
           />
           <ChartFacade
             id={"dashboard_Discover"}
             header={"Dummy chart 3"}
             display={{ height: 350, width: "25%" }}
             description={"This is another dummy chart. with 350x25% display!!"}
-            data={[]}
+            content={{ data: [], type: "line" }}
           />
         </div>
       </Section>
@@ -58,7 +58,7 @@ const DummyPage: React.FC = (): JSX.Element => {
           header={"Dummy chart"}
           display={{ height: 350, width: 600 }}
           description={"This is a dummy chart with 100% width and 350px height"}
-          data={[]}
+          content={{ data: [], type: "line" }}
         />
       </Section>
       <Section header={"Tipple Dummy chart with fixed width"}>
@@ -74,21 +74,21 @@ const DummyPage: React.FC = (): JSX.Element => {
             header={"Dummy chart 1"}
             display={{ height: 200, width: 300 }}
             description={"This is another dummy chart. with 200x300 display!!"}
-            data={[]}
+            content={{ data: [], type: "line" }}
           />
           <ChartFacade
             id={"dashboard_Discover"}
             header={"Dummy chart 2"}
             display={{ height: 200, width: 500 }}
             description={"This is another dummy chart. with 200x400 display!!"}
-            data={[]}
+            content={{ data: [], type: "line" }}
           />
           <ChartFacade
             id={"dashboard_Discover"}
             header={"Dummy chart 3"}
             display={{ height: 200, width: 300 }}
             description={"This is another dummy chart. with 200x300 display!!"}
-            data={[]}
+            content={{ data: [], type: "line" }}
           />
         </div>
       </Section>

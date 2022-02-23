@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Sidebar from "./navigation/sidebar/Sidebar";

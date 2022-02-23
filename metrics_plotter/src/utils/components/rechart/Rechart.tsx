@@ -9,22 +9,27 @@ import {
   Legend,
 } from "recharts";
 
+
+// A point in the chart (propName as line name, it´s value a number, name porperty the name of the x axis point)
+// (BUGFIX) propName value must be a number. but a ts error exists if it is setted only as number
 export interface IPoint {
   [propName: string]: string | number;
   name: string;
 }
 
+// Declare vertical display settings
 interface IHDisplay {
   height: number;
   width?: number | string | undefined;
   aspect?: never | undefined;
 }
+// Declare horizontal display settings
 interface IWDisplay {
   width: number;
   height?: number | string | undefined;
   aspect?: never | undefined;
 }
-
+// Declare vertical and horizontal display settings based on ratio
 interface IAspectDisplay {
   width?: never | undefined;
   height?: never | undefined;
@@ -37,11 +42,11 @@ export type IDisplay =
   | IAspectDisplay
   | (IHDisplay & IWDisplay);
 
-export interface IRechart {
-  data: IPoint[];
-  id: string;
-  display: IDisplay;
-  lineType?:
+export const defaultDisplay: IDisplay = { height: 350, width: "100%" };
+
+// Properties of rendered line
+export interface ILineProps {
+  type?:
     | "basis"
     | "basisClosed"
     | "basisOpen"
@@ -53,23 +58,66 @@ export interface IRechart {
     | "monotone"
     | "step"
     | "stepBefore"
-    | "stepAfter"
-    | Function;
+    | "stepAfter";
+  strokeColor?: string;
+  strokeWidth?: number;
+  dot?: {
+    fillColor?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+    radius?: number;
+  };
+  activeDot?: {
+    fillColor?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+    radius?: number;
+  };
+  activeAnimation?: boolean;
 }
 
-interface ILine {
-  name: string;
-  key: string;
-  type: any;
+// Declare that this chart render lines based on this properties
+export interface ILines {
+  type: "line";
+  contentProps?: { [lineName: string]: ILineProps };
+  data: IPoint[];
 }
 
-const Rechart: React.FC<IRechart> = ({ data, id, lineType, display }) => {
-  const lines = getLineKeys(data);
+// This type declared all the chart plotting settings that can be. the must be separed by |
+export type IContent = ILines;
+
+// Declare the main chart object
+export interface IRechart {
+  content: IContent;
+  id: string;
+  display?: IDisplay;
+  hideLegend?: boolean;
+  hideToolTip?: boolean;
+}
+
+const Rechart: React.FC<IRechart> = ({
+  content,
+  id: chartId,
+  display = defaultDisplay,
+  hideLegend = false,
+  hideToolTip = false,
+}) => {
+
+  // Parse line properties
+  const lines: { [lineKey: string]: ILineProps | undefined } =
+    getLineKeys(content);
+
+  // Generate line renders based on above parsed lines
+  const renderLines: JSX.Element[] = [];
+  for (const key in lines) {
+    const lineKey = `${chartId}_rechart_line_${key}`;
+    renderLines.push(newLine({ id: lineKey, pointKey: key, ...lines[key] }));
+  }
 
   return (
     <ResponsiveContainer {...display}>
       <LineChart
-        data={data}
+        data={content.data}
         margin={{
           top: 10,
           right: 10,
@@ -77,19 +125,21 @@ const Rechart: React.FC<IRechart> = ({ data, id, lineType, display }) => {
           bottom: 10,
         }}
       >
-        <Legend
-          align="left"
-          verticalAlign="top"
-          height={50}
-          iconType={"circle"}
-          iconSize={10}
-          wrapperStyle={{
-            fontStyle: "normal",
-            fontWeight: "normal",
-            fontSize: "11px",
-            lineHeight: "13px",
-          }}
-        />
+        {!hideLegend && (
+          <Legend
+            align="left"
+            verticalAlign="top"
+            height={50}
+            iconType={"circle"}
+            iconSize={10}
+            wrapperStyle={{
+              fontStyle: "normal",
+              fontWeight: "normal",
+              fontSize: "11px",
+              lineHeight: "13px",
+            }}
+          />
+        )}
         <CartesianGrid horizontal={false} vertical={false} />
         <XAxis
           dataKey="name"
@@ -114,15 +164,15 @@ const Rechart: React.FC<IRechart> = ({ data, id, lineType, display }) => {
           tickMargin={0}
           width={35}
         />
-        <Tooltip
-          contentStyle={{ backgroundColor: "#8884d8", color: "#fff" }}
-          itemStyle={{ color: "#fff" }}
-          cursor={false}
-        />
-        {lines.map((name: string) => {
-          const lineKey = `${id}_rechart_line_${name}`;
-          return newLine({ name, type: lineType, key: lineKey });
-        })}
+        {!hideToolTip && (
+          <Tooltip
+            contentStyle={{ backgroundColor: "#8884d8", color: "#fff" }}
+            itemStyle={{ color: "#fff" }}
+            cursor={false}
+          />
+        )}
+
+        {renderLines.map((renderLine) => renderLine)}
       </LineChart>
     </ResponsiveContainer>
   );
@@ -130,39 +180,59 @@ const Rechart: React.FC<IRechart> = ({ data, id, lineType, display }) => {
 
 export default Rechart;
 
-const getLineKeys = (data: IPoint[]) => {
-  const lines: string[] = [];
-  data.map(({ name, ...plotData }) => {
+// Lines parsing function
+const getLineKeys = (content: ILines) => {
+  const lines: { [lineKey: string]: ILineProps | undefined } = {};
+  content.data.map(({ name, ...plotData }) => {
     const entries: string[] = Object.keys(plotData);
     entries.map((key: string) => {
-      !lines.includes(key) && lines.push(key);
+      if (!lines[key]) {
+        const lineProps: ILineProps | undefined =
+          content.contentProps && content.contentProps[key];
+        lines[key] = lineProps;
+      }
     });
   });
 
   return lines;
 };
 
-const newLine = ({ name, type, key }: ILine) => {
+interface INewLineProps extends ILineProps {
+  pointKey: string;
+  id: string;
+}
+
+// Function that returns the rendered line based on it´s properties
+const newLine = ({
+  pointKey,
+  strokeColor,
+  strokeWidth,
+  dot,
+  activeDot,
+  activeAnimation,
+  type,
+  id,
+}: INewLineProps) => {
   return (
     <Line
-      dataKey={name}
+      dataKey={pointKey}
       type={type || "monotone"}
-      stroke="#2E71F0"
-      strokeWidth="1.5"
+      stroke={strokeColor || "#2E71F0"}
+      strokeWidth={strokeWidth || 1.5}
       dot={{
-        fill: "#FFFFFF",
-        stroke: "#2E71F0",
-        strokeWidth: 1.5,
-        r: 2.5,
+        fill: dot?.fillColor || "#FFFFFF",
+        stroke: dot?.strokeColor || "#2E71F0",
+        strokeWidth: dot?.strokeWidth || 0,
+        r: dot?.radius || 0,
       }}
       activeDot={{
-        fill: "#2e4355",
-        stroke: "#2E71F0",
-        strokeWidth: 5,
-        r: 5,
+        fill: activeDot?.fillColor || "#FFFFFF",
+        stroke: activeDot?.strokeColor || "#2E71F0",
+        strokeWidth: activeDot?.strokeWidth || 0,
+        r: activeDot?.radius || 0,
       }}
-      isAnimationActive={false}
-      key={key}
+      isAnimationActive={activeAnimation || false}
+      key={id}
     />
   );
 };

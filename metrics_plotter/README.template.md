@@ -25,7 +25,7 @@
 - ./App is the component used to declare all the navigation components
 - All navigation components are related between each other through a context provider declared in ./app
 - ./src/navigation is the directory were navbars and navigation related components are stores
-- ./src/navigation/main contains the logic used to add routing and other properties to the pages. It is used as the pages container. This component will receive a set of declared pages in ./App
+- ./src/navigation/main contains the logic used to add routing and other properties to the pages. It is used as the pages container. This component will receive a set of declared pages from ./App
 - ./src/navigation/navbar contains the logic of the principal navigation bar
 - ./src/navigation/sidebar contains the logic of side navbar
 - ./src/navigation/{newNavComponent} must be created for a new navigation related component

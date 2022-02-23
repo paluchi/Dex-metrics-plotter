@@ -24,13 +24,14 @@
 ## What can be improved?
 
 - Add components and funcionalities testing (is a must)
-- Add multiline, line customization and multiple chart tyles functionalities to charting components
-- (bugfix) horizontal container with fixed width charts don't work at it's best
+- Add support to multiple charting graphics and errors into chart facade
+- (bugfix) multiple column fixed width charts don't work at it's best
 - Improve already existing fundamental components variability. Add a stats facade for complex statsSets interactions
 - Add notification component, modal component and other fundamental components
 - Make big improvements in the chart component by adding a lot more of variability and functionalities
 - Improve re-rendeding
 - Add accesibility properties to every component
+- Add error placeholders to chart and stats
 - Add more content
 - Add theme context, user context
 - Add tracking driver, track user interaction over the Web app, create events and create an external Web app user interaction metrics system. (in very advanced development)

@@ -6,12 +6,23 @@ import Card from "../../../card/Card";
 
 import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
-import Chart, { IChartPoint, IChart, IChartDisplay } from "../chart/Chart";
+import Chart, {
+  IChart,
+  IChartDisplay,
+  IChartContent,
+  defaultChartDisplay,
+} from "../chart/Chart";
 import Header from "./components/header/Header";
 
 import "./styles/Facade.css";
 
-export type { IChartDisplay } from "../chart/Chart";
+// Common types used to create charts
+export type {
+  IChartDisplay,
+  IChartContent,
+  IChartPoint,
+  IChartLineProps,
+} from "../chart/Chart";
 
 interface IModifierItem {
   content: any;
@@ -19,6 +30,7 @@ interface IModifierItem {
   active?: boolean;
 }
 
+// Set of buttons used to custom chart setup
 export interface IModifier {
   items: IModifierItem[];
   header?: string;
@@ -26,21 +38,29 @@ export interface IModifier {
   style?: object;
 }
 
-interface IFacadeBasics extends Omit<IChart, "data"> {
-  header: string;
-  description: string;
+interface IFacadeBasics extends Omit<IChart, "content"> {
+  header?: string;
+  description?: string;
 }
-interface IFacadeStatic extends IFacadeBasics {
-  data: IChartPoint[];
-  metricsLoader?: never;
+
+// For static charts just require data
+export interface IFacadeStatic extends IFacadeBasics {
+  content: IChartContent;
+  contentLoader?: never;
   updateInterval?: never;
   modifiers?: never;
 }
-interface IFacadeLoader extends IFacadeBasics {
-  metricsLoader: Function;
+
+export type IChartLoaderFunction = (modifiers: {
+  [modName: string]: any;
+}) => Promise<IChartContent | undefined>;
+
+// For dynamic charts set a loader
+export interface IFacadeLoader extends IFacadeBasics {
+  contentLoader: IChartLoaderFunction;
   updateInterval?: number;
   modifiers?: IModifier[];
-  data?: never;
+  content?: never;
 }
 
 export type IFacade = IFacadeLoader | IFacadeStatic;
@@ -51,14 +71,21 @@ const ChartFacade: React.FC<IFacade> = ({
   description,
   modifiers,
   id,
-  updateInterval,
-  data,
-  display,
-  metricsLoader,
+  updateInterval = 60 * 5,
+  content: staticContent,
+  display = defaultChartDisplay,
+  contentLoader,
+  hideLegend,
+  hideToolTip,
   ...props
 }) => {
   // Parsed metrics are saved here
-  const [metrics, setMetrics] = useState<IChartPoint[]>([] as IChartPoint[]);
+  const initialContent: IChartContent = {
+    data: [],
+    contentProps: {},
+    type: "line",
+  };
+  const [content, setContent] = useState<IChartContent>(initialContent);
   // Loading interval is saved here
   const loadInterval = useRef<NodeJS.Timer | undefined>();
   // This custom hook adds all the logic needed to use modifiers (must move multipleSelector parsing logic from here)
@@ -66,7 +93,7 @@ const ChartFacade: React.FC<IFacade> = ({
 
   // At first render start the new metrics reader
   useEffect(() => {
-    loadMetrics();
+    loadContent();
   }, []);
 
   // Clears setInterval when derendered
@@ -77,27 +104,30 @@ const ChartFacade: React.FC<IFacade> = ({
 
   // If some modifier is updated the render again with updated data
   useEffect(() => {
-    const loadingTimeout = setTimeout(async () => setMetrics([]), 50); // If loading time takes too long then set the loading screen as placeholder
-    metricsLoader && interval();
-    loadMetrics();
+    const loadingTimeout = setTimeout(
+      async () => setContent(initialContent),
+      50
+    ); // If loading time takes too long then set the loading screen as placeholder
+    contentLoader && interval();
+    loadContent();
     clearInterval(loadingTimeout);
   }, [reducedModifiers]);
 
   const interval = () => {
     loadInterval.current && clearInterval(loadInterval.current);
     loadInterval.current = setInterval(() => {
-      loadMetrics();
-    }, 1000 * (updateInterval || 60 * 5));
+      loadContent();
+    }, 1000 * updateInterval);
   };
 
   // This function loads and sets the new metrics
-  const loadMetrics = async () => {
-    const newMetrics = data
-      ? data
-      : metricsLoader && (await metricsLoader(reducedModifiers));
+  const loadContent = async () => {
+    const newContent = staticContent
+      ? staticContent
+      : contentLoader && (await contentLoader(reducedModifiers));
 
     //If metrics does not exist then set it to empty array (so loading anim. starts)
-    setMetrics(newMetrics ? newMetrics : []);
+    setContent(newContent || initialContent);
   };
 
   // This ref will be used in a very complex way
@@ -127,9 +157,11 @@ const ChartFacade: React.FC<IFacade> = ({
               );
             })}
           <Chart
-            data={metrics}
+            content={content}
             id={id}
             display={processChartDisplay(display)}
+            hideLegend={hideLegend}
+            hideToolTip={hideToolTip}
           />
         </Body>
         <Header
@@ -137,7 +169,7 @@ const ChartFacade: React.FC<IFacade> = ({
           description={description}
           id={id}
           chartRef={ref}
-          isLoading={!metrics.length && true}
+          isLoading={!content.data.length && true}
         />
       </div>
     </Card>
