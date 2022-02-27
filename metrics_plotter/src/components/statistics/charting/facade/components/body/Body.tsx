@@ -1,16 +1,9 @@
-import { forwardRef } from "react";
+import React from "react";
 
 import "./styles/Body.css";
 
-type Props = React.HTMLProps<HTMLDivElement>;
-
-// A not so simple wrapper that reference his first child
-const Body = forwardRef<HTMLDivElement, Props>((props, ref) => {
-  return (
-    <div className="chartFacadeBodyContainer" ref={ref}>
-      {props.children}
-    </div>
-  );
-});
+const Body: React.FC<React.HTMLProps<HTMLDivElement>> = ({ children }) => {
+  return <div className="chartFacadeBodyContainer">{children}</div>;
+};
 
 export default Body;

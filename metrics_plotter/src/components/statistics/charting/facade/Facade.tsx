@@ -144,9 +144,10 @@ const ChartFacade: React.FC<IFacade> = ({
         marginLeft: "0px",
         ...processCardDisplay(display),
       }}
+      ref={ref}
     >
       <div className="chartFacade" {...props}>
-        <Body ref={ref}>
+        <Body>
           {modifiers &&
             multipleSelectors.map((props: IMultipleSelector, index) => {
               return (

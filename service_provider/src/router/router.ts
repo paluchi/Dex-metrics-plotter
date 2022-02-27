@@ -1,7 +1,7 @@
 import { RequestHandler, Application } from "express";
 import { IStatus } from "../utilities/status";
-const functions = require("../functions");
-const { queryValidator, authentication } = require("./expressMiddlewares");
+import {metrics} from "../functions"
+import { queryValidator, authentication } from "./expressMiddlewares"
 
 // This function handle request query validation, business logic and status (very important)
 const validateQuery = (command: string, callback: Function) => {
@@ -28,7 +28,7 @@ const router = (app: Application) => {
       authentication.apiKey,
       validateQuery(
         queryValidator.commands.GET_METRICS_BY_DATE_RANGE,
-        functions.metrics.getByDateRange
+        metrics.getByDateRange
       )
     );
 };

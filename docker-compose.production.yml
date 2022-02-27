@@ -2,12 +2,12 @@ version: "3"
 services:
   react-app:
     build: ./metrics_plotter
-    volumes:
-      - ./metrics_plotter:/metrics_plotter:cached
     ports: 
       - "3000:3000"
-    env_file:
-        - ./metrics_plotter/.env
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_SERVICE_PROVIDER_API_KEY=74fecf8a-c86e-4d30-936c-389cfbe951f5
+      - REACT_APP_SERVICE_PROVIDER_URL=http://localhost:5505
     networks:
       - dex-app
     depends_on:
@@ -16,10 +16,11 @@ services:
     build: ./service_provider
     ports:
       - "5505:5505"
-    volumes:
-      - ./service_provider:/service_provider:cached
-    env_file:
-        - ./service_provider/.env
+    environment:
+      - NODE_ENV=production
+      - MONGO_DB_URL=mongodb://mongo:27017/dex_lectures
+      - API_KEY=74fecf8a-c86e-4d30-936c-389cfbe951f5
+      - API_PORT=5505
     networks:
       - dex-app
     depends_on:
@@ -27,10 +28,11 @@ services:
       - metrics-reader
   metrics-reader:
     build: ./metrics_reader
-    volumes:
-      - ./metrics_reader:/metrics_reader:cached
-    env_file:
-        - ./metrics_reader/.env
+    environment:
+      - ENVIRONMENT=production
+      - DEX_API_URL=https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
+      - MONGO_DB_URL=mongo:27017
+      - PAIRS=["0xbc9d21652cca70f54351e3fb982c6b5dbe992a22", "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc"]
     networks:
       - dex-app
     depends_on:

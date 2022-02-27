@@ -16,7 +16,7 @@ const header: string = "Annual Percentage Rate Average";
 const description: string = `APR (Annual Percentage Rate) is the annual rate of return,
                     expressed as a percentage, before factoring in compound interest.
                     APR only takes into account simple interest.`;
-const plottingHours: number = 24; // amount of hours the chart is going to plot
+const plottingHours: number = 24; // amount of hours the chart should to plot
 const lastHoursSkip: number = 0; // Last hour is current on process so if it needs to be skipped use this
 const updateInterval: number = 60 * 0.05; // every ho w many SECONDS it is going to update
 const chartId: string = "dashboard_apr_chart";
@@ -82,7 +82,6 @@ const AprMA: React.FC = () => {
       const plotLineName: string = ` ${apr_MA_time_frame}hs APR moving average`;
       const data: IAprPlotData[] = parseAverageAPRPlotData(
         plotLineName,
-        plottingHours,
         apr_MA_time_frame,
         pairData.snapshots
       );

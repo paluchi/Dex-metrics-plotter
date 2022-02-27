@@ -73,7 +73,7 @@ const Item: React.FC<IItem> = ({
   const background: string | undefined =
     currentItem?.content === content ? "#E2E8F3" : undefined;
   const border: string | undefined =
-    currentItem?.content === content ? "1px solid #65aad3" : undefined;
+    currentItem?.content === content ? "1px solid #65aad3" : "1px solid transparent" ;
 
   return (
     <li onClick={handleClick} style={{ background, border }} {...props}>

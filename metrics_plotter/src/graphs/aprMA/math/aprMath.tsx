@@ -8,7 +8,6 @@ export interface IAprPlotData {
 export interface IParseAverageAprPlotData {
   (
     plotLineName: string,
-    plottingHours: number,
     hoursAverage: number,
     snapshots: ISnapshot[]
   ): IAprPlotData[];
@@ -16,45 +15,45 @@ export interface IParseAverageAprPlotData {
 
 const parseAverageAPRPlotData: IParseAverageAprPlotData = (
   plotLineName,
-  plottingHours,
   hoursAverage,
   snapshots
 ): IAprPlotData[] => {
   const data: IAprPlotData[] = [];
 
+  // If empty return empty array
   if (!snapshots.length) return [];
 
+  // This variable stores the snapshots before the current to porteriorly calculate an average
   let backgroundSnapshots: ISnapshot[] = snapshots.splice(0, hoursAverage - 1);
 
-  for (let i = 0; i < plottingHours; i++) {
-    const currentSS = snapshots[i] || snapshots[snapshots.length - 1];
+  snapshots.map((snapshot) => {
+    // Get average of prev. snapshot adding the current
     const averageAPR: number = getAverageAPR(
-      backgroundSnapshots.concat([currentSS])
+      backgroundSnapshots.concat([snapshot])
     );
 
-    const pointDate: Date = new Date();
-
-    pointDate.setHours(pointDate.getHours() - i - 1);
+    // Create the x axis name and add average as value
+    const pointDate: Date = new Date(snapshot.date);
     const dayName: string = pointDate.toLocaleString(
       "en-us", // Use 'default' to get in english, 'fr' for france, or search more by "ECMAScript Internationalization API"
       { weekday: "narrow" } // 'long' full name of the month, 'short'  short name, 'narrow' minimal version
     );
-
     const plotPoint: IAprPlotData = {
       name: `${dayName} ${pointDate.getHours()}hs`,
-    };
-
+    }
     plotPoint[plotLineName] = averageAPR;
 
     data.push(plotPoint);
 
-    backgroundSnapshots = backgroundSnapshots.concat(currentSS);
+    // Add current to background, remove the oldest from background and continue
+    backgroundSnapshots = backgroundSnapshots.concat(snapshot);
     backgroundSnapshots.shift();
-  }
+  });
 
   return data;
 };
 
+// This function is purely mathematical and calculates the apr of a snapshot
 const getAPR = (liquidity: number, fees: number): number => {
   const hourlyFeesPerDollar: number = fees / liquidity;
   const daylyFeesPerDollar: number = hourlyFeesPerDollar * 24;
@@ -64,7 +63,8 @@ const getAPR = (liquidity: number, fees: number): number => {
   return apr;
 };
 
-export const getAverageAPR = (snapshots: ISnapshot[]): number => {
+// This function calculates the average of a serie of snapshots
+const getAverageAPR = (snapshots: ISnapshot[]): number => {
   const ssAPR: number[] = snapshots.map(
     ({ liquidity_usd, fees_usd }: Omit<ISnapshot, "volume_usd" | "date">) => {
       return getAPR(liquidity_usd, fees_usd);
