@@ -15,7 +15,7 @@
 ###### Run:
 
 ```sh
-docker-compose up --build
+docker-compose -f docker-compose.production.yml up --build
 ```
 
 ---
