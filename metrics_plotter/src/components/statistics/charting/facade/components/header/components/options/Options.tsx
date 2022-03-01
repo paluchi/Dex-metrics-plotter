@@ -15,12 +15,18 @@ interface IOptions {
   imageName: string;
   id: string;
   chartRef: React.RefObject<HTMLDivElement>;
+  expandCallback: Function;
 }
 
 // Presents a set of usefull options for the chat. (share, download, expand, others)
 // Makes use of a custom hook that takes a screenshot of a ref component (body child)
 // Makes use oF a twitter share module (must add other options. should use other module)
-const Options: React.FC<IOptions> = ({ imageName, id, chartRef }) => {
+const Options: React.FC<IOptions> = ({
+  imageName,
+  id,
+  chartRef,
+  expandCallback,
+}) => {
   //const [image, takeScreenshot] = useScreenshot();
 
   // const getImage = () => takeScreenshot(chartRef.current);
@@ -36,6 +42,7 @@ const Options: React.FC<IOptions> = ({ imageName, id, chartRef }) => {
     // getImage();
   };
   const onExpandClick = () => {
+    expandCallback();
     console.log("expand pressed");
   };
   const onOptionsClick = () => {

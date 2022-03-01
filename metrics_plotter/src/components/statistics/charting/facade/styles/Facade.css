@@ -1,7 +1,7 @@
 .chartFacade {
   position: relative;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   box-sizing: border-box;
   width: 100%;
 }

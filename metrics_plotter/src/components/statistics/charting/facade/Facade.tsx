@@ -3,6 +3,7 @@ import MultipleSelector, {
   IMultipleSelector,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
+import useExpand from "../../../../utils/hooks/useExpand";
 
 import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
@@ -91,6 +92,12 @@ const ChartFacade: React.FC<IFacade> = ({
   // This custom hook adds all the logic needed to use modifiers (must move multipleSelector parsing logic from here)
   const [reducedModifiers, multipleSelectors] = useModifiers(modifiers || []);
 
+  // This ref will be used in a complex way
+  // It will be forwarded to card so it can be used to take a body content snapshot as an image when the download button is pressed from the header selectors
+  const ref = createRef<HTMLDivElement>();
+
+  const expandCallback = useExpand(ref);
+
   // At first render start the new metrics reader
   useEffect(() => {
     loadContent();
@@ -129,14 +136,7 @@ const ChartFacade: React.FC<IFacade> = ({
     //If metrics does not exist then set it to empty array (so loading anim. starts)
     setContent(newContent || initialContent);
   };
-
-  // This ref will be used in a very complex way
-  // It will be forwarded to body so it can be used to take a body content snapshot as an image when the download button is pressed from the header selectors
-  const ref = createRef<HTMLDivElement>();
-
-  // Render body first so the ref is generated, then render the header and pass the ref. (using css the header in on top)
-  // Then render chart modifiers and the header
-
+  // Render a card containing the header and a body with the chart and modifiers
   return (
     <Card
       style={{
@@ -147,6 +147,14 @@ const ChartFacade: React.FC<IFacade> = ({
       ref={ref}
     >
       <div className="chartFacade" {...props}>
+        <Header
+          header={header}
+          description={description}
+          id={id}
+          chartRef={ref}
+          expandCallback={expandCallback}
+          isLoading={!content.data.length && true}
+        />
         <Body>
           {modifiers &&
             multipleSelectors.map((props: IMultipleSelector, index) => {
@@ -165,13 +173,6 @@ const ChartFacade: React.FC<IFacade> = ({
             hideToolTip={hideToolTip}
           />
         </Body>
-        <Header
-          header={header}
-          description={description}
-          id={id}
-          chartRef={ref}
-          isLoading={!content.data.length && true}
-        />
       </div>
     </Card>
   );

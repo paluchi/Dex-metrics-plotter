@@ -14,6 +14,7 @@ interface IHeader {
   id: string;
   chartRef: React.RefObject<HTMLDivElement>;
   isLoading: boolean;
+  expandCallback: Function;
 }
 
 // Presents the chart header, a set of options and a description
@@ -21,6 +22,7 @@ const Header: React.FC<IHeader> = ({
   header,
   description,
   isLoading,
+  expandCallback,
   id,
   chartRef,
 }) => {
@@ -32,6 +34,7 @@ const Header: React.FC<IHeader> = ({
         <Options
           id={`${id}_header`}
           chartRef={chartRef}
+          expandCallback={expandCallback}
           imageName={header || "new_chart"}
         />
       )}
