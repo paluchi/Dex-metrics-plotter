@@ -3,7 +3,6 @@ import MultipleSelector, {
   IMultipleSelector,
 } from "../../../multipleSelector/MultipleSelector";
 import Card from "../../../card/Card";
-import useExpand from "../../../../utils/hooks/useExpand";
 
 import useModifiers from "./components/hooks/useModifiers";
 import Body from "./components/body/Body";
@@ -93,15 +92,9 @@ const ChartFacade: React.FC<IFacade> = ({
   const [reducedModifiers, multipleSelectors] = useModifiers(modifiers || []);
 
   // This ref will be used in a complex way
-  // It will be forwarded to card so it can be used to take a body content snapshot as an image when the download button is pressed from the header selectors
+  // It will be forwarded to card so it can be used to take a body content snapshot as an image
+  // when the download button is pressed from the header selectors
   const ref = createRef<HTMLDivElement>();
-
-  const expandCallback = useExpand(ref);
-
-  // At first render start the new metrics reader
-  useEffect(() => {
-    loadContent();
-  }, []);
 
   // Clears setInterval when derendered
   useEffect(
@@ -109,7 +102,8 @@ const ChartFacade: React.FC<IFacade> = ({
     []
   );
 
-  // If some modifier is updated the render again with updated data
+  // When useMofidier is initialized start interval and load content
+  // If some modifier is updated then render again with updated data
   useEffect(() => {
     const loadingTimeout = setTimeout(
       async () => setContent(initialContent),
@@ -152,7 +146,6 @@ const ChartFacade: React.FC<IFacade> = ({
           description={description}
           id={id}
           chartRef={ref}
-          expandCallback={expandCallback}
           isLoading={!content.data.length && true}
         />
         <Body>

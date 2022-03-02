@@ -21,7 +21,6 @@ const Sidebar: React.FC = () => {
   // 3 sections in column. top with the logo, center with the items and bottom with user item
   // Render items while filtering the end placing items
   // Then render the end Placing
-
   return (
     <aside className="sidebar">
       <div className="top">

@@ -15,7 +15,7 @@ interface IOptions {
   imageName: string;
   id: string;
   chartRef: React.RefObject<HTMLDivElement>;
-  expandCallback: Function;
+  expandCallback?: Function;
 }
 
 // Presents a set of usefull options for the chat. (share, download, expand, others)
@@ -42,7 +42,7 @@ const Options: React.FC<IOptions> = ({
     // getImage();
   };
   const onExpandClick = () => {
-    expandCallback();
+    expandCallback && expandCallback();
     console.log("expand pressed");
   };
   const onOptionsClick = () => {

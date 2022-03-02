@@ -1,4 +1,4 @@
-export const INotification = (props: React.SVGProps<SVGSVGElement>) => {
+export const Notification = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="24"
@@ -17,4 +17,4 @@ export const INotification = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default INotification;
+export default Notification;

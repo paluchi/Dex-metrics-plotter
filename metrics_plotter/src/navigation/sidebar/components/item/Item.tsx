@@ -1,9 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import {
   NavigationContext,
   INavigationContextData,
-  ISetCurrentPageAction,
 } from "../../../../context/NavigationContext";
 
 import { Link } from "react-router-dom";
@@ -49,12 +48,15 @@ const Item: React.FC<INavigationItem> = ({
   const color =
     reducedPages.currentPage?.id === id ? activeColor : unactiveColor;
 
-  const InnerContent: React.FC = () => {
+  const InnerContent: React.FC<{
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
+  }> = ({ onClick }) => {
     return (
       <button
         style={{
           background,
         }}
+        onClick={onClick}
       >
         <Icon fill={color} stroke={color} strokeWidth={0} className="icon" />
       </button>
@@ -63,17 +65,17 @@ const Item: React.FC<INavigationItem> = ({
 
   // Render the item wrapped in a router updating component with the given path
   // If it's a pathed item then render wrapping it in a router's link component. if not then render without the link component
-  if (path) {
-    return (
-      <li className="item">
-        <Link to={path} onClick={handleClick} draggable={"false"}>
-          <InnerContent />
+  return (
+    <li className="item">
+      {path ? (
+        <Link to={path} draggable={"false"}>
+          <InnerContent onClick={handleClick} />
         </Link>
-      </li>
-    );
-  } else {
-    return <InnerContent />;
-  }
+      ) : (
+        <InnerContent onClick={handleClick} />
+      )}
+    </li>
+  );
 };
 
 export default Item;

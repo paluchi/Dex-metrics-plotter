@@ -5,13 +5,15 @@ import "./styles/Card.css";
 export interface ICard {
   children: React.ReactNode;
   style?: object;
+  id?: string;
+  className?: string;
 }
 
 // A simple but flexible card component
 const Card = forwardRef<HTMLDivElement, ICard>(
-  ({ children, ...props }, ref) => {
+  ({ children, className, ...props }, ref) => {
     return (
-      <div className={"card"} {...props} ref={ref}>
+      <div className={`card ${className}`} {...props} ref={ref}>
         {children}
       </div>
     );

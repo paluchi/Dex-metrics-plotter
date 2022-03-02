@@ -13,7 +13,7 @@ import {
 import "./styles/Main.css";
 
 export interface IPage {
-  path: string;
+  path?: string;
   id: string;
   Component?: JSX.Element;
   exactRoute?: boolean;
@@ -65,14 +65,16 @@ const Main: React.FC<{ pages: IPage[] }> = ({ pages }) => {
       <main className="main">
         <Routes>
           {pages.map(({ id, path, Component, exactRoute, ...props }) => {
-            return (
-              <Route
-                path={path}
-                element={<Wrapper id={id} children={Component}></Wrapper>}
-                key={`page_${id}`}
-                {...props}
-              />
-            );
+            if (path) {
+              return (
+                <Route
+                  path={path}
+                  element={<Wrapper id={id} children={Component}></Wrapper>}
+                  key={`page_${id}`}
+                  {...props}
+                />
+              );
+            }
           })}
         </Routes>
       </main>

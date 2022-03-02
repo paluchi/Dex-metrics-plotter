@@ -94,10 +94,10 @@ const AprMA: React.FC = () => {
       };
     } catch (error) {
       // return sort of error screen here (add support to errors in facade)
-      return undefined
+      return undefined;
     }
   };
-
+  
   // Present chart inside a card
   return (
     <ChartFacade

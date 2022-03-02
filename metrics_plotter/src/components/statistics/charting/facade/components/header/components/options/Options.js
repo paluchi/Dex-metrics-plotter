@@ -31,7 +31,7 @@ function Options({ imageName, id, chartRef, expandCallback }) {
     setTimeout(() => {}, 5);
   };
   const onExpandClick = () => {
-    expandCallback();
+    expandCallback && expandCallback();
     console.log("expand pressed");
   };
   const onOptionsClick = () => {

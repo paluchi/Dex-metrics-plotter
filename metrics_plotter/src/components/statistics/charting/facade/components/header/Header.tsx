@@ -14,7 +14,7 @@ interface IHeader {
   id: string;
   chartRef: React.RefObject<HTMLDivElement>;
   isLoading: boolean;
-  expandCallback: Function;
+  expandCallback?: Function;
 }
 
 // Presents the chart header, a set of options and a description
