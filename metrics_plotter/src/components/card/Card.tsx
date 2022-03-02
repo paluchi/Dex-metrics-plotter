@@ -12,8 +12,10 @@ export interface ICard {
 // A simple but flexible card component
 const Card = forwardRef<HTMLDivElement, ICard>(
   ({ children, className, ...props }, ref) => {
+    const classes = !className ? "card" : `card ${className}`;
+
     return (
-      <div className={`card ${className}`} {...props} ref={ref}>
+      <div className={classes} {...props} ref={ref}>
         {children}
       </div>
     );
