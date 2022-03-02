@@ -22,7 +22,7 @@ const CardsSet: React.FC<ICardsSet> = ({
         return (
           <Card
             key={`card_set_${id}_${index}`}
-            style={props.style || { minWidth: "206px", height: "70px" }}
+            style={props.style || { width: "206px", height: "70px" }}
             {...props}
           >
             {children}
